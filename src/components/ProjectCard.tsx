@@ -39,18 +39,18 @@ export const ProjectCard = ({ title, domain, description, tags, githubUrl, webUr
         className={`relative w-full max-w-4xl mx-auto flex flex-col border border-slate-200 dark:border-slate-700/60 rounded-xl overflow-hidden bg-white dark:bg-[#16171d] shadow-xl dark:shadow-2xl cursor-pointer hover:shadow-purple-500/10 hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-500 ease-in-out scroll-mt-24`}
       >
         {/* CABECERA SAFARI */}
-        <div className="flex items-center px-4 py-3 bg-slate-100 dark:bg-[#1e1f26] border-b border-slate-200 dark:border-slate-700/50 transition-colors duration-300">
+        <div className="flex items-center justify-between gap-2 px-3 sm:px-4 py-3 bg-slate-100 dark:bg-[#1e1f26] border-b border-slate-200 dark:border-slate-700/50 transition-colors duration-300">
           
           {/* 3 Botoncitos Mac */}
-          <div className="flex gap-2 w-24">
+          <div className="flex gap-1.5 sm:gap-2 w-14 sm:w-24 shrink-0">
             <div className="w-3 h-3 rounded-full bg-red-500 shadow-sm hover:brightness-110 transition-all" />
             <div className="w-3 h-3 rounded-full bg-yellow-500 shadow-sm hover:brightness-110 transition-all" />
             <div className="w-3 h-3 rounded-full bg-green-500 shadow-sm hover:brightness-110 transition-all" />
           </div>
 
           {/* URL Bar */}
-          <div className="flex-1 flex justify-center">
-            <div className="bg-slate-200 dark:bg-[#16171d] text-slate-600 dark:text-slate-400 text-xs font-mono px-6 py-1.5 rounded-md border border-slate-300/50 dark:border-slate-700/50 flex items-center gap-2 max-w-[300px] w-full justify-center transition-colors group-hover:bg-slate-300 dark:group-hover:bg-[#1a1c23] truncate">
+          <div className="flex-1 flex justify-center min-w-0">
+            <div className="bg-slate-200 dark:bg-[#16171d] text-slate-600 dark:text-slate-400 text-xs font-mono px-2.5 sm:px-6 py-1.5 rounded-md border border-slate-300/50 dark:border-slate-700/50 flex items-center gap-1.5 sm:gap-2 max-w-[300px] w-full justify-center transition-colors group-hover:bg-slate-300 dark:group-hover:bg-[#1a1c23] truncate">
               <svg className="w-3 h-3 opacity-70 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
               </svg>
@@ -58,25 +58,25 @@ export const ProjectCard = ({ title, domain, description, tags, githubUrl, webUr
             </div>
           </div>
 
-          <div className="w-24"></div>
+          <div className="w-6 sm:w-24 shrink-0"></div>
         </div>
 
         {/* CUERPO DEL PROYECTO */}
-        <div className="relative flex flex-col flex-1 p-8">
+        <div className="relative flex flex-col flex-1 p-5 sm:p-8">
           
           {/* ESTADO CERRADO (Resumen) */}
-          <div className={`flex flex-col items-center justify-center transition-all duration-500 overflow-hidden ${
-            isOpen ? 'max-h-0 opacity-0' : 'max-h-[200px] opacity-100 mt-8'
+          <div className={`flex flex-col items-center justify-center text-center transition-all duration-500 overflow-hidden ${
+            isOpen ? 'max-h-0 opacity-0' : 'max-h-[200px] opacity-100 mt-4 sm:mt-8'
           }`}>
-            <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{title}</h3>
-            <p className="text-slate-500 dark:text-slate-400 text-sm">Haz clic para expandir y ver detalles</p>
+            <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-2">{title}</h3>
+            <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm">Haz clic para expandir y ver detalles</p>
           </div>
 
           {/* ESTADO ABIERTO (Detalles) */}
           <div className={`transition-all duration-500 overflow-hidden ${
             isOpen ? 'max-h-[3000px] opacity-100 mt-4' : 'max-h-0 opacity-0 m-0'
           }`}>
-            <div className="flex flex-col md:flex-row gap-8">
+            <div className="flex flex-col md:flex-row gap-6 sm:gap-8">
               
               {/* Contenedor de la Imagen - Ahora es clickeable y abre la modal */}
               <div 
@@ -84,7 +84,7 @@ export const ProjectCard = ({ title, domain, description, tags, githubUrl, webUr
                   e.stopPropagation(); // Evitamos que cierre la tarjeta
                   setIsModalOpen(true);
                 }}
-                className="flex-1 bg-slate-100 dark:bg-[#1e1f26] border border-slate-200 dark:border-slate-700/50 rounded-lg min-h-[300px] flex items-center justify-center transition-all duration-300 overflow-hidden relative group"
+                className="flex-1 bg-slate-100 dark:bg-[#1e1f26] border border-slate-200 dark:border-slate-700/50 rounded-lg min-h-[200px] sm:min-h-[300px] flex items-center justify-center transition-all duration-300 overflow-hidden relative group"
                 title="Ampliar vista"
               >
                 {/* Indicador de click al hacer hover */}

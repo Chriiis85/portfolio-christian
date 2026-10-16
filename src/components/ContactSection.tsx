@@ -9,7 +9,7 @@ export const ContactSection = () => {
       </div>
       
       {/* FOOTER BÁSICO */}
-      <footer className="w-full text-center mt-24 mb-8 text-slate-500 dark:text-slate-500/50 text-sm">
+      <footer className="w-full text-center mt-24 mb-24 md:mb-8 px-4 text-slate-500 dark:text-slate-500/50 text-sm">
         <p>Desarrollado por Christian Moreno Díaz © {new Date().getFullYear()}</p>
       </footer>
     </section>

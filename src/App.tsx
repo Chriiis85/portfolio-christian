@@ -18,10 +18,10 @@ function App() {
         <section id="inicio" className="relative overflow-hidden min-h-screen flex items-center justify-center pt-16 bg-[#eeeeee] dark:bg-[#222831] transition-colors duration-300">
           <HeroBackground />
           <div className="relative z-10 text-center px-4">
-            <h1 className="text-5xl md:text-7xl font-bold text-[#222831] dark:text-[#eeeeee] mb-4">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-[#222831] dark:text-[#eeeeee] mb-4">
               ¡Hola, soy Christian!
             </h1>
-            <p className="text-xl md:text-2xl text-[#0092ca] font-medium mb-6">
+            <p className="text-lg sm:text-xl md:text-2xl text-[#0092ca] font-medium mb-6">
               Desarrollador de Aplicaciones Web | Desarrollador Full Stack
             </p>
             <p className="text-lg text-[#393e46] dark:text-[#eeeeee]/80 max-w-2xl mx-auto">

@@ -175,12 +175,12 @@ export const SafariModal = ({ isOpen, onClose, title: _title, domain, githubUrl,
           </div>
 
           {/* Centro: Barra de Direcciones URL */}
-          <div className="flex-1 max-w-md mx-4">
+          <div className="flex-1 max-w-md mx-2 sm:mx-4 min-w-0">
             <a
               href={webUrl && webUrl !== '#' ? webUrl : undefined}
               target="_blank"
               rel="noreferrer"
-              className={`w-full bg-white dark:bg-[#16171d] text-slate-700 dark:text-slate-300 text-xs font-mono py-1.5 px-4 rounded-lg border border-slate-300/80 dark:border-slate-700/60 flex items-center justify-center gap-2 shadow-inner transition-all ${
+              className={`w-full bg-white dark:bg-[#16171d] text-slate-700 dark:text-slate-300 text-xs font-mono py-1.5 px-2.5 sm:px-4 rounded-lg border border-slate-300/80 dark:border-slate-700/60 flex items-center justify-center gap-1.5 sm:gap-2 shadow-inner transition-all truncate ${
                 webUrl && webUrl !== '#' ? 'hover:border-blue-500 cursor-pointer' : 'cursor-default'
               }`}
             >
@@ -192,7 +192,7 @@ export const SafariModal = ({ isOpen, onClose, title: _title, domain, githubUrl,
           </div>
 
           {/* Derecha: Icono de GitHub */}
-          <div className="flex items-center gap-3 w-20 justify-end">
+          <div className="flex items-center gap-3 w-8 sm:w-20 justify-end shrink-0">
             {githubUrl && (
               <a
                 href={githubUrl}
@@ -210,12 +210,12 @@ export const SafariModal = ({ isOpen, onClose, title: _title, domain, githubUrl,
         </div>
 
         {/* Cuerpo / Contenido de la web */}
-        <div className="relative w-full flex-1 bg-white dark:bg-[#0d0e12] p-6 sm:p-10 overflow-y-auto max-h-[75vh] min-h-[500px]">
+        <div className="relative w-full flex-1 bg-white dark:bg-[#0d0e12] p-4 sm:p-10 overflow-y-auto max-h-[80vh] min-h-[320px] sm:min-h-[500px]">
           
           {/* STACK ESPECÍFICO DEL PROYECTO */}
           {tags && tags.length > 0 && (
-            <div className="w-full max-w-5xl mx-auto mb-16 mt-4">
-              <h3 className="text-2xl font-extrabold text-[#222831] dark:text-[#eeeeee] mb-6 text-center tracking-tight">Stack de la Aplicación</h3>
+            <div className="w-full max-w-5xl mx-auto mb-12 sm:mb-16 mt-2 sm:mt-4">
+              <h3 className="text-xl sm:text-2xl font-extrabold text-[#222831] dark:text-[#eeeeee] mb-6 text-center tracking-tight">Stack de la Aplicación</h3>
               <div className="relative border border-slate-200 dark:border-white/10 rounded-xl overflow-hidden bg-white dark:bg-[#111]">
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
                   {tags.map((tag, idx) => {
@@ -246,9 +246,9 @@ export const SafariModal = ({ isOpen, onClose, title: _title, domain, githubUrl,
             </div>
           )}
 
-          <div className="flex flex-col items-center text-center mb-10 mt-4">
-            <h2 className="text-4xl font-extrabold text-[#222831] dark:text-[#eeeeee] mb-3 tracking-tight">Galería del Proyecto</h2>
-            <p className="text-[#393e46] dark:text-[#eeeeee]/70">Explora la colección de capturas e interfaces de la aplicación</p>
+          <div className="flex flex-col items-center text-center mb-8 sm:mb-10 mt-4">
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-[#222831] dark:text-[#eeeeee] mb-3 tracking-tight">Galería del Proyecto</h2>
+            <p className="text-sm sm:text-base text-[#393e46] dark:text-[#eeeeee]/70">Explora la colección de capturas e interfaces de la aplicación</p>
           </div>
 
           {/* Grid Estilo Masonry (como en la referencia) */}

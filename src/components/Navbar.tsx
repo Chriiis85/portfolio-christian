@@ -11,12 +11,12 @@ export const Navbar = () => {
   };
 
   const dockItems = [
-    { name: 'Sobre mí', href: '#sobre-mi', icon: <User size={22} /> },
-    { name: 'Experiencia', href: '#experiencia', icon: <Briefcase size={22} /> },
-    { name: 'Proyectos', href: '#proyectos', icon: <LayoutGrid size={22} /> },
-    { name: 'Stack', href: '#stack', icon: <Code size={22} /> },
-    { name: 'Estudios', href: '#estudios', icon: <GraduationCap size={22} /> },
-    { name: 'Contacto', href: '#contacto', icon: <Mail size={22} /> },
+    { name: 'Sobre mí', href: '#sobre-mi', icon: <User size={20} /> },
+    { name: 'Experiencia', href: '#experiencia', icon: <Briefcase size={20} /> },
+    { name: 'Proyectos', href: '#proyectos', icon: <LayoutGrid size={20} /> },
+    { name: 'Stack', href: '#stack', icon: <Code size={20} /> },
+    { name: 'Estudios', href: '#estudios', icon: <GraduationCap size={20} /> },
+    { name: 'Contacto', href: '#contacto', icon: <Mail size={20} /> },
   ];
 
   const socialItems = [
@@ -42,58 +42,72 @@ export const Navbar = () => {
   ];
 
   return (
-    <nav className="fixed top-4 left-1/2 -translate-x-1/2 w-[96%] max-w-5xl h-16 bg-white/80 dark:bg-[#393e46]/80 backdrop-blur-md border border-slate-200 dark:border-[#393e46] shadow-2xl rounded-2xl flex items-center justify-between px-6 z-50 transition-colors duration-300">
+    <>
+      {/* BARRA SUPERIOR */}
+      <nav className="fixed top-4 left-1/2 -translate-x-1/2 w-[94%] sm:w-[96%] max-w-5xl h-16 bg-white/85 dark:bg-[#393e46]/85 backdrop-blur-md border border-slate-200 dark:border-[#393e46] shadow-2xl rounded-2xl flex items-center justify-between px-4 sm:px-6 z-50 transition-colors duration-300">
 
-      {/* IZQUIERDA: Logo y Tema */}
-      <div className="flex-1 flex items-center gap-4">
-        <a href="#inicio" className="text-xl font-bold text-[#222831] dark:text-[#eeeeee] tracking-wide hover:scale-105 transition-transform">
-          Christian<span className="text-[#0092ca]">.dev</span>
-        </a>
-        
-        <button
-          onClick={toggleTheme}
-          className="p-2 rounded-lg text-[#393e46] dark:text-[#eeeeee] hover:text-yellow-500 dark:hover:text-yellow-400 hover:bg-slate-100 dark:hover:bg-[#222831] transition-all hover:scale-110"
-          title="Cambiar modo claro/oscuro"
-        >
-          {isDark ? <Sun size={20} /> : <Moon size={20} />}
-        </button>
-      </div>
+        {/* IZQUIERDA: Logo y Tema */}
+        <div className="flex-1 flex items-center gap-2 sm:gap-4 min-w-0">
+          <a href="#inicio" className="text-lg sm:text-xl font-bold text-[#222831] dark:text-[#eeeeee] tracking-wide hover:scale-105 transition-transform truncate">
+            Christian<span className="text-[#0092ca]">.dev</span>
+          </a>
+          
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-lg text-[#393e46] dark:text-[#eeeeee] hover:text-yellow-500 dark:hover:text-yellow-400 hover:bg-slate-100 dark:hover:bg-[#222831] transition-all hover:scale-110 shrink-0"
+            title="Cambiar modo claro/oscuro"
+          >
+            {isDark ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
+        </div>
 
-      {/* CENTRO: Dock */}
-      <div className="flex-none flex items-center gap-2">
+        {/* CENTRO: Dock (Visible en Tablet y Desktop md+) */}
+        <div className="hidden md:flex flex-none items-center gap-1.5 lg:gap-2">
+          {dockItems.map((item) => (
+            <a
+              key={item.name}
+              href={item.href}
+              className="relative group p-2.5 lg:p-3 rounded-xl bg-slate-100/50 dark:bg-[#222831] text-[#393e46] dark:text-[#eeeeee] hover:text-[#222831] dark:hover:text-white hover:bg-slate-200 dark:hover:bg-[#222831] transition-all duration-300 hover:scale-125 hover:-translate-y-2 hover:shadow-lg"
+            >
+              {item.icon}
+              <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs bg-slate-800 text-white dark:bg-[#222831] dark:text-[#eeeeee] px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                {item.name}
+              </span>
+            </a>
+          ))}
+        </div>
+
+        {/* DERECHA: Redes */}
+        <div className="flex-1 flex items-center gap-1 sm:gap-2 justify-end">
+          {socialItems.map((item) => (
+            <a
+              key={item.name}
+              href={item.href}
+              target="_blank"
+              rel="noreferrer"
+              className="p-2 rounded-lg text-[#393e46] dark:text-[#eeeeee] hover:text-[#0092ca] dark:hover:text-[#0092ca] hover:bg-slate-100 dark:hover:bg-[#222831] transition-all hover:scale-110"
+              title={item.name}
+            >
+              {item.icon}
+            </a>
+          ))}
+        </div>
+
+      </nav>
+
+      {/* DOCK INFERIOR FLOTANTE PARA MÓVILES (< md) */}
+      <div className="md:hidden fixed bottom-3 left-1/2 -translate-x-1/2 w-[94%] max-w-sm bg-white/90 dark:bg-[#393e46]/90 backdrop-blur-md border border-slate-200 dark:border-[#393e46] shadow-2xl rounded-2xl flex items-center justify-around py-2 px-2 z-50 transition-colors duration-300">
         {dockItems.map((item) => (
           <a
             key={item.name}
             href={item.href}
-            className="relative group p-3 rounded-xl bg-slate-100/50 dark:bg-[#222831] text-[#393e46] dark:text-[#eeeeee] hover:text-[#222831] dark:hover:text-white hover:bg-slate-200 dark:hover:bg-[#222831] transition-all duration-300 hover:scale-125 hover:-translate-y-2 hover:shadow-lg"
-          >
-            {item.icon}
-            <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs bg-slate-800 text-white dark:bg-[#222831] dark:text-[#eeeeee] px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-              {item.name}
-            </span>
-          </a>
-        ))}
-      </div>
-
-      {/* DERECHA: Redes */}
-      <div className="flex-1 flex items-center gap-2 justify-end">
-        {socialItems.map((item) => (
-          <a
-            key={item.name}
-            href={item.href}
-            target="_blank"
-            rel="noreferrer"
-            className="p-2 rounded-lg text-[#393e46] dark:text-[#eeeeee] hover:text-[#0092ca] dark:hover:text-[#0092ca] hover:bg-slate-100 dark:hover:bg-[#222831] transition-all hover:scale-110"
-            title={item.name}
+            aria-label={item.name}
+            className="flex flex-col items-center justify-center p-2 rounded-xl bg-slate-100/60 dark:bg-[#222831] text-[#393e46] dark:text-[#eeeeee] active:scale-95 transition-all"
           >
             {item.icon}
           </a>
         ))}
       </div>
-
-    </nav>
+    </>
   );
 };
-
-
-

@@ -14,6 +14,7 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;
 }
 
 /* Colores de fondo y tipografía estilo Apple por defecto (Modo Claro) */
@@ -23,6 +24,7 @@ body {
   font-family: var(--font-sans);
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   letter-spacing: -0.015em;
+  overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {

@@ -192,7 +192,7 @@ export const AboutSection: React.FC = () => {
             href={token.href}
             target={token.external ? '_blank' : undefined}
             rel={token.external ? 'noopener noreferrer' : undefined}
-            className={`${token.className} underline decoration-amber-500/40 hover:decoration-[#0092ca] hover:text-[#0092ca] dark:hover:text-[#0092ca] transition-colors cursor-pointer`}
+            className={`${token.className} break-all sm:break-words underline decoration-amber-500/40 hover:decoration-[#0092ca] hover:text-[#0092ca] dark:hover:text-[#0092ca] transition-colors cursor-pointer`}
             title={`Abrir ${token.href.replace(/^(mailto:|tel:)/, '')}`}
           >
             {visibleText}
@@ -275,29 +275,29 @@ export const AboutSection: React.FC = () => {
             {/* Ventana con el mismo estilo exacto de ProjectCard en light y dark mode */}
             <div className="relative w-full flex flex-col border border-slate-200 dark:border-slate-700/60 rounded-xl overflow-hidden bg-white dark:bg-[#16171d] shadow-xl dark:shadow-2xl hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-500 ease-in-out">
               
-              {/* CABECERA SAFARI / MAC (idéntica a ProjectCard) */}
-              <div className="flex items-center px-4 py-3 bg-slate-100 dark:bg-[#1e1f26] border-b border-slate-200 dark:border-slate-700/50 transition-colors duration-300">
+              {/* CABECERA SAFARI / MAC (adaptable desde 320px hasta 4K) */}
+              <div className="flex items-center justify-between gap-2 px-3 sm:px-4 py-3 bg-slate-100 dark:bg-[#1e1f26] border-b border-slate-200 dark:border-slate-700/50 transition-colors duration-300">
                 {/* 3 Botoncitos Mac */}
-                <div className="flex gap-2 w-24">
+                <div className="flex gap-1.5 sm:gap-2 w-14 sm:w-24 shrink-0">
                   <div className="w-3 h-3 rounded-full bg-red-500 shadow-sm hover:brightness-110 transition-all" />
                   <div className="w-3 h-3 rounded-full bg-yellow-500 shadow-sm hover:brightness-110 transition-all" />
                   <div className="w-3 h-3 rounded-full bg-green-500 shadow-sm hover:brightness-110 transition-all" />
                 </div>
 
                 {/* Barra central estilo archivo/URL */}
-                <div className="flex-1 flex justify-center">
-                  <div className="bg-slate-200 dark:bg-[#16171d] text-slate-600 dark:text-slate-400 text-xs font-mono px-6 py-1.5 rounded-md border border-slate-300/50 dark:border-slate-700/50 flex items-center gap-2 max-w-[300px] w-full justify-center transition-colors truncate">
+                <div className="flex-1 flex justify-center min-w-0">
+                  <div className="bg-slate-200 dark:bg-[#16171d] text-slate-600 dark:text-slate-400 text-xs font-mono px-2.5 sm:px-6 py-1.5 rounded-md border border-slate-300/50 dark:border-slate-700/50 flex items-center gap-1.5 sm:gap-2 max-w-[300px] w-full justify-center transition-colors truncate">
                     <Code2 className="w-3.5 h-3.5 text-[#0092ca] flex-shrink-0" />
                     <span className="truncate">about_me.rb</span>
                   </div>
                 </div>
 
                 {/* Botón Compilar arriba a la derecha (en blanco estilo macOS, deshabilitado hasta terminar de tipear y con bote a los 5s) */}
-                <div className="w-24 flex justify-end">
+                <div className="w-auto sm:w-24 flex justify-end shrink-0">
                   <button
                     onClick={handleCompile}
                     disabled={!isTypingComplete || isCompiling}
-                    className={`px-3.5 py-1 rounded-[7px] font-sans text-xs font-medium tracking-[-0.01em] select-none transition-all duration-200 bg-gradient-to-b from-white to-slate-100 text-slate-700 border border-slate-300/90 shadow-[0_1px_2px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] ${
+                    className={`px-3 sm:px-3.5 py-1 rounded-[7px] font-sans text-xs font-medium tracking-[-0.01em] select-none transition-all duration-200 bg-gradient-to-b from-white to-slate-100 text-slate-700 border border-slate-300/90 shadow-[0_1px_2px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] ${
                       !isTypingComplete
                         ? 'opacity-45 cursor-not-allowed'
                         : 'opacity-100 cursor-pointer hover:brightness-95 active:scale-[0.97]'
@@ -309,7 +309,7 @@ export const AboutSection: React.FC = () => {
               </div>
 
               {/* CUERPO DEL EDITOR: se va desplegando orgánicamente a medida que se tipea */}
-              <div className="p-6 md:p-10 font-mono text-sm sm:text-base md:text-lg leading-relaxed overflow-x-auto transition-all duration-300">
+              <div className="p-4 sm:p-6 md:p-10 font-mono text-xs sm:text-base md:text-lg leading-relaxed overflow-x-auto transition-all duration-300">
                 <pre className="whitespace-pre-wrap break-words m-0">
                   <code>
                     {renderTypedTokens()}
@@ -324,7 +324,7 @@ export const AboutSection: React.FC = () => {
         ) : (
           /* SOBRE MÍ REAL (Tarjeta de perfil estilo referencia) */
           <div className="w-full max-w-5xl mx-auto pt-20 mt-2 transition-all duration-500 animate-fadeIn">
-            <div className="relative flex flex-col min-w-0 break-words bg-white dark:bg-[#16171d] w-full shadow-xl dark:shadow-2xl rounded-xl border border-slate-200 dark:border-slate-700/60 px-6 sm:px-12 pb-12 pt-6">
+            <div className="relative flex flex-col min-w-0 break-words bg-white dark:bg-[#16171d] w-full shadow-xl dark:shadow-2xl rounded-xl border border-slate-200 dark:border-slate-700/60 px-4 sm:px-12 pb-10 sm:pb-12 pt-6">
               
               {/* Fila superior: Estadísticas (Izquierda) + Foto sobresaliendo (Centro) + Botón CONNECT a GitHub (Derecha) */}
               <div className="flex flex-col md:flex-row items-center justify-between">
@@ -353,7 +353,7 @@ export const AboutSection: React.FC = () => {
 
                 {/* Foto circular sobresaliendo por arriba */}
                 <div className="w-full md:w-4/12 flex justify-center order-1 md:order-2">
-                  <div className="relative -mt-20 w-36 h-36 md:w-40 md:h-40 rounded-full overflow-hidden shadow-2xl border-4 border-white dark:border-[#16171d] bg-[#393e46]">
+                  <div className="relative -mt-20 w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 rounded-full overflow-hidden shadow-2xl border-4 border-white dark:border-[#16171d] bg-[#393e46]">
                     <img
                       src="https://media.licdn.com/dms/image/v2/D4D03AQER95VpQqGa6g/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1710956028738?e=1793232000&v=beta&t=r2znvX5bBHZIGz03ckGuWbA6Zp60uVlcOkOCAPnj90w"
                       alt="Christian Moreno Díaz"
@@ -377,16 +377,16 @@ export const AboutSection: React.FC = () => {
 
               {/* Información central de Christian */}
               <div className="text-center mt-8">
-                <h2 className="text-3xl md:text-4xl font-bold leading-normal text-[#222831] dark:text-[#eeeeee] mb-2">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-normal text-[#222831] dark:text-[#eeeeee] mb-2">
                   Christian Moreno Díaz
                 </h2>
 
-                <div className="flex flex-wrap items-center justify-center gap-4 text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400 mb-6">
+                <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400 mb-6">
                   <a
                     href="mailto:christianmorenodiaz85@gmail.com"
-                    className="inline-flex items-center gap-1.5 hover:text-[#0092ca] transition-colors"
+                    className="inline-flex items-center gap-1.5 hover:text-[#0092ca] transition-colors break-all"
                   >
-                    <Mail className="w-3.5 h-3.5 text-[#0092ca]" />
+                    <Mail className="w-3.5 h-3.5 text-[#0092ca] shrink-0" />
                     <span>christianmorenodiaz85@gmail.com</span>
                   </a>
                   <span className="hidden sm:inline">•</span>
@@ -394,7 +394,7 @@ export const AboutSection: React.FC = () => {
                     href="tel:+34619276645"
                     className="inline-flex items-center gap-1.5 hover:text-[#0092ca] transition-colors"
                   >
-                    <Phone className="w-3.5 h-3.5 text-[#0092ca]" />
+                    <Phone className="w-3.5 h-3.5 text-[#0092ca] shrink-0" />
                     <span>619 27 66 45</span>
                   </a>
                 </div>
