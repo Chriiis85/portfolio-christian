@@ -89,7 +89,7 @@ interface SafariModalProps {
   tags?: string[];
 }
 
-export const SafariModal = ({ isOpen, onClose, title, domain, githubUrl, webUrl, tags = [] }: SafariModalProps) => {
+export const SafariModal = ({ isOpen, onClose, title: _title, domain, githubUrl, webUrl, tags = [] }: SafariModalProps) => {
   const [isRendered, setIsRendered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 

@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const ContactSection = () => {
   return (
     <section id="contacto" className="w-full pt-0 pb-24 mt-12 scroll-mt-24 flex flex-col justify-center">

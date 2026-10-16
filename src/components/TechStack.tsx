@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FaReact, FaAngular, FaHtml5, FaCss3Alt, FaJava, FaPhp, FaFigma, FaGitAlt, FaGithub } from 'react-icons/fa';
 import { SiTypescript, SiJavascript, SiTailwindcss, SiBootstrap, SiDotnet, SiMysql, SiPostgresql, SiFirebase, SiJson, SiPostman } from 'react-icons/si';
 import { VscVscode } from 'react-icons/vsc';
