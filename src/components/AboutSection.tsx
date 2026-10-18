@@ -208,56 +208,8 @@ export const AboutSection: React.FC = () => {
     });
   };
 
-  const experiences = [
-    {
-      company: "ANALISIS SURVEY UNIT SL",
-      role: "Desarrollador",
-      date: "OCT 2024 - ACTUAL",
-      location: "Madrid",
-      current: true,
-      description: [
-        "Desarrollo y mantenimiento de encuestas web interactivas como plataformas dinámicas y accesibles.",
-        "Gestión y tratamiento eficiente de datos mediante sistemas de bases de datos.",
-        "Participación en todo el ciclo de desarrollo, desde el análisis y diseño hasta la optimización."
-      ]
-    },
-    {
-      company: "IbernetCloud, Rentdays",
-      role: "Desarrollador Web (Prácticas)",
-      date: "MAR 2024 - JUN 2024",
-      location: "Madrid",
-      current: false,
-      description: [
-        "Diseño, maquetación y creación de un portal web inmobiliario (estilo Airbnb/Booking).",
-        "Gestión de reservas, control de usuarios y registro de inmuebles con diseño responsive.",
-      ]
-    },
-    {
-      company: "Teditel, Tecnoaccesos",
-      role: "Desarrollador Web (Prácticas)",
-      date: "MAR 2023 - JUN 2023",
-      location: "Vallecas, Madrid",
-      current: false,
-      description: [
-        "Desarrollo de sitio web responsive y accesible para generar visitas de empresas.",
-        "Creación de plataforma para gestión de visitas, registro de códigos QR y control de accesos."
-      ]
-    },
-    {
-      company: "Motiva Consulting, S.L.",
-      role: "Técnico Informático de Sistemas (Prácticas)",
-      date: "MAR 2021 - JUN 2021",
-      location: "San Blas, Madrid",
-      current: false,
-      description: [
-        "Instalación, mantenimiento y reparación de equipos y sistemas operativos.",
-        "Soporte técnico a usuarios resolviendo incidencias."
-      ]
-    }
-  ];
-
   return (
-    <section id="sobre-mi" className="w-full max-w-6xl mx-auto px-6 pt-0 pb-24 mt-20 flex flex-col gap-32 scroll-mt-24">
+    <section id="sobre-mi" className="w-full max-w-6xl mx-auto px-6 pt-0 pb-24 mt-20 flex flex-col items-center scroll-mt-24">
       
       {/* 1. SOBRE MÍ INTERACTIVO (Ventana macOS igual que Proyectos -> Compilar -> Sobre Mí Real) */}
       <div ref={aboutRef} className="w-full flex flex-col items-center scroll-mt-24">
@@ -362,15 +314,23 @@ export const AboutSection: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Botón CONNECT -> GitHub */}
-                <div className="w-full md:w-4/12 flex justify-center md:justify-end order-3 mt-6 md:mt-0">
+                {/* Botones CONNECT (LinkedIn) y PROJECTS (GitHub) */}
+                <div className="w-full md:w-4/12 flex flex-wrap items-center justify-center md:justify-end gap-3 order-3 mt-6 md:mt-0">
+                  <a
+                    href="https://www.linkedin.com/in/christian-moreno-d%C3%ADaz-109024292/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-[#0092ca] hover:bg-[#0092ca]/90 active:scale-95 text-white font-bold uppercase text-xs px-5 py-2.5 rounded-md shadow-md hover:shadow-lg transition-all tracking-wider"
+                  >
+                    Connect
+                  </a>
                   <a
                     href="https://github.com/Chriiis85"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-[#0092ca] hover:bg-[#0092ca]/90 active:scale-95 text-white font-bold uppercase text-xs px-6 py-2.5 rounded-md shadow-md hover:shadow-lg transition-all tracking-wider"
+                    className="bg-[#222831] dark:bg-[#393e46] hover:bg-[#393e46] dark:hover:bg-[#0092ca] active:scale-95 text-white font-bold uppercase text-xs px-5 py-2.5 rounded-md shadow-md hover:shadow-lg transition-all tracking-wider"
                   >
-                    Connect
+                    Projects
                   </a>
                 </div>
               </div>
@@ -431,55 +391,106 @@ export const AboutSection: React.FC = () => {
           </div>
         )}
       </div>
-
-      {/* 2. EXPERIENCIA (Línea de tiempo) */}
-      <div id="experiencia" className="w-full scroll-mt-24">
-        <div className="flex items-center gap-4 mb-12">
-          <Briefcase className="w-8 h-8 text-[#0092ca]" />
-          <h3 className="text-3xl font-bold text-[#222831] dark:text-[#eeeeee]">Experiencia Profesional</h3>
-        </div>
-
-        <div className="relative border-l-2 border-slate-200 dark:border-white/10 ml-4 md:ml-6 space-y-12 pb-4">
-          {experiences.map((exp, idx) => (
-            <div key={idx} className="relative pl-8 md:pl-12">
-              {/* Punto en la línea */}
-              <div className={`absolute -left-[9px] top-1.5 w-4 h-4 rounded-full border-4 ${
-                exp.current 
-                  ? 'bg-[#0092ca] border-[#0092ca]/30 dark:border-[#0092ca]/30 animate-pulse' 
-                  : 'bg-slate-300 dark:bg-[#393e46] border-white dark:border-[#222831]'
-              }`}></div>
-              
-              <div className="flex flex-col md:flex-row md:items-center justify-between mb-2 gap-2">
-                <h4 className="text-xl font-bold text-[#222831] dark:text-[#eeeeee]">{exp.role}</h4>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 dark:bg-white/5 text-[#393e46] dark:text-[#eeeeee] text-xs font-semibold rounded-full w-fit">
-                  <Calendar className="w-3.5 h-3.5" />
-                  {exp.date}
-                </span>
-              </div>
-              
-              <div className="flex items-center gap-4 mb-4">
-                <span className="text-lg font-medium text-[#0092ca]">
-                  {exp.company}
-                </span>
-                <span className="flex items-center gap-1 text-slate-500 text-sm">
-                  <MapPin className="w-4 h-4" />
-                  {exp.location}
-                </span>
-              </div>
-
-              <ul className="space-y-3">
-                {exp.description.map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 text-[#393e46] dark:text-slate-400 leading-relaxed">
-                    <CheckCircle2 className="w-5 h-5 text-[#0092ca] shrink-0 mt-0.5" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </div>
-
     </section>
   );
 };
+
+export const ExperienceSection: React.FC = () => {
+  const experiences = [
+    {
+      company: "ANALISIS SURVEY UNIT SL",
+      role: "Desarrollador",
+      date: "OCT 2024 - ACTUAL",
+      location: "Madrid",
+      current: true,
+      description: [
+        "Desarrollo y mantenimiento de encuestas web interactivas como plataformas dinámicas y accesibles.",
+        "Gestión y tratamiento eficiente de datos mediante sistemas de bases de datos.",
+        "Participación en todo el ciclo de desarrollo, desde el análisis y diseño hasta la optimización."
+      ]
+    },
+    {
+      company: "IbernetCloud, Rentdays",
+      role: "Desarrollador Web (Prácticas)",
+      date: "MAR 2024 - JUN 2024",
+      location: "Madrid",
+      current: false,
+      description: [
+        "Diseño, maquetación y creación de un portal web inmobiliario (estilo Airbnb/Booking).",
+        "Gestión de reservas, control de usuarios y registro de inmuebles con diseño responsive.",
+      ]
+    },
+    {
+      company: "Teditel, Tecnoaccesos",
+      role: "Desarrollador Web (Prácticas)",
+      date: "MAR 2023 - JUN 2023",
+      location: "Vallecas, Madrid",
+      current: false,
+      description: [
+        "Desarrollo de sitio web responsive y accesible para generar visitas de empresas.",
+        "Creación de plataforma para gestión de visitas, registro de códigos QR y control de accesos."
+      ]
+    },
+    {
+      company: "Motiva Consulting, S.L.",
+      role: "Técnico Informático de Sistemas (Prácticas)",
+      date: "MAR 2021 - JUN 2021",
+      location: "San Blas, Madrid",
+      current: false,
+      description: [
+        "Instalación, mantenimiento y reparación de equipos y sistemas operativos.",
+        "Soporte técnico a usuarios resolviendo incidencias."
+      ]
+    }
+  ];
+
+  return (
+    <section id="experiencia" className="w-full max-w-6xl mx-auto px-6 pt-0 pb-24 mt-12 scroll-mt-24">
+      <div className="flex items-center gap-4 mb-12">
+        <Briefcase className="w-8 h-8 text-[#0092ca]" />
+        <h3 className="text-3xl font-bold text-[#222831] dark:text-[#eeeeee]">Experiencia Profesional</h3>
+      </div>
+
+      <div className="relative border-l-2 border-slate-200 dark:border-white/10 ml-4 md:ml-6 space-y-12 pb-4">
+        {experiences.map((exp, idx) => (
+          <div key={idx} className="relative pl-8 md:pl-12">
+            {/* Punto en la línea */}
+            <div className={`absolute -left-[9px] top-1.5 w-4 h-4 rounded-full border-4 ${
+              exp.current 
+                ? 'bg-[#0092ca] border-[#0092ca]/30 dark:border-[#0092ca]/30 animate-pulse' 
+                : 'bg-slate-300 dark:bg-[#393e46] border-white dark:border-[#222831]'
+            }`}></div>
+            
+            <div className="flex flex-col md:flex-row md:items-center justify-between mb-2 gap-2">
+              <h4 className="text-xl font-bold text-[#222831] dark:text-[#eeeeee]">{exp.role}</h4>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 dark:bg-white/5 text-[#393e46] dark:text-[#eeeeee] text-xs font-semibold rounded-full w-fit">
+                <Calendar className="w-3.5 h-3.5" />
+                {exp.date}
+              </span>
+            </div>
+            
+            <div className="flex items-center gap-4 mb-4">
+              <span className="text-lg font-medium text-[#0092ca]">
+                {exp.company}
+              </span>
+              <span className="flex items-center gap-1 text-slate-500 text-sm">
+                <MapPin className="w-4 h-4" />
+                {exp.location}
+              </span>
+            </div>
+
+            <ul className="space-y-3">
+              {exp.description.map((item, i) => (
+                <li key={i} className="flex items-start gap-3 text-[#393e46] dark:text-slate-400 leading-relaxed">
+                  <CheckCircle2 className="w-5 h-5 text-[#0092ca] shrink-0 mt-0.5" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+};
+

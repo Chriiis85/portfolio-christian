@@ -12,8 +12,8 @@ export const Navbar = () => {
 
   const dockItems = [
     { name: 'Sobre mí', href: '#sobre-mi', icon: <User size={20} /> },
-    { name: 'Experiencia', href: '#experiencia', icon: <Briefcase size={20} /> },
     { name: 'Proyectos', href: '#proyectos', icon: <LayoutGrid size={20} /> },
+    { name: 'Experiencia', href: '#experiencia', icon: <Briefcase size={20} /> },
     { name: 'Stack', href: '#stack', icon: <Code size={20} /> },
     { name: 'Estudios', href: '#estudios', icon: <GraduationCap size={20} /> },
     { name: 'Contacto', href: '#contacto', icon: <Mail size={20} /> },

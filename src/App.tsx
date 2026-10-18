@@ -3,7 +3,7 @@ import { Navbar } from './components/Navbar'
 import { ProjectCard } from './components/ProjectCard'
 import { TechStack } from './components/TechStack'
 import { HeroBackground } from './components/HeroBackground'
-import { AboutSection } from './components/AboutSection'
+import { AboutSection, ExperienceSection } from './components/AboutSection'
 import { EducationSection } from './components/EducationSection'
 import { ContactSection } from './components/ContactSection'
 
@@ -32,19 +32,17 @@ function App() {
               <a href="#proyectos" className="w-full sm:w-auto px-8 py-3.5 bg-[#222831] text-[#eeeeee] dark:bg-[#0092ca] dark:text-[#eeeeee] font-bold rounded-full hover:scale-105 transition-transform shadow-xl shadow-slate-900/10 dark:shadow-white/10">
                 Ver Mis Proyectos
               </a>
-              <a href="#sobre-mi" className="w-full sm:w-auto px-8 py-3.5 bg-white text-[#222831] border border-[#393e46]/20 dark:bg-[#393e46] dark:text-[#eeeeee] dark:border-[#393e46] font-bold rounded-full hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+              <a href="#experiencia" className="w-full sm:w-auto px-8 py-3.5 bg-white text-[#222831] border border-[#393e46]/20 dark:bg-[#393e46] dark:text-[#eeeeee] dark:border-[#393e46] font-bold rounded-full hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
                 Ver Experiencia
               </a>
             </div>
           </div>
         </section>
 
-
-
-        {/* SECCIÓN: Sobre mí, Experiencia y Educación */}
+        {/* SECCIÓN: Sobre Mí */}
         <AboutSection />
 
-        {/* SECCIÓN: Proyectos */}
+        {/* SECCIÓN: Mis Proyectos */}
         <section id="proyectos" className="pt-0 pb-24 mt-12 px-4 scroll-mt-24 flex flex-col items-center justify-center bg-[#eeeeee] dark:bg-[#222831] transition-colors duration-300">
           <div className="w-full max-w-5xl text-center mb-12">
             <h2 className="text-4xl font-bold text-[#222831] dark:text-[#eeeeee] mb-4">Mis Proyectos</h2>
@@ -108,7 +106,10 @@ function App() {
           </div>
         </section>
 
-        {/* SECCIÓN: Stack */}
+        {/* SECCIÓN: Experiencia Profesional */}
+        <ExperienceSection />
+
+        {/* SECCIÓN: Mi Stack */}
         <TechStack />
 
         {/* SECCIÓN: Estudios y Certificados */}
