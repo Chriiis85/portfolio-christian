@@ -61,6 +61,15 @@ function App() {
               tags={["TypeScript", "React", "Next.js", "Tailwind CSS"]}
               githubUrl="https://github.com/Chriiis85/motoring-community"
               webUrl="https://motoring-community-v1.vercel.app"
+              coverImage="/projects/motoring-community/Cover_MotoringCommunity.png"
+              images={[
+                "/projects/motoring-community/1_MotoringCommunity.png",
+                "/projects/motoring-community/2_MotoringCommunity.png",
+                "/projects/motoring-community/3_MotoringCommunity.png",
+                "/projects/motoring-community/4_MotoringCommunity.png",
+                "/projects/motoring-community/5_MotoringCommunity.png",
+                "/projects/motoring-community/6_MotoringCommunity.png",
+              ]}
             />
 
             {/* Proyecto 2: RCManager (Frontend) */}
@@ -71,6 +80,16 @@ function App() {
               tags={["JavaScript", "HTML", "CSS", "Frontend"]}
               githubUrl="https://github.com/Chriiis85/RCManager"
               webUrl="https://rcmanager-nine.vercel.app/"
+              inProgress
+              coverImage="/projects/rcmanager/Cover_RCManager.png"
+              images={[
+                "/projects/rcmanager/1_RCManager.png",
+                "/projects/rcmanager/2_RCManager.png",
+                "/projects/rcmanager/3_RCManager.png",
+                "/projects/rcmanager/4_RCManager.png",
+                "/projects/rcmanager/5_RCManager.png",
+                "/projects/rcmanager/6_RCManager.png",
+              ]}
             />
 
             {/* Proyecto Nuevo: RCManagerAPI (Backend) */}
@@ -81,6 +100,14 @@ function App() {
               tags={["Node.js", "Express", "API REST", "Backend"]}
               githubUrl="https://github.com/Chriiis85/RCManagerAPI"
               webUrl="https://rc-manager-api.vercel.app/"
+              inProgress
+              coverImage="/projects/rcmanager-api/Cover_RCApi.png"
+              images={[
+                "/projects/rcmanager-api/1_RCApi.png",
+                "/projects/rcmanager-api/2_RCApi.png",
+                "/projects/rcmanager-api/3_RCApi.png",
+                "/projects/rcmanager-api/4_RCApi.png",
+              ]}
             />
             
             {/* Proyecto 3: Manager */}
@@ -91,6 +118,7 @@ function App() {
               tags={["TypeScript", "React", "Tailwind CSS", "UI/UX"]}
               githubUrl="https://github.com/Chriiis85/Manager"
               webUrl="https://manager-coral-seven.vercel.app"
+              inProgress
             />
 
             {/* Proyecto 4: TFG-DAW-2024 */}
@@ -101,6 +129,15 @@ function App() {
               tags={["Full-Stack", "PHP", "JavaScript", "CSS", "MySQL"]}
               githubUrl="https://github.com/Chriiis85/TFG-DAW-2024"
               webUrl="#"
+              coverImage="/projects/tfg-daw-2024/Cover_TFG.png"
+              images={[
+                "/projects/tfg-daw-2024/1_TFG.png",
+                "/projects/tfg-daw-2024/2_TFG.png",
+                "/projects/tfg-daw-2024/3_TFG.png",
+                "/projects/tfg-daw-2024/4_TFG.png",
+                "/projects/tfg-daw-2024/5_TFG.png",
+                "/projects/tfg-daw-2024/6_TFG.png",
+              ]}
             />
 
           </div>

@@ -8,16 +8,43 @@ interface ProjectCardProps {
   tags: string[];
   githubUrl?: string;
   webUrl?: string;
+  coverImage?: string;
+  images?: string[];
+  inProgress?: boolean;
 }
 
-export const ProjectCard = ({ title, domain, description, tags, githubUrl, webUrl }: ProjectCardProps) => {
+let activeOpenProjectTitle: string | null = null;
+
+export const ProjectCard = ({ title, domain, description, tags, githubUrl, webUrl, coverImage, images, inProgress }: ProjectCardProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
+  const previewSrc = coverImage || (images && images.length > 0 ? images[0] : undefined);
 
-  // Auto-scroll para colocar el inicio de la tarjeta justo debajo del header cuando se abre
+  // Cerrar esta tarjeta automáticamente si se abre otro proyecto
   useEffect(() => {
-    if (isOpen && cardRef.current) {
+    const handleOtherCardOpen = (e: Event) => {
+      const customEvent = e as CustomEvent<string>;
+      if (customEvent.detail !== title) {
+        setIsOpen(false);
+      }
+    };
+
+    window.addEventListener('project-card-open', handleOtherCardOpen);
+    return () => window.removeEventListener('project-card-open', handleOtherCardOpen);
+  }, [title]);
+
+  const handleToggleCard = () => {
+    const nextIsOpen = !isOpen;
+    const hadAnotherOpen = activeOpenProjectTitle !== null && activeOpenProjectTitle !== title;
+
+    if (nextIsOpen) {
+      activeOpenProjectTitle = title;
+      window.dispatchEvent(new CustomEvent('project-card-open', { detail: title }));
+      setIsOpen(true);
+
+      // Si había otra tarjeta abierta cerrándose, esperamos a que termine su transición para calcular la posición exacta
+      const delay = hadAnotherOpen ? 520 : 150;
       setTimeout(() => {
         if (!cardRef.current) return;
         const headerOffset = 88;
@@ -26,15 +53,20 @@ export const ProjectCard = ({ title, domain, description, tags, githubUrl, webUr
           top: targetTop,
           behavior: 'smooth',
         });
-      }, 150);
+      }, delay);
+    } else {
+      if (activeOpenProjectTitle === title) {
+        activeOpenProjectTitle = null;
+      }
+      setIsOpen(false);
     }
-  }, [isOpen]);
+  };
 
   return (
     <>
       <div
         ref={cardRef}
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={handleToggleCard}
         /* CONTENEDOR PRINCIPAL: Añadimos soporte claro/oscuro y animación de altura */
         className={`relative w-full max-w-4xl mx-auto flex flex-col border border-slate-200 dark:border-slate-700/60 rounded-xl overflow-hidden bg-white dark:bg-[#16171d] shadow-xl dark:shadow-2xl cursor-pointer hover:shadow-purple-500/10 hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-500 ease-in-out scroll-mt-24`}
       >
@@ -78,22 +110,51 @@ export const ProjectCard = ({ title, domain, description, tags, githubUrl, webUr
           }`}>
             <div className="flex flex-col md:flex-row gap-6 sm:gap-8">
               
-              {/* Contenedor de la Imagen - Ahora es clickeable y abre la modal */}
+              {/* Contenedor de la Imagen - Marco con contraste y sombra profunda para resaltar capturas con fondo blanco */}
               <div 
                 onClick={(e) => {
                   e.stopPropagation(); // Evitamos que cierre la tarjeta
                   setIsModalOpen(true);
                 }}
-                className="flex-1 bg-slate-100 dark:bg-[#1e1f26] border border-slate-200 dark:border-slate-700/50 rounded-lg min-h-[200px] sm:min-h-[300px] flex items-center justify-center transition-all duration-300 overflow-hidden relative group"
+                className="flex-1 self-stretch p-2.5 sm:p-3.5 bg-gradient-to-br from-slate-200/90 via-slate-100 to-slate-200/80 dark:from-[#1e1f26] dark:via-[#252832] dark:to-[#181920] border border-slate-300/80 dark:border-slate-700/70 rounded-xl min-h-[220px] sm:min-h-[300px] flex items-center justify-center shadow-inner hover:border-[#0092ca]/50 dark:hover:border-[#0092ca]/50 transition-all duration-300 relative group"
                 title="Ampliar vista"
               >
-                {/* Indicador de click al hacer hover */}
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 dark:group-hover:bg-white/5 transition-colors z-10 flex items-center justify-center">
-                  <span className="opacity-0 group-hover:opacity-100 bg-black/60 text-white text-sm px-4 py-2 rounded-full font-medium transition-opacity transform scale-95 group-hover:scale-100">
-                    Ampliar vista
-                  </span>
+                <div className="relative w-full h-full min-h-[200px] sm:min-h-[272px] rounded-lg overflow-hidden bg-white dark:bg-[#121318] shadow-[0_12px_30px_-6px_rgba(15,23,42,0.28)] dark:shadow-[0_15px_35px_-6px_rgba(0,0,0,0.75)] ring-1 ring-slate-900/12 dark:ring-white/15 flex items-center justify-center">
+                  {/* Indicador central "In Progress" estilo en construcción con tono amarillo */}
+                  {inProgress && (
+                    <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center transition-all duration-300 group-hover:opacity-0 group-hover:scale-95">
+                      <span className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold tracking-wide bg-amber-50/95 dark:bg-[#1c1d24]/95 text-amber-700 dark:text-amber-300 border border-amber-400/80 dark:border-amber-400/50 shadow-[0_10px_30px_rgba(245,158,11,0.3)] backdrop-blur-md select-none">
+                        <span className="relative flex h-2.5 w-2.5">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
+                          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-500 dark:bg-amber-400" />
+                        </span>
+                        {/* Icono sutil de en construcción / herramientas */}
+                        <svg className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z" />
+                        </svg>
+                        <span>In Progress</span>
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Indicador de click al hacer hover */}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-slate-900/25 dark:group-hover:bg-black/35 transition-colors z-10 flex items-center justify-center">
+                    <span className="opacity-0 group-hover:opacity-100 bg-black/75 text-white text-sm px-4 py-2 rounded-full font-medium transition-all transform scale-95 group-hover:scale-100 shadow-xl backdrop-blur-sm border border-white/15">
+                      Ampliar vista
+                    </span>
+                  </div>
+                  {previewSrc ? (
+                    <img
+                      src={previewSrc}
+                      alt={`Vista previa de ${title}`}
+                      className="absolute inset-0 w-full h-full object-cover object-top"
+                    />
+                  ) : !inProgress ? (
+                    <span className="text-slate-400 dark:text-slate-500 font-medium z-0">No preview image</span>
+                  ) : null}
+                  {/* Borde interior sutil para definir capturas 100% blancas */}
+                  <div className="pointer-events-none absolute inset-0 rounded-lg ring-1 ring-inset ring-black/10 dark:ring-white/10 z-10" />
                 </div>
-                <span className="text-slate-400 dark:text-slate-500 font-medium z-0">No preview image</span>
               </div>
 
               {/* Detalles y Botones */}
@@ -157,6 +218,7 @@ export const ProjectCard = ({ title, domain, description, tags, githubUrl, webUr
         githubUrl={githubUrl}
         webUrl={webUrl}
         tags={tags}
+        images={images}
       />
     </>
   );
