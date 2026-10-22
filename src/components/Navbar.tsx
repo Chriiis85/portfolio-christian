@@ -44,7 +44,7 @@ export const Navbar = () => {
   return (
     <>
       {/* BARRA SUPERIOR */}
-      <nav className="fixed top-4 left-1/2 -translate-x-1/2 w-[94%] sm:w-[96%] max-w-5xl h-16 bg-white/85 dark:bg-[#393e46]/85 backdrop-blur-md border border-slate-200 dark:border-[#393e46] shadow-2xl rounded-2xl flex items-center justify-between px-4 sm:px-6 z-50 transition-colors duration-300">
+      <nav className="fixed top-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-4xl h-16 bg-white/85 dark:bg-[#393e46]/85 backdrop-blur-md border border-slate-200 dark:border-[#393e46] shadow-2xl rounded-2xl flex items-center justify-between px-4 sm:px-6 z-50 transition-colors duration-300">
 
         {/* IZQUIERDA: Logo y Tema */}
         <div className="flex-1 flex items-center gap-2 sm:gap-4 min-w-0">

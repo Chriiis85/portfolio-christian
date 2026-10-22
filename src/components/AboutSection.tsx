@@ -209,10 +209,10 @@ export const AboutSection: React.FC = () => {
   };
 
   return (
-    <section id="sobre-mi" className="w-full max-w-6xl mx-auto px-6 pt-0 pb-24 mt-20 flex flex-col items-center scroll-mt-24">
+    <section id="sobre-mi" className="w-full pt-0 pb-24 mt-20 px-4 flex flex-col items-center scroll-mt-24">
       
       {/* 1. SOBRE MÍ INTERACTIVO (Ventana macOS igual que Proyectos -> Compilar -> Sobre Mí Real) */}
-      <div ref={aboutRef} className="w-full flex flex-col items-center scroll-mt-24">
+      <div ref={aboutRef} className="w-full max-w-4xl mx-auto flex flex-col items-center scroll-mt-24">
         <h2 className="text-4xl font-bold text-[#222831] dark:text-[#eeeeee] mb-8 text-center">
           Sobre <span className="text-[#0092ca]">Mí</span>
         </h2>
@@ -249,10 +249,10 @@ export const AboutSection: React.FC = () => {
                   <button
                     onClick={handleCompile}
                     disabled={!isTypingComplete || isCompiling}
-                    className={`px-3 sm:px-3.5 py-1 rounded-[7px] font-sans text-xs font-medium tracking-[-0.01em] select-none transition-all duration-200 bg-gradient-to-b from-white to-slate-100 text-slate-700 border border-slate-300/90 shadow-[0_1px_2px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] ${
+                    className={`px-3 sm:px-3.5 py-1 rounded-[7px] font-sans text-xs font-medium tracking-[-0.01em] select-none transition-all duration-200 bg-gradient-to-b from-white to-slate-100 dark:from-[#252832] dark:to-[#1b1c23] text-slate-700 dark:text-slate-200 border border-slate-300/90 dark:border-slate-700/80 shadow-[0_1px_2px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-none ${
                       !isTypingComplete
                         ? 'opacity-45 cursor-not-allowed'
-                        : 'opacity-100 cursor-pointer hover:brightness-95 active:scale-[0.97]'
+                        : 'opacity-100 cursor-pointer hover:brightness-95 dark:hover:brightness-110 active:scale-[0.97]'
                     } ${shouldBounce && !isCompiling ? 'animate-bounce' : ''}`}
                   >
                     {isCompiling ? 'Compilando…' : 'Compilar'}
@@ -274,8 +274,8 @@ export const AboutSection: React.FC = () => {
             </div>
           </div>
         ) : (
-          /* SOBRE MÍ REAL (Tarjeta de perfil estilo referencia) */
-          <div className="w-full max-w-5xl mx-auto pt-20 mt-2 transition-all duration-500 animate-fadeIn">
+          /* SOBRE MÍ REAL (Tarjeta de perfil estilo referencia con el mismo ancho max-w-4xl que Mis Proyectos) */
+          <div className="w-full max-w-4xl mx-auto pt-20 mt-2 transition-all duration-500 animate-fadeIn">
             <div className="relative flex flex-col min-w-0 break-words bg-white dark:bg-[#16171d] w-full shadow-xl dark:shadow-2xl rounded-xl border border-slate-200 dark:border-slate-700/60 px-4 sm:px-12 pb-10 sm:pb-12 pt-6">
               
               {/* Fila superior: Estadísticas (Izquierda) + Foto sobresaliendo (Centro) + Botón CONNECT a GitHub (Derecha) */}
@@ -445,50 +445,52 @@ export const ExperienceSection: React.FC = () => {
   ];
 
   return (
-    <section id="experiencia" className="w-full max-w-6xl mx-auto px-6 pt-0 pb-24 mt-12 scroll-mt-24">
-      <div className="flex items-center gap-4 mb-12">
-        <Briefcase className="w-8 h-8 text-[#0092ca]" />
-        <h3 className="text-3xl font-bold text-[#222831] dark:text-[#eeeeee]">Experiencia Profesional</h3>
-      </div>
+    <section id="experiencia" className="w-full pt-0 pb-24 mt-12 px-4 flex flex-col items-center scroll-mt-24">
+      <div className="w-full max-w-4xl mx-auto">
+        <div className="flex items-center gap-4 mb-12">
+          <Briefcase className="w-8 h-8 text-[#0092ca]" />
+          <h3 className="text-3xl font-bold text-[#222831] dark:text-[#eeeeee]">Experiencia Profesional</h3>
+        </div>
 
-      <div className="relative border-l-2 border-slate-200 dark:border-white/10 ml-4 md:ml-6 space-y-12 pb-4">
-        {experiences.map((exp, idx) => (
-          <div key={idx} className="relative pl-8 md:pl-12">
-            {/* Punto en la línea */}
-            <div className={`absolute -left-[9px] top-1.5 w-4 h-4 rounded-full border-4 ${
-              exp.current 
-                ? 'bg-[#0092ca] border-[#0092ca]/30 dark:border-[#0092ca]/30 animate-pulse' 
-                : 'bg-slate-300 dark:bg-[#393e46] border-white dark:border-[#222831]'
-            }`}></div>
-            
-            <div className="flex flex-col md:flex-row md:items-center justify-between mb-2 gap-2">
-              <h4 className="text-xl font-bold text-[#222831] dark:text-[#eeeeee]">{exp.role}</h4>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 dark:bg-white/5 text-[#393e46] dark:text-[#eeeeee] text-xs font-semibold rounded-full w-fit">
-                <Calendar className="w-3.5 h-3.5" />
-                {exp.date}
-              </span>
-            </div>
-            
-            <div className="flex items-center gap-4 mb-4">
-              <span className="text-lg font-medium text-[#0092ca]">
-                {exp.company}
-              </span>
-              <span className="flex items-center gap-1 text-slate-500 text-sm">
-                <MapPin className="w-4 h-4" />
-                {exp.location}
-              </span>
-            </div>
+        <div className="relative border-l-2 border-slate-200 dark:border-white/10 ml-4 md:ml-6 space-y-12 pb-4">
+          {experiences.map((exp, idx) => (
+            <div key={idx} className="relative pl-8 md:pl-12">
+              {/* Punto en la línea */}
+              <div className={`absolute -left-[9px] top-1.5 w-4 h-4 rounded-full border-4 ${
+                exp.current 
+                  ? 'bg-[#0092ca] border-[#0092ca]/30 dark:border-[#0092ca]/30 animate-pulse' 
+                  : 'bg-slate-300 dark:bg-[#393e46] border-white dark:border-[#222831]'
+              }`}></div>
+              
+              <div className="flex flex-col md:flex-row md:items-center justify-between mb-2 gap-2">
+                <h4 className="text-xl font-bold text-[#222831] dark:text-[#eeeeee]">{exp.role}</h4>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 dark:bg-white/5 text-[#393e46] dark:text-[#eeeeee] text-xs font-semibold rounded-full w-fit">
+                  <Calendar className="w-3.5 h-3.5" />
+                  {exp.date}
+                </span>
+              </div>
+              
+              <div className="flex items-center gap-4 mb-4">
+                <span className="text-lg font-medium text-[#0092ca]">
+                  {exp.company}
+                </span>
+                <span className="flex items-center gap-1 text-slate-500 text-sm">
+                  <MapPin className="w-4 h-4" />
+                  {exp.location}
+                </span>
+              </div>
 
-            <ul className="space-y-3">
-              {exp.description.map((item, i) => (
-                <li key={i} className="flex items-start gap-3 text-[#393e46] dark:text-slate-400 leading-relaxed">
-                  <CheckCircle2 className="w-5 h-5 text-[#0092ca] shrink-0 mt-0.5" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+              <ul className="space-y-3">
+                {exp.description.map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 text-[#393e46] dark:text-slate-400 leading-relaxed">
+                    <CheckCircle2 className="w-5 h-5 text-[#0092ca] shrink-0 mt-0.5" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

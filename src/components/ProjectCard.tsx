@@ -5,6 +5,7 @@ interface ProjectCardProps {
   title: string;
   domain: string;
   description: string;
+  aboutApp?: string;
   tags: string[];
   githubUrl?: string;
   webUrl?: string;
@@ -15,7 +16,7 @@ interface ProjectCardProps {
 
 let activeOpenProjectTitle: string | null = null;
 
-export const ProjectCard = ({ title, domain, description, tags, githubUrl, webUrl, coverImage, images, inProgress }: ProjectCardProps) => {
+export const ProjectCard = ({ title, domain, description, aboutApp, tags, githubUrl, webUrl, coverImage, images, inProgress }: ProjectCardProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -215,6 +216,8 @@ export const ProjectCard = ({ title, domain, description, tags, githubUrl, webUr
         onClose={() => setIsModalOpen(false)} 
         title={title} 
         domain={domain} 
+        description={description}
+        aboutApp={aboutApp}
         githubUrl={githubUrl}
         webUrl={webUrl}
         tags={tags}

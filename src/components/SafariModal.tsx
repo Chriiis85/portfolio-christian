@@ -84,6 +84,8 @@ interface SafariModalProps {
   onClose: () => void;
   title: string;
   domain: string;
+  description?: string;
+  aboutApp?: string;
   githubUrl?: string;
   webUrl?: string;
   tags?: string[];
@@ -124,7 +126,7 @@ const getFileNameFromUrl = (url: string, fallbackIndex: number, projectTitle: st
   return `${fallbackIndex + 1}_${projectTitle.replace(/\s+/g, '')}.png`;
 };
 
-export const SafariModal = ({ isOpen, onClose, title, domain, githubUrl, webUrl, tags = [], images }: SafariModalProps) => {
+export const SafariModal = ({ isOpen, onClose, title, domain, description, aboutApp, githubUrl, webUrl, tags = [], images }: SafariModalProps) => {
   const [isRendered, setIsRendered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
@@ -337,6 +339,20 @@ export const SafariModal = ({ isOpen, onClose, title, domain, githubUrl, webUrl,
         {/* Cuerpo / Contenido de la web */}
         <div className="relative w-full flex-1 bg-[#f4f5f7] dark:bg-[#0d0e12] p-4 sm:p-10 overflow-y-auto max-h-[80vh] min-h-[320px] sm:min-h-[500px]">
           
+          {/* DESCRIPCIÓN PERSONAL DEL PROYECTO ENCIMA DEL STACK */}
+          {(aboutApp || description) && (
+            <div className="w-full max-w-5xl mx-auto mb-10 sm:mb-12 mt-1 sm:mt-2">
+              <h3 className="text-xl sm:text-2xl font-extrabold text-[#222831] dark:text-[#eeeeee] mb-4 text-center tracking-tight">
+                Sobre {title}
+              </h3>
+              <div className="bg-white dark:bg-[#111] border border-slate-200 dark:border-white/10 rounded-xl p-5 sm:p-7 shadow-xs">
+                <p className="text-sm sm:text-base text-[#393e46] dark:text-[#eeeeee]/85 leading-relaxed text-center max-w-4xl mx-auto">
+                  {aboutApp || description}
+                </p>
+              </div>
+            </div>
+          )}
+
           {/* STACK ESPECÍFICO DEL PROYECTO */}
           {tags && tags.length > 0 && (
             <div className="w-full max-w-5xl mx-auto mb-12 sm:mb-16 mt-2 sm:mt-4">

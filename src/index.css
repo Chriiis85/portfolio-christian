@@ -27,6 +27,10 @@ body {
   overflow-x: hidden;
 }
 
+input, textarea, button, select {
+  font-family: inherit;
+}
+
 h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.03em;
 }
