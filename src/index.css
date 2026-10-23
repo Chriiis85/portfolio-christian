@@ -17,10 +17,10 @@ html {
   overflow-x: hidden;
 }
 
-/* Colores de fondo y tipografía estilo Apple por defecto (Modo Claro) */
+/* Colores de fondo y tipografía Pure Zinc & Ice (Modo Claro) */
 body {
-  background-color: #eeeeee;
-  color: #222831;
+  background-color: #fafafa;
+  color: #18181b;
   font-family: var(--font-sans);
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   letter-spacing: -0.015em;
@@ -40,10 +40,30 @@ code, pre {
   font-feature-settings: "liga" 0;
 }
 
-/* Colores de fondo en Modo Oscuro */
+/* Colores de fondo en Modo Oscuro (Pure Zinc) */
 html.dark body {
-  background-color: #222831;
-  color: #eeeeee;
+  background-color: #09090b;
+  color: #f4f4f5;
+}
+
+/* Selección de texto en tono Ice quirúrgico */
+::selection {
+  background-color: rgba(56, 189, 248, 0.2);
+  color: #0284c7;
+}
+html.dark ::selection {
+  background-color: rgba(56, 189, 248, 0.22);
+  color: #e0f2fe;
+}
+
+/* Textura arquitectónica sutil estilo Vercel / Linear */
+.bg-zinc-blueprint {
+  background-image: radial-gradient(rgba(24, 24, 27, 0.07) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+html.dark .bg-zinc-blueprint {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
 /* =========================================
@@ -51,10 +71,10 @@ html.dark body {
    ========================================= */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(0, 0, 0, 0.2) #eeeeee;
+  scrollbar-color: rgba(0, 0, 0, 0.2) #fafafa;
 }
 html.dark * {
-  scrollbar-color: rgba(255, 255, 255, 0.15) #222831;
+  scrollbar-color: rgba(255, 255, 255, 0.15) #09090b;
 }
 
 ::-webkit-scrollbar {
@@ -62,10 +82,10 @@ html.dark * {
 }
 
 ::-webkit-scrollbar-track {
-  background: #eeeeee; 
+  background: #fafafa; 
 }
 html.dark ::-webkit-scrollbar-track {
-  background: #222831; 
+  background: #09090b; 
 }
 
 ::-webkit-scrollbar-thumb {

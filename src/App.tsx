@@ -9,30 +9,30 @@ import { ContactSection } from './components/ContactSection'
 
 function App() {
   return (
-    <div className="min-h-screen bg-[#eeeeee] dark:bg-[#222831] text-[#222831] dark:text-[#eeeeee] transition-colors duration-300">
+    <div className="min-h-screen bg-[#fafafa] dark:bg-[#09090b] text-zinc-900 dark:text-zinc-100 transition-colors duration-300">
       {/* Nuestro nuevo componente de Navegación */}
       <Navbar />
 
       <main>
         {/* SECCIÓN: Inicio */}
-        <section id="inicio" className="relative overflow-hidden min-h-screen flex items-center justify-center pt-16 px-4 bg-[#eeeeee] dark:bg-[#222831] transition-colors duration-300">
+        <section id="inicio" className="relative overflow-hidden min-h-screen flex items-center justify-center pt-16 px-4 bg-[#fafafa] dark:bg-[#09090b] transition-colors duration-300">
           <HeroBackground />
           <div className="relative z-10 w-full max-w-4xl mx-auto text-center">
-            <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold text-[#222831] dark:text-[#eeeeee] mb-3 sm:mb-4 leading-tight">
+            <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold tracking-tight text-zinc-900 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-b dark:from-white dark:via-zinc-100 dark:to-zinc-400 mb-3 sm:mb-4 leading-tight">
               ¡Hola, soy Christian!
             </h1>
-            <p className="text-base sm:text-xl md:text-2xl text-[#0092ca] font-medium mb-4 sm:mb-6">
-              Desarrollador de Aplicaciones Web | Desarrollador Full Stack
+            <p className="text-base sm:text-xl md:text-2xl text-zinc-700 dark:text-zinc-300 font-medium mb-4 sm:mb-6 tracking-tight">
+              Desarrollador de Aplicaciones Web <span className="text-sky-500 dark:text-sky-400 font-mono mx-1">/</span> Desarrollador Full Stack
             </p>
-            <p className="text-sm sm:text-lg text-[#393e46] dark:text-[#eeeeee]/80 max-w-2xl mx-auto">
+            <p className="text-sm sm:text-lg text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed">
               Bienvenido a mi portfolio. Aquí podrás encontrar mis últimos proyectos, novedades sobre mí y un punto mas focalizado de mi vida como desarrollador.</p>
 
             {/* Botones de Acción Rápida (CTA) */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mt-6 sm:mt-8">
-              <a href="#proyectos" className="w-full sm:w-auto px-8 py-3 sm:py-3.5 bg-[#222831] text-[#eeeeee] dark:bg-[#0092ca] dark:text-[#eeeeee] font-bold rounded-full hover:scale-105 active:scale-95 transition-transform shadow-xl shadow-slate-900/10 dark:shadow-white/10 text-sm sm:text-base">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-3.5 mt-7 sm:mt-8">
+              <a href="#proyectos" className="w-full sm:w-auto px-7 py-3 bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-950 font-semibold rounded-lg hover:bg-zinc-800 dark:hover:bg-white active:scale-[0.98] transition-all shadow-lg shadow-zinc-950/10 dark:shadow-[0_0_25px_rgba(255,255,255,0.08)] text-sm sm:text-[15px]">
                 Ver Mis Proyectos
               </a>
-              <a href="#experiencia" className="w-full sm:w-auto px-8 py-3 sm:py-3.5 bg-white text-[#222831] border border-[#393e46]/20 dark:bg-[#393e46] dark:text-[#eeeeee] dark:border-[#393e46] font-bold rounded-full hover:bg-slate-50 dark:hover:bg-white/5 active:scale-95 transition-all text-sm sm:text-base">
+              <a href="#experiencia" className="w-full sm:w-auto px-7 py-3 bg-white/90 text-zinc-800 border border-zinc-200/90 dark:bg-zinc-900/90 dark:text-zinc-200 dark:border-zinc-800 font-semibold rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800/80 active:scale-[0.98] transition-all shadow-xs backdrop-blur-sm text-sm sm:text-[15px]">
                 Ver Experiencia
               </a>
             </div>
@@ -43,10 +43,10 @@ function App() {
         <AboutSection />
 
         {/* SECCIÓN: Mis Proyectos */}
-        <section id="proyectos" className="w-full pt-0 pb-16 sm:pb-24 mt-8 sm:mt-12 px-4 scroll-mt-24 flex flex-col items-center justify-center bg-[#eeeeee] dark:bg-[#222831] transition-colors duration-300">
+        <section id="proyectos" className="w-full pt-0 pb-16 sm:pb-24 mt-8 sm:mt-12 px-4 scroll-mt-24 flex flex-col items-center justify-center bg-[#fafafa] dark:bg-[#09090b] transition-colors duration-300">
           <div className="w-full max-w-4xl mx-auto text-center mb-8 sm:mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#222831] dark:text-[#eeeeee] mb-3 sm:mb-4">Mis Proyectos</h2>
-            <p className="text-sm sm:text-base text-[#393e46] dark:text-[#eeeeee]/80 max-w-2xl mx-auto">
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 mb-3 sm:mb-4">Mis Proyectos</h2>
+            <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
               Haz clic en cualquiera de las "ventanas" para expandir y ver más detalles sobre mis proyectos.
             </p>
           </div>

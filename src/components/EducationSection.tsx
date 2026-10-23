@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { GraduationCap, Calendar, MapPin, CheckCircle2 } from 'lucide-react';
+import { GraduationCap, MapPin, CheckCircle2 } from 'lucide-react';
 
 export const EducationSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -27,7 +27,7 @@ export const EducationSection = () => {
     {
       institution: "I.E.S Puig Adam",
       degree: "Grado Superior en Desarrollo de Aplicaciones Web (DAW)",
-      date: "SEP 2023 - JUN 2024",
+      date: "Septiembre 2023 — Junio 2024",
       location: "Getafe, Madrid",
       highlight: true,
       description: [
@@ -38,7 +38,7 @@ export const EducationSection = () => {
     {
       institution: "La Inmaculada Padres Escolapios",
       degree: "Grado Superior en Desarrollo de Aplicaciones Multiplataforma (DAM)",
-      date: "SEP 2021 - JUN 2023",
+      date: "Septiembre 2021 — Junio 2023",
       location: "Getafe, Madrid",
       highlight: false,
       description: [
@@ -49,7 +49,7 @@ export const EducationSection = () => {
     {
       institution: "I.E.S Laguna de Joatzel",
       degree: "Grado Medio en Sistemas Microinformáticos y Redes (SMR)",
-      date: "SEP 2019 - JUN 2021",
+      date: "Septiembre 2019 — Junio 2021",
       location: "Getafe, Madrid",
       highlight: false,
       description: [
@@ -60,7 +60,7 @@ export const EducationSection = () => {
     {
       institution: "Certificaciones, Idiomas y Movilidad",
       degree: "Formación Complementaria y Competencias",
-      date: "ACTUALIDAD",
+      date: "Actualidad",
       location: "Madrid",
       highlight: false,
       description: [
@@ -79,18 +79,18 @@ export const EducationSection = () => {
     >
       <div className="w-full max-w-4xl mx-auto my-auto">
         <div
-          className={`flex items-center justify-center sm:justify-start gap-3 sm:gap-4 mb-8 sm:mb-12 transition-all duration-700 ease-out transform ${
+          className={`flex items-center justify-center sm:justify-start gap-3 sm:gap-3.5 mb-8 sm:mb-12 transition-all duration-700 ease-out transform ${
             isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
           }`}
         >
-          <GraduationCap className="w-7 h-7 sm:w-8 sm:h-8 text-[#0092ca] shrink-0" />
-          <h3 className="text-2xl sm:text-3xl font-bold text-[#222831] dark:text-[#eeeeee]">Estudios y Certificados</h3>
+          <GraduationCap className="w-6 h-6 sm:w-7 sm:h-7 text-sky-500 dark:text-sky-400 shrink-0" />
+          <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">Estudios y Certificados</h3>
         </div>
 
         <div className="relative ml-2 sm:ml-4 md:ml-6 space-y-10 sm:space-y-12 pb-4">
           {/* Línea vertical animada tipo persiana (baja de arriba a abajo) */}
           <div
-            className={`absolute left-0 top-0 bottom-0 w-0.5 bg-slate-200 dark:bg-white/10 origin-top transition-transform duration-1000 ease-out ${
+            className={`absolute left-0 top-0 bottom-0 w-px bg-zinc-200 dark:bg-zinc-800 origin-top transition-transform duration-1000 ease-out ${
               isVisible ? 'scale-y-100' : 'scale-y-0'
             }`}
           />
@@ -108,28 +108,27 @@ export const EducationSection = () => {
                 {/* Punto en la línea */}
                 <div
                   style={{ transitionDelay: `${itemDelay + 80}ms` }}
-                  className={`absolute -left-[7px] top-1.5 w-4 h-4 rounded-full border-4 transition-transform duration-500 ease-out ${
+                  className={`absolute -left-[7.5px] top-1.5 w-4 h-4 rounded-full border-4 transition-transform duration-500 ease-out ${
                     isVisible ? 'scale-100' : 'scale-0'
                   } ${
                     item.highlight
-                      ? 'bg-[#0092ca] border-[#0092ca]/30 dark:border-[#0092ca]/30'
-                      : 'bg-slate-300 dark:bg-[#393e46] border-white dark:border-[#222831]'
+                      ? 'bg-sky-500 dark:bg-sky-400 border-sky-500/25 dark:border-sky-400/25'
+                      : 'bg-zinc-300 dark:bg-zinc-700 border-[#fafafa] dark:border-[#09090b]'
                   }`}
                 />
 
-                <div className="flex flex-col md:flex-row md:items-center justify-between mb-2 gap-1.5 sm:gap-2">
-                  <h4 className="text-lg sm:text-xl font-bold text-[#222831] dark:text-[#eeeeee]">{item.degree}</h4>
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 dark:bg-white/5 text-[#393e46] dark:text-[#eeeeee] text-xs font-semibold rounded-full w-fit">
-                    <Calendar className="w-3.5 h-3.5" />
+                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between mb-1.5 gap-1">
+                  <h4 className="text-lg sm:text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">{item.degree}</h4>
+                  <span className="text-xs sm:text-sm font-medium text-zinc-500 dark:text-zinc-400 shrink-0">
                     {item.date}
                   </span>
                 </div>
 
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mb-3 sm:mb-4">
-                  <span className="text-base sm:text-lg font-medium text-[#0092ca]">
+                  <span className="text-base sm:text-lg font-medium text-zinc-700 dark:text-zinc-300">
                     {item.institution}
                   </span>
-                  <span className="flex items-center gap-1 text-slate-500 text-xs sm:text-sm">
+                  <span className="flex items-center gap-1 text-zinc-500 dark:text-zinc-500 text-xs sm:text-sm">
                     <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     {item.location}
                   </span>
@@ -140,11 +139,11 @@ export const EducationSection = () => {
                     <li
                       key={i}
                       style={{ transitionDelay: `${itemDelay + 140 + i * 70}ms` }}
-                      className={`flex items-start gap-2.5 sm:gap-3 text-sm sm:text-base text-[#393e46] dark:text-slate-400 leading-relaxed transition-all duration-500 ease-out transform ${
+                      className={`flex items-start gap-2.5 sm:gap-3 text-sm sm:text-base text-zinc-600 dark:text-zinc-400 leading-relaxed transition-all duration-500 ease-out transform ${
                         isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-5'
                       }`}
                     >
-                      <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-[#0092ca] shrink-0 mt-0.5" />
+                      <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-sky-500 dark:text-sky-400 shrink-0 mt-0.5" />
                       <span>{point}</span>
                     </li>
                   ))}

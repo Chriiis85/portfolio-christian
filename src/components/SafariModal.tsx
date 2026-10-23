@@ -259,9 +259,9 @@ export const SafariModal = ({ isOpen, onClose, title, domain, description, about
       <div
         key={item.src + index}
         onClick={() => setSelectedImageIndex(index)}
-        className="group p-1.5 sm:p-2 rounded-2xl bg-gradient-to-b from-slate-200/85 to-slate-200/55 dark:from-[#1c1e26] dark:to-[#14161d] border border-slate-300/90 dark:border-white/10 shadow-[0_12px_28px_-6px_rgba(15,23,42,0.16)] dark:shadow-[0_14px_34px_-6px_rgba(0,0,0,0.65)] hover:shadow-[0_18px_38px_-8px_rgba(0,146,202,0.28)] hover:border-[#0092ca]/60 dark:hover:border-[#0092ca]/60 md:hover:-translate-y-1 active:scale-[0.99] transition-all duration-300 cursor-pointer"
+        className="group p-1.5 sm:p-2 rounded-2xl bg-zinc-100 dark:bg-[#161618] border border-zinc-200/90 dark:border-zinc-800/90 shadow-[0_12px_28px_-6px_rgba(0,0,0,0.1)] dark:shadow-[0_14px_34px_-6px_rgba(0,0,0,0.65)] hover:shadow-[0_18px_38px_-8px_rgba(56,189,248,0.18)] hover:border-sky-500/50 dark:hover:border-sky-400/50 md:hover:-translate-y-1 active:scale-[0.99] transition-all duration-300 cursor-pointer"
       >
-        <div className="relative overflow-hidden rounded-xl bg-white dark:bg-slate-900 shadow-md ring-1 ring-slate-900/12 dark:ring-white/15">
+        <div className="relative overflow-hidden rounded-xl bg-white dark:bg-zinc-950 shadow-md ring-1 ring-zinc-900/10 dark:ring-white/10">
           <img
             src={item.src}
             alt={item.alt}
@@ -270,15 +270,15 @@ export const SafariModal = ({ isOpen, onClose, title, domain, description, about
           {/* Borde interior sutil para que las capturas con fondo blanco nunca pierdan definición */}
           <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-black/10 dark:ring-white/10" />
           {/* Etiqueta táctil sutil en móvil + overlay en desktop */}
-          <div className="md:hidden absolute bottom-2 right-2 bg-black/70 text-white text-[11px] font-medium px-2.5 py-1 rounded-lg backdrop-blur-xs border border-white/15 flex items-center gap-1">
-            <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <div className="md:hidden absolute bottom-2 right-2 bg-zinc-950/80 text-zinc-100 text-[11px] font-medium px-2.5 py-1 rounded-lg backdrop-blur-xs border border-white/15 flex items-center gap-1">
+            <svg className="w-3 h-3 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
             </svg>
             <span>Ampliar</span>
           </div>
-          <div className="hidden md:flex absolute inset-0 bg-black/0 group-hover:bg-slate-900/25 dark:group-hover:bg-black/35 transition-colors duration-300 items-center justify-center opacity-0 group-hover:opacity-100">
-            <div className="flex items-center gap-2 bg-black/75 text-white text-xs font-medium px-3.5 py-2 rounded-xl backdrop-blur-sm shadow-xl border border-white/15 transform scale-90 group-hover:scale-100 transition-transform duration-300">
-              <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <div className="hidden md:flex absolute inset-0 bg-black/0 group-hover:bg-zinc-950/30 dark:group-hover:bg-black/40 transition-colors duration-300 items-center justify-center opacity-0 group-hover:opacity-100">
+            <div className="flex items-center gap-2 bg-zinc-950/85 text-zinc-100 text-xs font-medium px-3.5 py-2 rounded-xl backdrop-blur-sm shadow-xl border border-white/15 transform scale-90 group-hover:scale-100 transition-transform duration-300">
+              <svg className="w-4 h-4 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
               </svg>
               <span>Vista Previa</span>
@@ -314,38 +314,38 @@ export const SafariModal = ({ isOpen, onClose, title, domain, description, about
   return createPortal(
     <div
       className={`fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-6 md:p-12 transition-all duration-300 ease-out ${
-        isVisible ? 'bg-black/60 backdrop-blur-md opacity-100' : 'bg-black/0 backdrop-blur-none opacity-0'
+        isVisible ? 'bg-black/65 backdrop-blur-md opacity-100' : 'bg-black/0 backdrop-blur-none opacity-0'
       }`}
       onClick={onClose}
     >
       {/* Ventana de Safari */}
       <div
         onClick={(e) => e.stopPropagation()}
-        className={`relative w-full max-w-6xl bg-slate-100 dark:bg-[#1e1f26] border border-slate-300 dark:border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden flex flex-col transition-all duration-300 ease-out transform ${
+        className={`relative w-full max-w-6xl bg-white dark:bg-[#111113] border border-zinc-200/90 dark:border-zinc-800/90 rounded-2xl shadow-[0_25px_70px_rgba(0,0,0,0.45)] dark:shadow-[0_25px_70px_rgba(0,0,0,0.75),inset_0_1px_0_0_rgba(255,255,255,0.06)] overflow-hidden flex flex-col transition-all duration-300 ease-out transform ${
           isVisible ? 'scale-100 translate-y-0 opacity-100' : 'scale-95 translate-y-8 opacity-0'
         }`}
       >
         {/* Cabecera de Safari (Barra Superior) */}
-        <div className="flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3 bg-slate-200/80 dark:bg-[#25262e] border-b border-slate-300 dark:border-slate-700/50 select-none">
+        <div className="flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3 bg-zinc-100/90 dark:bg-[#161618] border-b border-zinc-200/90 dark:border-zinc-800/80 select-none">
           {/* Izquierda: Botones de control de ventana (Mac) + Controles de pestaña */}
           <div className="flex items-center gap-3 sm:gap-6 shrink-0">
             <div className="flex items-center gap-2">
               <button
                 onClick={onClose}
-                className="w-3.5 h-3.5 rounded-full bg-red-500 hover:bg-red-600 flex items-center justify-center group transition-colors shadow-sm cursor-pointer"
+                className="w-3.5 h-3.5 rounded-full bg-[#ff5f57] hover:brightness-95 flex items-center justify-center group transition-colors shadow-2xs cursor-pointer"
                 title="Cerrar ventana"
               >
                 <span className="text-[9px] font-bold text-red-950 opacity-0 group-hover:opacity-100 leading-none">✕</span>
               </button>
               <button
                 onClick={onClose}
-                className="w-3.5 h-3.5 rounded-full bg-yellow-500 hover:bg-yellow-600 flex items-center justify-center group transition-colors shadow-sm cursor-pointer"
+                className="w-3.5 h-3.5 rounded-full bg-[#febc2e] hover:brightness-95 flex items-center justify-center group transition-colors shadow-2xs cursor-pointer"
                 title="Minimizar"
               >
                 <span className="text-[9px] font-bold text-yellow-950 opacity-0 group-hover:opacity-100 leading-none">−</span>
               </button>
               <button
-                className="w-3.5 h-3.5 rounded-full bg-green-500 hover:bg-green-600 flex items-center justify-center group transition-colors shadow-sm cursor-default"
+                className="w-3.5 h-3.5 rounded-full bg-[#28c840] hover:brightness-95 flex items-center justify-center group transition-colors shadow-2xs cursor-default"
                 title="Pantalla completa"
               >
                 <span className="text-[8px] font-bold text-green-950 opacity-0 group-hover:opacity-100 leading-none">+</span>
@@ -353,7 +353,7 @@ export const SafariModal = ({ isOpen, onClose, title, domain, description, about
             </div>
 
             {/* Iconos decorativos de navegación de Safari */}
-            <div className="hidden sm:flex items-center gap-3 text-slate-400 dark:text-slate-500">
+            <div className="hidden sm:flex items-center gap-3 text-zinc-400 dark:text-zinc-500">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
             </div>
@@ -365,11 +365,11 @@ export const SafariModal = ({ isOpen, onClose, title, domain, description, about
               href={webUrl && webUrl !== '#' ? webUrl : undefined}
               target="_blank"
               rel="noreferrer"
-              className={`w-full bg-white dark:bg-[#16171d] text-slate-700 dark:text-slate-300 text-xs font-mono py-1.5 px-2.5 sm:px-4 rounded-lg border border-slate-300/80 dark:border-slate-700/60 flex items-center justify-center gap-1.5 sm:gap-2 shadow-inner transition-all truncate ${
-                webUrl && webUrl !== '#' ? 'hover:border-blue-500 cursor-pointer' : 'cursor-default'
+              className={`w-full bg-white dark:bg-zinc-950 text-zinc-700 dark:text-zinc-300 text-xs font-mono py-1.5 px-2.5 sm:px-4 rounded-lg border border-zinc-200/90 dark:border-zinc-800/90 flex items-center justify-center gap-1.5 sm:gap-2 shadow-2xs transition-all truncate ${
+                webUrl && webUrl !== '#' ? 'hover:border-sky-500/60 dark:hover:border-sky-400/60 cursor-pointer' : 'cursor-default'
               }`}
             >
-              <svg className="w-3 h-3 text-slate-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg className="w-3 h-3 text-sky-500 dark:text-sky-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
               </svg>
               <span className="truncate">{domain}</span>
@@ -383,7 +383,7 @@ export const SafariModal = ({ isOpen, onClose, title, domain, description, about
                 href={githubUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="p-1 text-[#393e46] dark:text-[#eeeeee]/70 hover:text-slate-900 dark:hover:text-white transition-colors"
+                className="p-1 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
                 title="Ver en GitHub"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -393,7 +393,7 @@ export const SafariModal = ({ isOpen, onClose, title, domain, description, about
             )}
             <button
               onClick={onClose}
-              className="sm:hidden p-1.5 rounded-md bg-white/80 dark:bg-white/10 text-slate-700 dark:text-slate-200 border border-slate-300/80 dark:border-white/10"
+              className="sm:hidden p-1.5 rounded-md bg-white dark:bg-zinc-900 text-zinc-700 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-800"
               title="Cerrar"
             >
               <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -404,16 +404,16 @@ export const SafariModal = ({ isOpen, onClose, title, domain, description, about
         </div>
 
         {/* Cuerpo / Contenido de la web */}
-        <div className="relative w-full flex-1 bg-[#f4f5f7] dark:bg-[#0d0e12] p-3.5 sm:p-10 overflow-y-auto max-h-[85vh] sm:max-h-[80vh] min-h-[320px] sm:min-h-[500px]">
+        <div className="relative w-full flex-1 bg-[#fafafa] dark:bg-[#09090b] p-3.5 sm:p-10 overflow-y-auto max-h-[85vh] sm:max-h-[80vh] min-h-[320px] sm:min-h-[500px]">
           
           {/* DESCRIPCIÓN PERSONAL DEL PROYECTO ENCIMA DEL STACK */}
           {(aboutApp || description) && (
             <div className="w-full max-w-5xl mx-auto mb-8 sm:mb-12 mt-1 sm:mt-2">
-              <h3 className="text-lg sm:text-2xl font-extrabold text-[#222831] dark:text-[#eeeeee] mb-3 sm:mb-4 text-center tracking-tight">
+              <h3 className="text-lg sm:text-2xl font-extrabold text-zinc-900 dark:text-zinc-100 mb-3 sm:mb-4 text-center tracking-tight">
                 Sobre {title}
               </h3>
-              <div className="bg-white dark:bg-[#111] border border-slate-200 dark:border-white/10 rounded-xl p-4 sm:p-7 shadow-xs">
-                <p className="text-xs sm:text-base text-[#393e46] dark:text-[#eeeeee]/85 leading-relaxed text-center max-w-4xl mx-auto">
+              <div className="bg-white dark:bg-[#111113] border border-zinc-200/90 dark:border-zinc-800/90 rounded-xl p-4 sm:p-7 shadow-xs">
+                <p className="text-xs sm:text-base text-zinc-600 dark:text-zinc-300 leading-relaxed text-center max-w-4xl mx-auto">
                   {aboutApp || description}
                 </p>
               </div>
@@ -423,18 +423,18 @@ export const SafariModal = ({ isOpen, onClose, title, domain, description, about
           {/* STACK ESPECÍFICO DEL PROYECTO */}
           {tags && tags.length > 0 && (
             <div className="w-full max-w-5xl mx-auto mb-10 sm:mb-16 mt-2 sm:mt-4">
-              <h3 className="text-lg sm:text-2xl font-extrabold text-[#222831] dark:text-[#eeeeee] mb-4 sm:mb-6 text-center tracking-tight">Stack de la Aplicación</h3>
-              <div className="relative border border-slate-200 dark:border-white/10 rounded-xl overflow-hidden bg-white dark:bg-[#111]">
+              <h3 className="text-lg sm:text-2xl font-extrabold text-zinc-900 dark:text-zinc-100 mb-4 sm:mb-6 text-center tracking-tight">Stack de la Aplicación</h3>
+              <div className="relative border border-zinc-200/90 dark:border-zinc-800/90 rounded-xl overflow-hidden bg-white dark:bg-[#111113]">
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
                   {tags.map((tag, idx) => {
                     const iconElement = getSkillBadgeConfig(
                       tag,
-                      "w-6 h-6 sm:w-8 sm:h-8 text-[#393e46] dark:text-[#eeeeee]/70 group-hover:text-[#0092ca] dark:group-hover:text-[#0092ca] transition-colors duration-300 mb-2 sm:mb-3"
+                      "w-6 h-6 sm:w-8 sm:h-8 text-zinc-500 dark:text-zinc-400 group-hover:text-sky-500 dark:group-hover:text-sky-400 transition-colors duration-300 mb-2 sm:mb-3"
                     ).icon;
                     return (
-                      <div key={idx} className="relative group flex flex-col items-center justify-center p-4 sm:p-6 border-b border-r border-slate-200 dark:border-white/10 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+                      <div key={idx} className="relative group flex flex-col items-center justify-center p-4 sm:p-6 border-b border-r border-zinc-200/80 dark:border-zinc-800/80 hover:bg-zinc-50 dark:hover:bg-zinc-900/60 transition-colors">
                         {/* Crosshair (bottom right) */}
-                        <svg className="absolute -right-[9px] -bottom-[9px] w-4 h-4 text-slate-300 dark:text-slate-600 z-10 hidden md:block pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg className="absolute -right-[9px] -bottom-[9px] w-4 h-4 text-zinc-300 dark:text-zinc-700 z-10 hidden md:block pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 4v16m8-8H4" />
                         </svg>
                         
@@ -442,10 +442,10 @@ export const SafariModal = ({ isOpen, onClose, title, domain, description, about
                           iconElement
                         ) : (
                           <div className="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center mb-2 sm:mb-3">
-                             <span className="text-[#393e46] dark:text-[#eeeeee]/70 font-mono text-lg sm:text-xl font-bold">{tag.charAt(0)}</span>
+                             <span className="text-zinc-600 dark:text-zinc-400 font-mono text-lg sm:text-xl font-bold">{tag.charAt(0)}</span>
                           </div>
                         )}
-                        <span className="text-xs font-semibold text-[#393e46] dark:text-[#eeeeee]/70 group-hover:text-[#0092ca] dark:group-hover:text-[#0092ca] transition-colors text-center">{tag}</span>
+                        <span className="text-xs font-semibold text-zinc-600 dark:text-zinc-300 group-hover:text-zinc-900 dark:group-hover:text-zinc-100 transition-colors text-center">{tag}</span>
                       </div>
                     );
                   })}
@@ -455,8 +455,8 @@ export const SafariModal = ({ isOpen, onClose, title, domain, description, about
           )}
 
           <div className="flex flex-col items-center text-center mb-6 sm:mb-10 mt-2 sm:mt-4">
-            <h2 className="text-xl sm:text-4xl font-extrabold text-[#222831] dark:text-[#eeeeee] mb-2 sm:mb-3 tracking-tight">Galería del Proyecto</h2>
-            <p className="text-xs sm:text-base text-[#393e46] dark:text-[#eeeeee]/70">Toca cualquier captura para abrir el visor y desliza para recorrerlas</p>
+            <h2 className="text-xl sm:text-4xl font-extrabold text-zinc-900 dark:text-zinc-100 mb-2 sm:mb-3 tracking-tight">Galería del Proyecto</h2>
+            <p className="text-xs sm:text-base text-zinc-600 dark:text-zinc-400">Toca cualquier captura para abrir el visor y desliza para recorrerlas</p>
           </div>
 
           {/* Grid Estilo Masonry (6 imágenes en orden aleatorio) */}
@@ -490,14 +490,14 @@ export const SafariModal = ({ isOpen, onClose, title, domain, description, about
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className={`relative flex flex-col bg-[#f5f5f7] dark:bg-[#25262b] border border-slate-300/90 dark:border-white/15 rounded-xl shadow-[0_30px_90px_-15px_rgba(0,0,0,0.75)] overflow-hidden transition-all duration-300 ${
+            className={`relative flex flex-col bg-[#f5f5f7] dark:bg-[#161618] border border-zinc-300/90 dark:border-zinc-800 rounded-xl shadow-[0_30px_90px_-15px_rgba(0,0,0,0.75)] overflow-hidden transition-all duration-300 ${
               isPreviewMaximized
                 ? 'w-[98vw] h-[94vh]'
                 : 'w-full max-w-5xl h-[82vh] sm:h-[84vh]'
             }`}
           >
             {/* BARRA DE HERRAMIENTAS DE VISTA PREVIA (macOS Preview Toolbar) */}
-            <div className="flex items-center justify-between gap-2 px-3 sm:px-4 py-2.5 bg-gradient-to-b from-[#fbfbfd] to-[#e9e9ec] dark:from-[#32333a] dark:to-[#27282e] border-b border-slate-300/90 dark:border-black/50 select-none shrink-0">
+            <div className="flex items-center justify-between gap-2 px-3 sm:px-4 py-2.5 bg-zinc-100 dark:bg-[#1c1c1f] border-b border-zinc-300/90 dark:border-zinc-800 select-none shrink-0">
               
               {/* Izquierda: Semáforo Mac + Selector de barra lateral + Nombre del archivo */}
               <div className="flex items-center gap-3 min-w-0">
@@ -531,8 +531,8 @@ export const SafariModal = ({ isOpen, onClose, title, domain, description, about
                   onClick={() => setShowSidebar((prev) => !prev)}
                   className={`hidden sm:flex items-center justify-center p-1.5 rounded-md border transition-colors cursor-pointer ${
                     showSidebar
-                      ? 'bg-black/10 dark:bg-white/15 border-slate-400/40 dark:border-white/15 text-slate-800 dark:text-white'
-                      : 'bg-transparent border-transparent hover:bg-black/5 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300'
+                      ? 'bg-black/10 dark:bg-white/15 border-zinc-400/40 dark:border-white/15 text-zinc-800 dark:text-white'
+                      : 'bg-transparent border-transparent hover:bg-black/5 dark:hover:bg-white/10 text-zinc-600 dark:text-zinc-300'
                   }`}
                   title="Mostrar/Ocultar miniaturas"
                 >
@@ -543,21 +543,21 @@ export const SafariModal = ({ isOpen, onClose, title, domain, description, about
                 </button>
 
                 {/* Separador vertical sutil */}
-                <div className="hidden sm:block h-5 w-px bg-slate-300 dark:bg-white/10" />
+                <div className="hidden sm:block h-5 w-px bg-zinc-300 dark:bg-zinc-700" />
 
                 {/* Icono de imagen + Nombre de archivo + Página X de Y */}
                 <div className="flex flex-col min-w-0">
                   <div className="flex items-center gap-1.5 min-w-0">
-                    <svg className="w-3.5 h-3.5 text-[#0092ca] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <svg className="w-3.5 h-3.5 text-sky-500 dark:text-sky-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
                       <circle cx="8.5" cy="8.5" r="1.5" />
                       <polyline points="21 15 16 10 5 21" />
                     </svg>
-                    <span className="text-xs sm:text-[13px] font-semibold text-slate-800 dark:text-slate-100 truncate">
+                    <span className="text-xs sm:text-[13px] font-semibold text-zinc-800 dark:text-zinc-100 truncate">
                       {galleryImages[selectedImageIndex].fileName}
                     </span>
                   </div>
-                  <span className="text-[10px] text-slate-500 dark:text-slate-400 leading-tight truncate">
+                  <span className="text-[10px] text-zinc-500 dark:text-zinc-400 leading-tight truncate">
                     Página {selectedImageIndex + 1} de {galleryImages.length}
                   </span>
                 </div>
@@ -567,22 +567,22 @@ export const SafariModal = ({ isOpen, onClose, title, domain, description, about
               <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
                 
                 {/* Navegación Anterior / Siguiente */}
-                <div className="inline-flex items-center rounded-md bg-white/90 dark:bg-[#3a3b42] border border-slate-300/90 dark:border-white/10 shadow-2xs overflow-hidden">
+                <div className="inline-flex items-center rounded-md bg-white/90 dark:bg-zinc-800 border border-zinc-300/90 dark:border-zinc-700 shadow-2xs overflow-hidden">
                   <button
                     onClick={() =>
                       setSelectedImageIndex((selectedImageIndex - 1 + galleryImages.length) % galleryImages.length)
                     }
-                    className="p-1.5 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/10 active:bg-slate-200 transition-colors cursor-pointer"
+                    className="p-1.5 text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:bg-zinc-200 transition-colors cursor-pointer"
                     title="Imagen anterior (←)"
                   >
                     <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
                     </svg>
                   </button>
-                  <div className="h-4 w-px bg-slate-300/80 dark:bg-white/10" />
+                  <div className="h-4 w-px bg-zinc-300/80 dark:bg-zinc-700" />
                   <button
                     onClick={() => setSelectedImageIndex((selectedImageIndex + 1) % galleryImages.length)}
-                    className="p-1.5 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/10 active:bg-slate-200 transition-colors cursor-pointer"
+                    className="p-1.5 text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:bg-zinc-200 transition-colors cursor-pointer"
                     title="Imagen siguiente (→)"
                   >
                     <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -596,7 +596,7 @@ export const SafariModal = ({ isOpen, onClose, title, domain, description, about
                   href={galleryImages[selectedImageIndex].src}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center justify-center p-1.5 rounded-md bg-white/90 dark:bg-[#3a3b42] border border-slate-300/90 dark:border-white/10 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/10 shadow-2xs transition-colors"
+                  className="flex items-center justify-center p-1.5 rounded-md bg-white/90 dark:bg-zinc-800 border border-zinc-300/90 dark:border-zinc-700 text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-700 shadow-2xs transition-colors"
                   title="Abrir imagen original"
                 >
                   <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -607,7 +607,7 @@ export const SafariModal = ({ isOpen, onClose, title, domain, description, about
                 {/* Botón Cerrar con X del mismo estilo */}
                 <button
                   onClick={() => setSelectedImageIndex(null)}
-                  className="flex items-center justify-center p-1.5 rounded-md bg-white/90 dark:bg-[#3a3b42] border border-slate-300/90 dark:border-white/10 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/10 shadow-2xs transition-colors cursor-pointer"
+                  className="flex items-center justify-center p-1.5 rounded-md bg-white/90 dark:bg-zinc-800 border border-zinc-300/90 dark:border-zinc-700 text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-700 shadow-2xs transition-colors cursor-pointer"
                   title="Cerrar Vista Previa (Esc)"
                 >
                   <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -622,7 +622,7 @@ export const SafariModal = ({ isOpen, onClose, title, domain, description, about
               
               {/* Barra lateral izquierda de miniaturas (estilo macOS Preview) */}
               {showSidebar && (
-                <div className="hidden sm:flex w-44 md:w-48 bg-[#ebebed] dark:bg-[#1e1f24] border-r border-slate-300/80 dark:border-black/50 overflow-y-auto p-3 flex-col gap-3 select-none shrink-0">
+                <div className="hidden sm:flex w-44 md:w-48 bg-zinc-200/70 dark:bg-[#111113] border-r border-zinc-300/80 dark:border-zinc-800 overflow-y-auto p-3 flex-col gap-3 select-none shrink-0">
                   {galleryImages.map((img, idx) => {
                     const isCurrent = idx === selectedImageIndex;
                     return (
@@ -631,11 +631,11 @@ export const SafariModal = ({ isOpen, onClose, title, domain, description, about
                         onClick={() => setSelectedImageIndex(idx)}
                         className={`flex flex-col items-center p-1.5 rounded-lg transition-all cursor-pointer ${
                           isCurrent
-                            ? 'bg-[#0092ca]/15 dark:bg-[#0092ca]/25 ring-2 ring-[#0092ca]'
+                            ? 'bg-sky-500/15 dark:bg-sky-400/20 ring-2 ring-sky-500 dark:ring-sky-400'
                             : 'hover:bg-black/5 dark:hover:bg-white/5'
                         }`}
                       >
-                        <div className="w-full h-20 rounded overflow-hidden bg-slate-200 dark:bg-slate-800 shadow-xs border border-black/10 dark:border-white/10">
+                        <div className="w-full h-20 rounded overflow-hidden bg-zinc-200 dark:bg-zinc-900 shadow-xs border border-black/10 dark:border-white/10">
                           <img
                             src={img.src}
                             alt={img.alt}
@@ -645,8 +645,8 @@ export const SafariModal = ({ isOpen, onClose, title, domain, description, about
                         <span
                           className={`mt-1 text-[11px] font-medium px-2 py-0.5 rounded-full ${
                             isCurrent
-                              ? 'bg-[#0092ca] text-white font-semibold'
-                              : 'text-slate-600 dark:text-slate-400'
+                              ? 'bg-sky-500 text-white font-semibold'
+                              : 'text-zinc-600 dark:text-zinc-400'
                           }`}
                         >
                           {idx + 1}
@@ -662,7 +662,7 @@ export const SafariModal = ({ isOpen, onClose, title, domain, description, about
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
-                className="flex-1 flex flex-col bg-[#dcdce0] dark:bg-[#16171b] overflow-hidden relative select-none touch-pan-y"
+                className="flex-1 flex flex-col bg-zinc-200/90 dark:bg-[#09090b] overflow-hidden relative select-none touch-pan-y"
               >
                 <div
                   onClick={() => setSelectedImageIndex(null)}
@@ -683,7 +683,7 @@ export const SafariModal = ({ isOpen, onClose, title, domain, description, about
                 {/* Tira inferior de miniaturas en móvil (< sm) + pista de deslizar */}
                 <div
                   onClick={(e) => e.stopPropagation()}
-                  className="sm:hidden bg-[#ebebed] dark:bg-[#1e1f24] border-t border-slate-300/80 dark:border-black/50 px-3 py-2 flex flex-col items-center gap-1.5 shrink-0"
+                  className="sm:hidden bg-zinc-200/80 dark:bg-[#111113] border-t border-zinc-300/80 dark:border-zinc-800 px-3 py-2 flex flex-col items-center gap-1.5 shrink-0"
                 >
                   <div className="flex items-center gap-2 overflow-x-auto max-w-full pb-0.5">
                     {galleryImages.map((img, idx) => {
@@ -694,7 +694,7 @@ export const SafariModal = ({ isOpen, onClose, title, domain, description, about
                           onClick={() => setSelectedImageIndex(idx)}
                           className={`relative w-12 h-8 rounded overflow-hidden shrink-0 transition-all cursor-pointer ${
                             isCurrent
-                              ? 'ring-2 ring-[#0092ca] scale-105'
+                              ? 'ring-2 ring-sky-500 dark:ring-sky-400 scale-105'
                               : 'opacity-60 hover:opacity-100'
                           }`}
                         >
@@ -707,7 +707,7 @@ export const SafariModal = ({ isOpen, onClose, title, domain, description, about
                       );
                     })}
                   </div>
-                  <span className="text-[10px] text-slate-500 dark:text-slate-400">
+                  <span className="text-[10px] text-zinc-500 dark:text-zinc-400">
                     Desliza a izquierda o derecha para pasar de foto
                   </span>
                 </div>

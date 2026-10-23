@@ -76,10 +76,10 @@ export const HeroBackground = () => {
       </div>
 
       {/* Degradado fuerte hacia la derecha para fundirlo a partir de la mitad de la pantalla */}
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#eeeeee]/90 to-[#eeeeee] dark:from-transparent dark:via-[#222831]/90 dark:to-[#222831]"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#fafafa]/90 to-[#fafafa] dark:from-transparent dark:via-[#09090b]/90 dark:to-[#09090b]"></div>
       
       {/* Degradados verticales para suavizar bordes superior e inferior */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#eeeeee] via-transparent to-[#eeeeee] dark:from-[#222831] dark:via-transparent dark:to-[#222831]"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-[#fafafa] via-transparent to-[#fafafa] dark:from-[#09090b] dark:via-transparent dark:to-[#09090b]"></div>
 
     </div>
   );

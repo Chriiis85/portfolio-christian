@@ -1,22 +1,41 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { User, Briefcase, LayoutGrid, GraduationCap, Mail, Code, Code2, Sun, Moon } from 'lucide-react';
 
 export const Navbar = () => {
   // Empezamos en oscuro por defecto
   const [isDark, setIsDark] = useState(true);
+  const [activeSection, setActiveSection] = useState<string>('#inicio');
 
   const toggleTheme = () => {
     setIsDark(!isDark);
     document.documentElement.classList.toggle('dark');
   };
 
+  useEffect(() => {
+    const sectionIds = ['inicio', 'sobre-mi', 'proyectos', 'experiencia', 'stack', 'estudios', 'contacto'];
+    const handleScroll = () => {
+      const scrollPos = window.scrollY + 240;
+      for (let i = sectionIds.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sectionIds[i]);
+        if (el && el.offsetTop <= scrollPos) {
+          setActiveSection(`#${sectionIds[i]}`);
+          break;
+        }
+      }
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const dockItems = [
-    { name: 'Sobre mí', href: '#sobre-mi', icon: <User size={20} /> },
-    { name: 'Proyectos', href: '#proyectos', icon: <LayoutGrid size={20} /> },
-    { name: 'Experiencia', href: '#experiencia', icon: <Briefcase size={20} /> },
-    { name: 'Stack', href: '#stack', icon: <Code size={20} /> },
-    { name: 'Estudios', href: '#estudios', icon: <GraduationCap size={20} /> },
-    { name: 'Contacto', href: '#contacto', icon: <Mail size={20} /> },
+    { name: 'Sobre mí', href: '#sobre-mi', icon: <User size={19} /> },
+    { name: 'Proyectos', href: '#proyectos', icon: <LayoutGrid size={19} /> },
+    { name: 'Experiencia', href: '#experiencia', icon: <Briefcase size={19} /> },
+    { name: 'Stack', href: '#stack', icon: <Code size={19} /> },
+    { name: 'Estudios', href: '#estudios', icon: <GraduationCap size={19} /> },
+    { name: 'Contacto', href: '#contacto', icon: <Mail size={19} /> },
   ];
 
   const socialItems = [
@@ -43,49 +62,59 @@ export const Navbar = () => {
 
   return (
     <>
-      {/* BARRA SUPERIOR */}
-      <nav className="fixed top-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-4xl h-16 bg-white/85 dark:bg-[#393e46]/85 backdrop-blur-md border border-slate-200 dark:border-[#393e46] shadow-2xl rounded-2xl flex items-center justify-between px-4 sm:px-6 z-50 transition-colors duration-300">
+      {/* BARRA SUPERIOR (Pure Zinc & Ice) */}
+      <nav className="fixed top-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-4xl h-16 bg-white/85 dark:bg-zinc-900/80 backdrop-blur-md border border-zinc-200/90 dark:border-zinc-800/90 shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:shadow-[0_12px_36px_rgba(0,0,0,0.6),inset_0_1px_0_0_rgba(255,255,255,0.06)] rounded-2xl flex items-center justify-between px-4 sm:px-6 z-50 transition-colors duration-300">
 
         {/* IZQUIERDA: Logo y Tema */}
-        <div className="flex-1 flex items-center gap-2 sm:gap-4 min-w-0">
-          <a href="#inicio" className="text-lg sm:text-xl font-bold text-[#222831] dark:text-[#eeeeee] tracking-wide hover:scale-105 transition-transform truncate">
-            Christian<span className="text-[#0092ca]">.dev</span>
+        <div className="flex-1 flex items-center gap-2 sm:gap-3 min-w-0">
+          <a href="#inicio" className="text-lg sm:text-xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight hover:opacity-80 transition-opacity truncate">
+            Christian<span className="text-sky-500 dark:text-sky-400 font-mono font-normal">.dev</span>
           </a>
           
           <button
             onClick={toggleTheme}
-            className="p-2 rounded-lg text-[#393e46] dark:text-[#eeeeee] hover:text-yellow-500 dark:hover:text-yellow-400 hover:bg-slate-100 dark:hover:bg-[#222831] transition-all hover:scale-110 shrink-0"
+            className="p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-amber-500 dark:hover:text-amber-400 hover:bg-zinc-100 dark:hover:bg-zinc-800/80 transition-all cursor-pointer shrink-0"
             title="Cambiar modo claro/oscuro"
           >
-            {isDark ? <Sun size={20} /> : <Moon size={20} />}
+            {isDark ? <Sun size={18} /> : <Moon size={18} />}
           </button>
         </div>
 
         {/* CENTRO: Dock (Visible en Tablet y Desktop md+) */}
         <div className="hidden md:flex flex-none items-center gap-1.5 lg:gap-2">
-          {dockItems.map((item) => (
-            <a
-              key={item.name}
-              href={item.href}
-              className="relative group p-2.5 lg:p-3 rounded-xl bg-slate-100/50 dark:bg-[#222831] text-[#393e46] dark:text-[#eeeeee] hover:text-[#222831] dark:hover:text-white hover:bg-slate-200 dark:hover:bg-[#222831] transition-all duration-300 hover:scale-125 hover:-translate-y-2 hover:shadow-lg"
-            >
-              {item.icon}
-              <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs bg-slate-800 text-white dark:bg-[#222831] dark:text-[#eeeeee] px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                {item.name}
-              </span>
-            </a>
-          ))}
+          {dockItems.map((item) => {
+            const isActive = activeSection === item.href;
+            return (
+              <a
+                key={item.name}
+                href={item.href}
+                className={`relative group p-2 rounded-xl border transition-all duration-300 hover:scale-115 hover:-translate-y-1 hover:shadow-lg ${
+                  isActive
+                    ? 'bg-zinc-900 text-white border-zinc-800 dark:bg-zinc-100 dark:text-zinc-950 dark:border-white shadow-sm'
+                    : 'bg-zinc-100/80 dark:bg-zinc-950/70 border-transparent hover:border-zinc-300/80 dark:hover:border-zinc-700/80 text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-100 hover:bg-white dark:hover:bg-zinc-900'
+                }`}
+              >
+                {item.icon}
+                {isActive && (
+                  <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-sky-500 dark:bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,0.85)]" />
+                )}
+                <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs font-mono bg-zinc-900 text-zinc-100 dark:bg-zinc-800 dark:text-zinc-100 border border-zinc-700/60 px-2 py-0.5 rounded-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-lg">
+                  {item.name}
+                </span>
+              </a>
+            );
+          })}
         </div>
 
         {/* DERECHA: Redes */}
-        <div className="flex-1 flex items-center gap-1 sm:gap-2 justify-end">
+        <div className="flex-1 flex items-center gap-1 sm:gap-1.5 justify-end">
           {socialItems.map((item) => (
             <a
               key={item.name}
               href={item.href}
               target="_blank"
               rel="noreferrer"
-              className="p-2 rounded-lg text-[#393e46] dark:text-[#eeeeee] hover:text-[#0092ca] dark:hover:text-[#0092ca] hover:bg-slate-100 dark:hover:bg-[#222831] transition-all hover:scale-110"
+              className="p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800/80 transition-all hover:scale-105"
               title={item.name}
             >
               {item.icon}
@@ -96,17 +125,27 @@ export const Navbar = () => {
       </nav>
 
       {/* DOCK INFERIOR FLOTANTE PARA MÓVILES (< md) */}
-      <div className="md:hidden fixed bottom-3 left-1/2 -translate-x-1/2 w-[94%] max-w-sm bg-white/90 dark:bg-[#393e46]/90 backdrop-blur-md border border-slate-200 dark:border-[#393e46] shadow-2xl rounded-2xl flex items-center justify-around py-2 px-2 z-50 transition-colors duration-300">
-        {dockItems.map((item) => (
-          <a
-            key={item.name}
-            href={item.href}
-            aria-label={item.name}
-            className="flex flex-col items-center justify-center p-2 rounded-xl bg-slate-100/60 dark:bg-[#222831] text-[#393e46] dark:text-[#eeeeee] active:scale-95 transition-all"
-          >
-            {item.icon}
-          </a>
-        ))}
+      <div className="md:hidden fixed bottom-3 left-1/2 -translate-x-1/2 w-[94%] max-w-sm bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md border border-zinc-200 dark:border-zinc-800 shadow-2xl rounded-2xl flex items-center justify-around py-2.5 px-2 z-50 transition-colors duration-300">
+        {dockItems.map((item) => {
+          const isActive = activeSection === item.href;
+          return (
+            <a
+              key={item.name}
+              href={item.href}
+              aria-label={item.name}
+              className={`relative flex flex-col items-center justify-center p-2 rounded-xl active:scale-95 transition-all ${
+                isActive
+                  ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-950 shadow-xs'
+                  : 'bg-zinc-100/80 dark:bg-zinc-950 text-zinc-600 dark:text-zinc-400'
+              }`}
+            >
+              {item.icon}
+              {isActive && (
+                <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-sky-500 dark:bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,0.8)]" />
+              )}
+            </a>
+          );
+        })}
       </div>
     </>
   );

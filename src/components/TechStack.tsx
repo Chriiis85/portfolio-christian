@@ -164,18 +164,18 @@ export const TechStack = () => {
     >
       <div className="w-full max-w-4xl mx-auto flex flex-col items-center my-auto">
         
-        {/* Título igual que en Mis Proyectos */}
+        {/* Título de la sección */}
         <h2
-          className={`text-3xl sm:text-4xl font-bold text-[#222831] dark:text-[#eeeeee] mb-6 sm:mb-8 text-center transition-all duration-700 ease-out ${
+          className={`text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 mb-6 sm:mb-8 text-center transition-all duration-700 ease-out ${
             isVisible ? 'opacity-100 translate-y-0 blur-none' : 'opacity-0 translate-y-4 blur-sm'
           }`}
         >
           Mi Stack
         </h2>
 
-        {/* Selector de Secciones Estilo Elegante */}
+        {/* Selector de Secciones Estilo Pure Zinc */}
         <div
-          className={`flex flex-wrap justify-center gap-1.5 sm:gap-2 mb-8 sm:mb-12 bg-slate-100 dark:bg-[#0a0a0a] p-1.5 rounded-2xl sm:rounded-full border border-slate-200 dark:border-white/10 shadow-sm relative z-20 transition-all duration-700 delay-100 ease-out ${
+          className={`flex flex-wrap justify-center gap-1.5 sm:gap-2 mb-8 sm:mb-12 bg-zinc-100/90 dark:bg-[#111113] p-1.5 rounded-2xl sm:rounded-full border border-zinc-200/90 dark:border-zinc-800/90 shadow-xs relative z-20 transition-all duration-700 delay-100 ease-out ${
             isVisible ? 'opacity-100 translate-y-0 blur-none' : 'opacity-0 translate-y-4 blur-sm'
           }`}
         >
@@ -185,8 +185,8 @@ export const TechStack = () => {
               onClick={() => handleTabChange(tab)}
               className={`px-3.5 sm:px-6 py-2 sm:py-2.5 rounded-xl sm:rounded-full text-xs sm:text-sm font-medium transition-all duration-300 cursor-pointer ${
                 activeTab === tab 
-                  ? 'bg-white dark:bg-[#1c1c1c] text-slate-900 dark:text-white shadow-sm border border-slate-200 dark:border-white/10' 
-                  : 'text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 border border-transparent bg-transparent'
+                  ? 'bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 shadow-xs border border-zinc-200/90 dark:border-zinc-800' 
+                  : 'text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200 border border-transparent bg-transparent'
               }`}
             >
               {tab}
@@ -195,7 +195,7 @@ export const TechStack = () => {
         </div>
 
         {/* Grid Estilo Panel con efecto de vaho/borrosidad que se despeja en cascada */}
-        <div className="w-full relative border-l border-t border-slate-200 dark:border-white/5 bg-transparent">
+        <div className="w-full relative border-l border-t border-zinc-200/90 dark:border-zinc-800/80 bg-white/40 dark:bg-[#111113]/40">
           <div className="grid grid-cols-2 md:grid-cols-4">
             {currentItems.map((item, i) => {
               // Lógica de intersecciones para las cruces (Crosshairs)
@@ -222,12 +222,12 @@ export const TechStack = () => {
                       ? (isDark ? `${effectiveColor}14` : `${effectiveColor}0d`) 
                       : undefined,
                   }}
-                  className="relative h-20 sm:h-24 px-2 flex items-center justify-center border-r border-b border-slate-200 dark:border-white/5 transition-colors duration-300 group cursor-default overflow-hidden select-none"
+                  className="relative h-20 sm:h-24 px-2 flex items-center justify-center border-r border-b border-zinc-200/90 dark:border-zinc-800/80 transition-colors duration-300 group cursor-default overflow-hidden select-none"
                 >
                   {/* Capa de vaho / cristal empañado que se evapora al aparecer */}
                   <div
                     style={{ transitionDelay: `${cellDelay}ms` }}
-                    className={`pointer-events-none absolute inset-0 z-20 bg-white/60 dark:bg-[#222831]/70 backdrop-blur-md transition-opacity duration-700 ease-out ${
+                    className={`pointer-events-none absolute inset-0 z-20 bg-[#fafafa]/70 dark:bg-[#09090b]/75 backdrop-blur-md transition-opacity duration-700 ease-out ${
                       isClear ? 'opacity-0' : 'opacity-100'
                     }`}
                   />
@@ -252,19 +252,19 @@ export const TechStack = () => {
                     <span 
                       style={{ color: isHovered ? effectiveColor : undefined }}
                       className={`transition-all duration-300 transform group-hover:scale-115 shrink-0 ${
-                        isHovered ? '' : 'text-slate-400 dark:text-slate-500'
+                        isHovered ? '' : 'text-zinc-400 dark:text-zinc-500'
                       }`}
                     >
                       {item.icon}
                     </span>
-                    <span className="font-semibold text-xs sm:text-[15px] tracking-wide text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white transition-colors duration-300 truncate">
+                    <span className="font-semibold text-xs sm:text-[15px] tracking-wide text-zinc-700 dark:text-zinc-300 group-hover:text-zinc-900 dark:group-hover:text-zinc-100 transition-colors duration-300 truncate">
                       {item.name}
                     </span>
                   </div>
                   
                   {/* Cruz en la intersección (Crosshair) */}
                   {showCross && (
-                    <svg className="absolute -right-[9px] -bottom-[9px] w-[18px] h-[18px] text-slate-300 dark:text-slate-500/70 z-10 hidden md:block pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="absolute -right-[9px] -bottom-[9px] w-[18px] h-[18px] text-zinc-300 dark:text-zinc-700 z-10 hidden md:block pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 4v16m8-8H4" />
                     </svg>
                   )}
