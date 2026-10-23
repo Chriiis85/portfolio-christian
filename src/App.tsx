@@ -18,21 +18,21 @@ function App() {
         <section id="inicio" className="relative overflow-hidden min-h-screen flex items-center justify-center pt-16 px-4 bg-[#eeeeee] dark:bg-[#222831] transition-colors duration-300">
           <HeroBackground />
           <div className="relative z-10 w-full max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-[#222831] dark:text-[#eeeeee] mb-4">
+            <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold text-[#222831] dark:text-[#eeeeee] mb-3 sm:mb-4 leading-tight">
               ¡Hola, soy Christian!
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-[#0092ca] font-medium mb-6">
+            <p className="text-base sm:text-xl md:text-2xl text-[#0092ca] font-medium mb-4 sm:mb-6">
               Desarrollador de Aplicaciones Web | Desarrollador Full Stack
             </p>
-            <p className="text-lg text-[#393e46] dark:text-[#eeeeee]/80 max-w-2xl mx-auto">
+            <p className="text-sm sm:text-lg text-[#393e46] dark:text-[#eeeeee]/80 max-w-2xl mx-auto">
               Bienvenido a mi portfolio. Aquí podrás encontrar mis últimos proyectos, novedades sobre mí y un punto mas focalizado de mi vida como desarrollador.</p>
 
             {/* Botones de Acción Rápida (CTA) */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
-              <a href="#proyectos" className="w-full sm:w-auto px-8 py-3.5 bg-[#222831] text-[#eeeeee] dark:bg-[#0092ca] dark:text-[#eeeeee] font-bold rounded-full hover:scale-105 transition-transform shadow-xl shadow-slate-900/10 dark:shadow-white/10">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mt-6 sm:mt-8">
+              <a href="#proyectos" className="w-full sm:w-auto px-8 py-3 sm:py-3.5 bg-[#222831] text-[#eeeeee] dark:bg-[#0092ca] dark:text-[#eeeeee] font-bold rounded-full hover:scale-105 active:scale-95 transition-transform shadow-xl shadow-slate-900/10 dark:shadow-white/10 text-sm sm:text-base">
                 Ver Mis Proyectos
               </a>
-              <a href="#experiencia" className="w-full sm:w-auto px-8 py-3.5 bg-white text-[#222831] border border-[#393e46]/20 dark:bg-[#393e46] dark:text-[#eeeeee] dark:border-[#393e46] font-bold rounded-full hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+              <a href="#experiencia" className="w-full sm:w-auto px-8 py-3 sm:py-3.5 bg-white text-[#222831] border border-[#393e46]/20 dark:bg-[#393e46] dark:text-[#eeeeee] dark:border-[#393e46] font-bold rounded-full hover:bg-slate-50 dark:hover:bg-white/5 active:scale-95 transition-all text-sm sm:text-base">
                 Ver Experiencia
               </a>
             </div>
@@ -43,15 +43,15 @@ function App() {
         <AboutSection />
 
         {/* SECCIÓN: Mis Proyectos */}
-        <section id="proyectos" className="w-full pt-0 pb-24 mt-12 px-4 scroll-mt-24 flex flex-col items-center justify-center bg-[#eeeeee] dark:bg-[#222831] transition-colors duration-300">
-          <div className="w-full max-w-4xl mx-auto text-center mb-12">
-            <h2 className="text-4xl font-bold text-[#222831] dark:text-[#eeeeee] mb-4">Mis Proyectos</h2>
-            <p className="text-[#393e46] dark:text-[#eeeeee]/80 max-w-2xl mx-auto">
+        <section id="proyectos" className="w-full pt-0 pb-16 sm:pb-24 mt-8 sm:mt-12 px-4 scroll-mt-24 flex flex-col items-center justify-center bg-[#eeeeee] dark:bg-[#222831] transition-colors duration-300">
+          <div className="w-full max-w-4xl mx-auto text-center mb-8 sm:mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#222831] dark:text-[#eeeeee] mb-3 sm:mb-4">Mis Proyectos</h2>
+            <p className="text-sm sm:text-base text-[#393e46] dark:text-[#eeeeee]/80 max-w-2xl mx-auto">
               Haz clic en cualquiera de las "ventanas" para expandir y ver más detalles sobre mis proyectos.
             </p>
           </div>
 
-          <div className="w-full max-w-4xl mx-auto flex flex-col gap-12">
+          <div className="w-full max-w-4xl mx-auto flex flex-col gap-6 sm:gap-12">
             
             {/* Proyecto 1: Motoring Community */}
             <ProjectCard 

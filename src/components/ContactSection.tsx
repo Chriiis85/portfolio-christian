@@ -55,12 +55,12 @@ export const ContactSection = () => {
   };
 
   return (
-    <section id="contacto" className="w-full pt-0 pb-24 mt-12 px-4 scroll-mt-24 flex flex-col items-center justify-center">
+    <section id="contacto" className="w-full pt-0 pb-16 sm:pb-24 mt-8 sm:mt-12 px-4 scroll-mt-24 flex flex-col items-center justify-center">
       <div className="w-full max-w-4xl mx-auto">
         
         {/* Título de sección igual que Mis Proyectos y Sobre Mí */}
         <div className="text-center mb-6 sm:mb-8">
-          <h2 className="text-4xl font-bold text-[#222831] dark:text-[#eeeeee] mb-2">
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#222831] dark:text-[#eeeeee] mb-2">
             Contacto
           </h2>
           <p className="text-sm sm:text-base text-[#393e46] dark:text-[#eeeeee]/80 max-w-2xl mx-auto font-sans">
@@ -194,16 +194,18 @@ export const ContactSection = () => {
             />
 
             {/* Pie del correo: Firma homogénea + Botón de acción principal */}
-            <div className="mt-4 pt-3.5 border-t border-slate-200/80 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div className="font-sans text-xs text-slate-500 dark:text-slate-400 select-none flex flex-wrap items-center gap-1.5 sm:gap-2">
+            <div className="mt-4 pt-3.5 border-t border-slate-200/80 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-3.5">
+              <div className="font-sans text-xs text-slate-500 dark:text-slate-400 select-none flex flex-wrap items-center gap-x-2 gap-y-1">
                 <span className="font-semibold text-slate-700 dark:text-slate-300">— Christian Moreno Díaz</span>
-                <span className="text-slate-300 dark:text-slate-600 hidden sm:inline">•</span>
-                <span className="hidden sm:inline">Full Stack Developer</span>
-                <span className="text-slate-300 dark:text-slate-600 hidden sm:inline">•</span>
-                <span className="hidden sm:inline">+34 619 27 66 45</span>
+                <span className="text-slate-300 dark:text-slate-600">•</span>
+                <span>Full Stack Developer</span>
+                <span className="text-slate-300 dark:text-slate-600">•</span>
+                <a href="tel:+34619276645" className="hover:text-[#0092ca] transition-colors">
+                  +34 619 27 66 45
+                </a>
               </div>
 
-              <div className="flex items-center gap-3 self-end sm:self-auto">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-3 w-full md:w-auto">
                 {status === 'success' && (
                   <span className="text-xs font-medium text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
                     <Check className="w-3.5 h-3.5" />

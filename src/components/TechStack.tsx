@@ -1,4 +1,4 @@
-import { useState, useEffect, type ReactNode } from 'react';
+import { useState, useEffect, useRef, type ReactNode } from 'react';
 import { 
   FaReact, 
   FaAngular, 
@@ -24,14 +24,12 @@ import {
   SiJson, 
   SiPostman, 
   SiNextdotjs, 
-  SiVuedotjs, 
   SiNodedotjs, 
   SiExpress, 
   SiSupabase, 
   SiMongodb, 
   SiDocker, 
   SiVite, 
-  SiRedux, 
   SiNpm 
 } from 'react-icons/si';
 import { TbBrandCSharp, TbSql } from 'react-icons/tb';
@@ -56,6 +54,41 @@ export const TechStack = () => {
   const [activeTab, setActiveTab] = useState('Frontend');
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const [isDark, setIsDark] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isClear, setIsClear] = useState(false);
+  const sectionRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          requestAnimationFrame(() => {
+            setIsClear(true);
+          });
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.18 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  const handleTabChange = (tab: string) => {
+    if (tab === activeTab) return;
+    setIsClear(false);
+    setActiveTab(tab);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setIsClear(true);
+      });
+    });
+  };
 
   useEffect(() => {
     if (typeof document !== 'undefined') {
@@ -75,7 +108,6 @@ export const TechStack = () => {
       { name: "React", icon: <FaReact className={iconClass} />, brandColor: "#61DAFB" },
       { name: "Next.js", icon: <SiNextdotjs className={iconClass} />, brandColor: "#000000", darkBrandColor: "#FFFFFF" },
       { name: "Angular", icon: <FaAngular className={iconClass} />, brandColor: "#DD0031" },
-      { name: "Vue.js", icon: <SiVuedotjs className={iconClass} />, brandColor: "#4FC08D" },
       { name: "TypeScript", icon: <SiTypescript className={iconClass} />, brandColor: "#3178C6" },
       { name: "JavaScript", icon: <SiJavascript className={iconClass} />, brandColor: "#F7DF1E" },
       { name: "Tailwind", icon: <SiTailwindcss className={iconClass} />, brandColor: "#06B6D4" },
@@ -83,7 +115,6 @@ export const TechStack = () => {
       { name: "HTML5", icon: <FaHtml5 className={iconClass} />, brandColor: "#E34F26" },
       { name: "CSS3", icon: <FaCss3Alt className={iconClass} />, brandColor: "#1572B6" },
       { name: "Vite", icon: <SiVite className={iconClass} />, brandColor: "#646CFF" },
-      { name: "Redux", icon: <SiRedux className={iconClass} />, brandColor: "#764ABC" },
     ],
     'Backend': [
       { name: "C#", icon: <TbBrandCSharp className={iconClass} />, brandColor: "#9B4993" },
@@ -127,23 +158,32 @@ export const TechStack = () => {
 
   return (
     <section 
+      ref={sectionRef}
       id="stack" 
-      className="w-full min-h-[calc(100vh-5rem)] lg:min-h-screen pt-4 pb-20 mt-6 scroll-mt-24 flex flex-col items-center justify-center relative"
+      className="w-full min-h-[calc(100vh-5rem)] lg:min-h-screen pt-4 pb-16 sm:pb-20 mt-6 px-4 scroll-mt-24 flex flex-col items-center justify-center relative"
     >
       <div className="w-full max-w-4xl mx-auto flex flex-col items-center my-auto">
         
         {/* Título igual que en Mis Proyectos */}
-        <h2 className="text-4xl font-bold text-[#222831] dark:text-[#eeeeee] mb-8 text-center">
+        <h2
+          className={`text-3xl sm:text-4xl font-bold text-[#222831] dark:text-[#eeeeee] mb-6 sm:mb-8 text-center transition-all duration-700 ease-out ${
+            isVisible ? 'opacity-100 translate-y-0 blur-none' : 'opacity-0 translate-y-4 blur-sm'
+          }`}
+        >
           Mi Stack
         </h2>
 
         {/* Selector de Secciones Estilo Elegante */}
-        <div className="flex flex-wrap justify-center gap-2 mb-12 bg-slate-100 dark:bg-[#0a0a0a] p-1.5 rounded-full border border-slate-200 dark:border-white/10 shadow-sm relative z-20">
+        <div
+          className={`flex flex-wrap justify-center gap-1.5 sm:gap-2 mb-8 sm:mb-12 bg-slate-100 dark:bg-[#0a0a0a] p-1.5 rounded-2xl sm:rounded-full border border-slate-200 dark:border-white/10 shadow-sm relative z-20 transition-all duration-700 delay-100 ease-out ${
+            isVisible ? 'opacity-100 translate-y-0 blur-none' : 'opacity-0 translate-y-4 blur-sm'
+          }`}
+        >
           {Object.keys(categories).map(tab => (
             <button
               key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`px-5 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 cursor-pointer ${
+              onClick={() => handleTabChange(tab)}
+              className={`px-3.5 sm:px-6 py-2 sm:py-2.5 rounded-xl sm:rounded-full text-xs sm:text-sm font-medium transition-all duration-300 cursor-pointer ${
                 activeTab === tab 
                   ? 'bg-white dark:bg-[#1c1c1c] text-slate-900 dark:text-white shadow-sm border border-slate-200 dark:border-white/10' 
                   : 'text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 border border-transparent bg-transparent'
@@ -154,7 +194,7 @@ export const TechStack = () => {
           ))}
         </div>
 
-        {/* Grid Estilo Logo Cloud Puro con soporte para Colores de Marca al Hover */}
+        {/* Grid Estilo Panel con efecto de vaho/borrosidad que se despeja en cascada */}
         <div className="w-full relative border-l border-t border-slate-200 dark:border-white/5 bg-transparent">
           <div className="grid grid-cols-2 md:grid-cols-4">
             {currentItems.map((item, i) => {
@@ -163,21 +203,35 @@ export const TechStack = () => {
               const isLastRow = Math.floor(i / 4) === Math.floor((currentItems.length - 1) / 4);
               const showCross = !isLastCol && !isLastRow;
 
+              // Onda diagonal tipo panal (fila + columna) para despejar el vaho celda por celda
+              const row = Math.floor(i / 4);
+              const col = i % 4;
+              const cellDelay = (row + col) * 75;
+
               const isHovered = hoveredItem === item.name;
               const effectiveColor = (isDark && item.darkBrandColor) ? item.darkBrandColor : item.brandColor;
 
               return (
                 <div 
-                  key={item.name} 
+                  key={`${activeTab}-${item.name}`} 
                   onMouseEnter={() => setHoveredItem(item.name)}
                   onMouseLeave={() => setHoveredItem(null)}
+                  onClick={() => setHoveredItem(hoveredItem === item.name ? null : item.name)}
                   style={{
                     backgroundColor: isHovered 
                       ? (isDark ? `${effectiveColor}14` : `${effectiveColor}0d`) 
                       : undefined,
                   }}
-                  className="relative h-24 flex items-center justify-center border-r border-b border-slate-200 dark:border-white/5 transition-colors duration-300 group cursor-default overflow-hidden select-none"
+                  className="relative h-20 sm:h-24 px-2 flex items-center justify-center border-r border-b border-slate-200 dark:border-white/5 transition-colors duration-300 group cursor-default overflow-hidden select-none"
                 >
+                  {/* Capa de vaho / cristal empañado que se evapora al aparecer */}
+                  <div
+                    style={{ transitionDelay: `${cellDelay}ms` }}
+                    className={`pointer-events-none absolute inset-0 z-20 bg-white/60 dark:bg-[#222831]/70 backdrop-blur-md transition-opacity duration-700 ease-out ${
+                      isClear ? 'opacity-0' : 'opacity-100'
+                    }`}
+                  />
+
                   {/* Resplandor ambiental suave al hover con el color de la marca */}
                   <div 
                     className={`absolute w-16 h-16 rounded-full blur-xl pointer-events-none transition-opacity duration-300 ${
@@ -186,17 +240,24 @@ export const TechStack = () => {
                     style={{ backgroundColor: effectiveColor }}
                   />
 
-                  {/* Contenido (Icono con color oficial en hover + Texto) */}
-                  <div className="relative z-10 flex items-center gap-3">
+                  {/* Contenido que pasa de borroso/empañado a totalmente nítido */}
+                  <div
+                    style={{ transitionDelay: `${cellDelay}ms` }}
+                    className={`relative z-10 flex items-center gap-2.5 sm:gap-3 transition-all duration-700 ease-out transform ${
+                      isClear
+                        ? 'opacity-100 scale-100 blur-none translate-y-0'
+                        : 'opacity-0 scale-90 blur-[8px] translate-y-2'
+                    }`}
+                  >
                     <span 
                       style={{ color: isHovered ? effectiveColor : undefined }}
-                      className={`transition-all duration-300 transform group-hover:scale-115 ${
+                      className={`transition-all duration-300 transform group-hover:scale-115 shrink-0 ${
                         isHovered ? '' : 'text-slate-400 dark:text-slate-500'
                       }`}
                     >
                       {item.icon}
                     </span>
-                    <span className="font-semibold text-[15px] tracking-wide text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white transition-colors duration-300">
+                    <span className="font-semibold text-xs sm:text-[15px] tracking-wide text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white transition-colors duration-300 truncate">
                       {item.name}
                     </span>
                   </div>
