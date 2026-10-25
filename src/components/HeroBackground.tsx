@@ -42,11 +42,14 @@ function shuffleArray<T>(array: T[]): T[] {
   return copy;
 }
 
-// Columna individual (Estática, sin animación)
+// Columna individual con pulso suave sincronizado (al cargar y luego cada ~3s)
 const ImageColumn = ({ images = [] }: { images: string[] }) => (
   <div className="flex flex-col gap-4 sm:gap-6 min-w-[200px] sm:min-w-[250px] lg:min-w-[300px]">
     {images.map((src, i) => (
-      <div key={src || i} className="relative w-full rounded-2xl overflow-hidden shadow-2xl border border-slate-300/70 dark:border-white/10 aspect-video lg:aspect-[4/3] bg-slate-200 dark:bg-slate-800">
+      <div
+        key={src || i}
+        className="animate-hero-heartbeat relative w-full rounded-2xl overflow-hidden shadow-2xl border border-slate-300/70 dark:border-white/10 aspect-video lg:aspect-[4/3] bg-slate-200 dark:bg-slate-800"
+      >
         <img 
           src={src} 
           alt="Project Background" 
@@ -63,12 +66,12 @@ export const HeroBackground = () => {
   const shuffledImages = useMemo(() => shuffleArray(projectImages), []);
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 animate-hero-bg">
       
       {/* Contenedor limitado al 50% izquierdo de la pantalla */}
       <div className="absolute top-0 left-0 w-full md:w-1/2 h-full flex justify-center items-center gap-4 sm:gap-6 lg:gap-8 opacity-40 dark:opacity-50 transform -rotate-[25deg] scale-[1.7] lg:scale-[1.5] origin-center">
         
-        {/* Columnas estáticas con capturas reales aleatorias sin repetir */}
+        {/* Columnas con capturas reales aleatorias sin repetir */}
         <ImageColumn images={shuffledImages.slice(0, 3)} />
         <ImageColumn images={shuffledImages.slice(3, 6)} />
         <ImageColumn images={shuffledImages.slice(6, 9)} />

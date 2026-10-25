@@ -117,9 +117,36 @@ export const ProjectCard = ({ title, domain, description, aboutApp, tags, github
           
           {/* 3 Botoncitos Mac */}
           <div className="flex gap-1.5 sm:gap-2 w-14 sm:w-28 shrink-0">
-            <div className="w-3 h-3 rounded-full bg-[#ff5f57] shadow-2xs hover:brightness-110 transition-all" />
-            <div className="w-3 h-3 rounded-full bg-[#febc2e] shadow-2xs hover:brightness-110 transition-all" />
-            <div className="w-3 h-3 rounded-full bg-[#28c840] shadow-2xs hover:brightness-110 transition-all" />
+            <div
+              className="w-3 h-3 rounded-full bg-[#ff5f57] shadow-2xs hover:brightness-95 flex items-center justify-center group/btn transition-all"
+              title={isOpen ? 'Cerrar proyecto' : 'Expandir proyecto'}
+            >
+              {isOpen && (
+                <span className="text-[8px] font-bold text-red-950 opacity-0 group-hover/btn:opacity-100 leading-none">✕</span>
+              )}
+            </div>
+            <div
+              className="w-3 h-3 rounded-full bg-[#febc2e] shadow-2xs hover:brightness-95 flex items-center justify-center group/btn transition-all"
+              title={isOpen ? 'Minimizar proyecto' : 'Expandir proyecto'}
+            >
+              {isOpen && (
+                <span className="text-[8px] font-bold text-yellow-950 opacity-0 group-hover/btn:opacity-100 leading-none">−</span>
+              )}
+            </div>
+            <div
+              onClick={(e) => {
+                if (isOpen) {
+                  e.stopPropagation();
+                  setIsModalOpen(true);
+                }
+              }}
+              className="w-3 h-3 rounded-full bg-[#28c840] shadow-2xs hover:brightness-95 flex items-center justify-center group/btn transition-all"
+              title={isOpen ? 'Ampliar vista completa' : 'Expandir proyecto'}
+            >
+              {isOpen && (
+                <span className="text-[7px] font-bold text-green-950 opacity-0 group-hover/btn:opacity-100 leading-none">+</span>
+              )}
+            </div>
           </div>
 
           {/* URL Bar */}
@@ -132,8 +159,27 @@ export const ProjectCard = ({ title, domain, description, aboutApp, tags, github
             </div>
           </div>
 
-          {/* Espaciador derecho simétrico */}
-          <div className="w-14 sm:w-28 shrink-0" />
+          {/* Derecha: Botón cerrar (X) visible cuando la ventana del proyecto está desplegada */}
+          <div className="w-14 sm:w-28 shrink-0 flex justify-end">
+            {isOpen && (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (activeOpenProjectTitle === title) {
+                    activeOpenProjectTitle = null;
+                  }
+                  setIsOpen(false);
+                }}
+                className="flex items-center justify-center p-1.5 rounded-md bg-white/90 dark:bg-zinc-800 border border-zinc-300/90 dark:border-zinc-700 text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-700 shadow-2xs transition-colors cursor-pointer"
+                title="Cerrar proyecto"
+              >
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            )}
+          </div>
         </div>
 
         {/* CUERPO DEL PROYECTO */}

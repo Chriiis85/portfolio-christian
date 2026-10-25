@@ -68,7 +68,7 @@ export const Navbar = () => {
         {/* IZQUIERDA: Logo y Tema */}
         <div className="flex-1 flex items-center gap-2 sm:gap-3 min-w-0">
           <a href="#inicio" className="text-lg sm:text-xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight hover:opacity-80 transition-opacity truncate">
-            Christian<span className="text-sky-500 dark:text-sky-400 font-mono font-normal">.dev</span>
+            Christian<span className="text-sky-500 dark:text-sky-400 font-normal">.dev</span>
           </a>
           
           <button
@@ -96,9 +96,9 @@ export const Navbar = () => {
               >
                 {item.icon}
                 {isActive && (
-                  <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-sky-500 dark:bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,0.85)]" />
+                  <span className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-sky-500 dark:bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,0.85)]" />
                 )}
-                <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs font-mono bg-zinc-900 text-zinc-100 dark:bg-zinc-800 dark:text-zinc-100 border border-zinc-700/60 px-2 py-0.5 rounded-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-lg">
+                <span className="absolute -bottom-9 left-1/2 -translate-x-1/2 text-xs font-medium bg-zinc-900 text-zinc-100 dark:bg-zinc-800 dark:text-zinc-100 border border-zinc-700/60 px-2 py-0.5 rounded-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-lg">
                   {item.name}
                 </span>
               </a>
@@ -141,7 +141,7 @@ export const Navbar = () => {
             >
               {item.icon}
               {isActive && (
-                <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-sky-500 dark:bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,0.8)]" />
+                <span className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-sky-500 dark:bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,0.8)]" />
               )}
             </a>
           );

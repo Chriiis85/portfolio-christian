@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import './App.css'
 import { Navbar } from './components/Navbar'
 import { ProjectCard } from './components/ProjectCard'
@@ -7,7 +8,48 @@ import { AboutSection, ExperienceSection } from './components/AboutSection'
 import { EducationSection } from './components/EducationSection'
 import { ContactSection } from './components/ContactSection'
 
+const HERO_ROLE_PART_1 = 'Desarrollador de Aplicaciones Web'
+const HERO_ROLE_DIVIDER = ' / '
+const HERO_ROLE_PART_2 = 'Desarrollador Full Stack'
+const HERO_ROLE_TOTAL_LENGTH =
+  HERO_ROLE_PART_1.length + HERO_ROLE_DIVIDER.length + HERO_ROLE_PART_2.length
+
 function App() {
+  const [typedRoleChars, setTypedRoleChars] = useState(0)
+  const [hasStartedRoleTyping, setHasStartedRoleTyping] = useState(false)
+
+  // Inicia el typing del subtítulo tras el blur-in del título principal
+  useEffect(() => {
+    const startTimer = setTimeout(() => {
+      setHasStartedRoleTyping(true)
+    }, 450)
+    return () => clearTimeout(startTimer)
+  }, [])
+
+  // Avanza letra a letra una sola vez hasta completar el subtítulo
+  useEffect(() => {
+    if (!hasStartedRoleTyping) return
+
+    if (typedRoleChars < HERO_ROLE_TOTAL_LENGTH) {
+      const charTimer = setTimeout(() => {
+        setTypedRoleChars((prev) => prev + 1)
+      }, 24)
+      return () => clearTimeout(charTimer)
+    }
+  }, [hasStartedRoleTyping, typedRoleChars])
+
+  const part1End = HERO_ROLE_PART_1.length
+  const dividerEnd = part1End + HERO_ROLE_DIVIDER.length
+
+  const visiblePart1 = HERO_ROLE_PART_1.slice(0, Math.min(typedRoleChars, part1End))
+  const visibleDivider =
+    typedRoleChars > part1End
+      ? HERO_ROLE_DIVIDER.slice(0, Math.min(typedRoleChars - part1End, HERO_ROLE_DIVIDER.length))
+      : ''
+  const visiblePart2 =
+    typedRoleChars > dividerEnd ? HERO_ROLE_PART_2.slice(0, typedRoleChars - dividerEnd) : ''
+  const isRoleTypingComplete = typedRoleChars >= HERO_ROLE_TOTAL_LENGTH
+
   return (
     <div className="min-h-screen bg-[#fafafa] dark:bg-[#09090b] text-zinc-900 dark:text-zinc-100 transition-colors duration-300">
       {/* Nuestro nuevo componente de Navegación */}
@@ -18,17 +60,51 @@ function App() {
         <section id="inicio" className="relative overflow-hidden min-h-screen flex items-center justify-center pt-16 px-4 bg-[#fafafa] dark:bg-[#09090b] transition-colors duration-300">
           <HeroBackground />
           <div className="relative z-10 w-full max-w-4xl mx-auto text-center">
-            <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold tracking-tight text-zinc-900 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-b dark:from-white dark:via-zinc-100 dark:to-zinc-400 mb-3 sm:mb-4 leading-tight">
-              ¡Hola, soy Christian!
+            <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold tracking-tight mb-3 sm:mb-4 leading-tight flex flex-wrap items-center justify-center gap-x-2.5 sm:gap-x-4">
+              {['¡Hola,', 'soy', 'Christian!'].map((word, index) => (
+                <span
+                  key={word}
+                  style={{ animationDelay: `${index * 120}ms` }}
+                  className="animate-hero-blur inline-block text-zinc-900 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-b dark:from-white dark:via-zinc-100 dark:to-zinc-400"
+                >
+                  {word}
+                </span>
+              ))}
             </h1>
-            <p className="text-base sm:text-xl md:text-2xl text-zinc-700 dark:text-zinc-300 font-medium mb-4 sm:mb-6 tracking-tight">
-              Desarrollador de Aplicaciones Web <span className="text-sky-500 dark:text-sky-400 font-mono mx-1">/</span> Desarrollador Full Stack
+
+            <p
+              style={{ animationDelay: '340ms' }}
+              className="animate-hero-blur text-base sm:text-xl md:text-2xl text-zinc-700 dark:text-zinc-300 font-medium mb-4 sm:mb-6 tracking-tight min-h-[3.25rem] sm:min-h-[2.25rem] flex items-center justify-center"
+            >
+              <span>
+                {visiblePart1}
+                {visibleDivider && (
+                  <span className="text-sky-500 dark:text-sky-400">
+                    {visibleDivider}
+                  </span>
+                )}
+                {visiblePart2}
+                <span
+                  aria-hidden="true"
+                  className={`inline-block w-[2px] h-[1.05em] align-middle bg-sky-500 dark:bg-sky-400 ml-1 ${
+                    isRoleTypingComplete ? 'animate-caret-blink' : 'opacity-100'
+                  }`}
+                />
+              </span>
             </p>
-            <p className="text-sm sm:text-lg text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed">
-              Bienvenido a mi portfolio. Aquí podrás encontrar mis últimos proyectos, novedades sobre mí y un punto mas focalizado de mi vida como desarrollador.</p>
+
+            <p
+              style={{ animationDelay: '620ms' }}
+              className="animate-hero-blur text-sm sm:text-lg text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed"
+            >
+              Bienvenid@ a mi portfolio. Aquí podrás encontrar mis últimos proyectos, novedades sobre mí y un punto mas focalizado de mi vida como desarrollador.
+            </p>
 
             {/* Botones de Acción Rápida (CTA) */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-3.5 mt-7 sm:mt-8">
+            <div
+              style={{ animationDelay: '820ms' }}
+              className="animate-hero-blur flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-3.5 mt-7 sm:mt-8"
+            >
               <a href="#proyectos" className="w-full sm:w-auto px-7 py-3 bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-950 font-semibold rounded-lg hover:bg-zinc-800 dark:hover:bg-white active:scale-[0.98] transition-all shadow-lg shadow-zinc-950/10 dark:shadow-[0_0_25px_rgba(255,255,255,0.08)] text-sm sm:text-[15px]">
                 Ver Mis Proyectos
               </a>

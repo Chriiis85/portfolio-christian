@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Briefcase, MapPin, CheckCircle2, Code2, GraduationCap, Mail, Phone } from 'lucide-react';
+import { Briefcase, MapPin, CheckCircle2, Code2, GraduationCap, Mail, Phone, FileText } from 'lucide-react';
+import { CvPreviewModal } from './CvPreviewModal';
 
 interface CodeToken {
   text: string;
@@ -61,17 +62,53 @@ const CODE_TOKENS: CodeToken[] = [
 const FULL_CODE_TEXT = CODE_TOKENS.map((t) => t.text).join('');
 const TOTAL_CHARS = FULL_CODE_TEXT.length;
 
+type CompileStage = 'idle' | 'collapsing' | 'circle' | 'unfolding' | 'done';
+
 export const AboutSection: React.FC = () => {
   const [hasStartedTyping, setHasStartedTyping] = useState(false);
   const [typedChars, setTypedChars] = useState(0);
-  const [isCompiling, setIsCompiling] = useState(false);
-  const [isCompiled, setIsCompiled] = useState(false);
+  const [compileStage, setCompileStage] = useState<CompileStage>('idle');
   const [shouldBounce, setShouldBounce] = useState(false);
+  const [isCvModalOpen, setIsCvModalOpen] = useState(false);
   const aboutRef = useRef<HTMLDivElement | null>(null);
   const lastScrolledLineRef = useRef<number>(0);
+  const userCancelledAutoScrollRef = useRef<boolean>(false);
+  const lastUserScrollInputRef = useRef<number>(0);
+  const typingStartTimestampRef = useRef<number>(0);
 
   const isTypingComplete = typedChars >= TOTAL_CHARS;
+  const isCompiling = compileStage === 'collapsing' || compileStage === 'circle' || compileStage === 'unfolding';
+  const isCompiled = compileStage === 'circle' || compileStage === 'unfolding' || compileStage === 'done';
   const currentLineCount = FULL_CODE_TEXT.slice(0, typedChars).split('\n').length;
+
+  // Detectar cualquier gesto de scroll manual del usuario para no bloquear ni pelear con su deslizamiento
+  useEffect(() => {
+    const handleUserScrollInput = () => {
+      const now = Date.now();
+      lastUserScrollInputRef.current = now;
+
+      // Si ya empezó a escribirse hace más de 350ms y el usuario hace scroll manual, cedemos el control total
+      if (hasStartedTyping && !isCompiled && now - typingStartTimestampRef.current > 350) {
+        userCancelledAutoScrollRef.current = true;
+      }
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Space'].includes(e.code)) {
+        handleUserScrollInput();
+      }
+    };
+
+    window.addEventListener('wheel', handleUserScrollInput, { passive: true });
+    window.addEventListener('touchmove', handleUserScrollInput, { passive: true });
+    window.addEventListener('keydown', handleKeyDown, { passive: true });
+
+    return () => {
+      window.removeEventListener('wheel', handleUserScrollInput);
+      window.removeEventListener('touchmove', handleUserScrollInput);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [hasStartedTyping, isCompiled]);
 
   // Detectar cuando el usuario hace scroll hasta la sección "Sobre mí"
   useEffect(() => {
@@ -79,6 +116,7 @@ export const AboutSection: React.FC = () => {
       (entries) => {
         const [entry] = entries;
         if (entry.isIntersecting && !hasStartedTyping) {
+          typingStartTimestampRef.current = Date.now();
           setHasStartedTyping(true);
         }
       },
@@ -118,9 +156,9 @@ export const AboutSection: React.FC = () => {
     return () => clearTimeout(bounceTimer);
   }, [isTypingComplete, isCompiled, isCompiling]);
 
-  // Auto-scroll inteligente a medida que se van tipeando líneas sin cortar nunca la parte superior con el header
+  // Auto-scroll inteligente que acompaña el crecimiento de la ventana SOLO si el usuario no está haciendo scroll manual
   useEffect(() => {
-    if (!hasStartedTyping || isCompiled || !aboutRef.current) return;
+    if (!hasStartedTyping || isCompiled || !aboutRef.current || userCancelledAutoScrollRef.current) return;
 
     const shouldCheckScroll =
       currentLineCount !== lastScrolledLineRef.current || isTypingComplete;
@@ -129,23 +167,23 @@ export const AboutSection: React.FC = () => {
       lastScrolledLineRef.current = currentLineCount;
 
       requestAnimationFrame(() => {
-        if (!aboutRef.current) return;
+        if (!aboutRef.current || userCancelledAutoScrollRef.current) return;
+
+        // Si el usuario acaba de usar la rueda o el dedo hace menos de 350ms, respetamos su inercia
+        if (Date.now() - lastUserScrollInputRef.current < 350) return;
+
         const rect = aboutRef.current.getBoundingClientRect();
         const viewportHeight = window.innerHeight;
         const headerOffset = 88; // Altura del header fijo + margen de respiro
         const bottomMargin = 60;
 
-        // Al empezar a escribir, colocamos el título/inicio de la sección justo debajo del header
-        if (currentLineCount <= 2 && (rect.top > viewportHeight * 0.45 || rect.top < headerOffset)) {
-          const targetTop = rect.top + window.scrollY - headerOffset;
-          window.scrollTo({
-            top: targetTop,
-            behavior: 'smooth',
-          });
+        // Si el usuario ya ha bajado más allá de la cabecera de Sobre Mí, no lo frenamos
+        if (rect.top < headerOffset) {
+          userCancelledAutoScrollRef.current = true;
           return;
         }
 
-        // A medida que crece la ventana, solo bajamos si no empuja el título por encima del header fijo
+        // A medida que crece la ventana, solo acompañamos hacia abajo si se sale por debajo de la pantalla
         if (rect.bottom > viewportHeight - bottomMargin && rect.top > headerOffset + 20) {
           const maxAllowedDelta = Math.max(0, rect.top - headerOffset);
           const neededDelta = rect.bottom - (viewportHeight - bottomMargin);
@@ -162,19 +200,31 @@ export const AboutSection: React.FC = () => {
   }, [currentLineCount, isTypingComplete, hasStartedTyping, isCompiled]);
 
   const handleCompile = () => {
-    if (!isTypingComplete || isCompiling) return;
+    if (!isTypingComplete || compileStage !== 'idle') return;
     setShouldBounce(false);
-    setIsCompiling(true);
+
+    // PASO 1: El código se contrae hacia el punto central superior donde nacerá el avatar (400ms)
+    setCompileStage('collapsing');
+
+    // PASO 2: Emerge y se abre el círculo con la foto de su cara en ese punto exacto
     setTimeout(() => {
-      setIsCompiling(false);
-      setIsCompiled(true);
+      setCompileStage('circle');
+
+      // PASO 3: Desde el círculo, se despliega el resto de la tarjeta suavemente
       setTimeout(() => {
-        if (!aboutRef.current) return;
-        const headerOffset = 88;
-        const targetTop = aboutRef.current.getBoundingClientRect().top + window.scrollY - headerOffset;
-        window.scrollTo({ top: targetTop, behavior: 'smooth' });
-      }, 60);
-    }, 450);
+        setCompileStage('unfolding');
+
+        // PASO 4: Finalizado completamente
+        setTimeout(() => {
+          setCompileStage('done');
+          if (aboutRef.current) {
+            const headerOffset = 88;
+            const targetTop = aboutRef.current.getBoundingClientRect().top + window.scrollY - headerOffset;
+            window.scrollTo({ top: targetTop, behavior: 'smooth' });
+          }
+        }, 650);
+      }, 550);
+    }, 400);
   };
 
   // Renderizado parcial de tokens según typedChars (con enlaces clicables válidos)
@@ -218,14 +268,21 @@ export const AboutSection: React.FC = () => {
         </h2>
         {!isCompiled ? (
           <div
-            className={`w-full max-w-4xl mx-auto transition-all duration-700 ease-out transform ${
-              hasStartedTyping
+            style={{ transformOrigin: '50% 72px' }}
+            className={`w-full max-w-4xl mx-auto transition-all duration-400 ease-in-out transform ${
+              compileStage === 'collapsing'
+                ? 'scale-0 opacity-0 rounded-[999px] blur-xs pointer-events-none'
+                : hasStartedTyping
                 ? 'opacity-100 translate-y-0 scale-100'
                 : 'opacity-0 translate-y-12 scale-95'
             }`}
           >
             {/* Ventana con el mismo estilo exacto de ProjectCard en light y dark mode */}
-            <div className="relative w-full flex flex-col border border-zinc-200/90 dark:border-zinc-800/90 rounded-xl overflow-hidden bg-white dark:bg-[#111113] shadow-[0_12px_32px_rgba(0,0,0,0.06)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.6),inset_0_1px_0_0_rgba(255,255,255,0.06)] hover:border-zinc-300 dark:hover:border-zinc-700/90 transition-all duration-500 ease-in-out">
+            <div
+              className={`relative w-full flex flex-col border border-zinc-200/90 dark:border-zinc-800/90 overflow-hidden bg-white dark:bg-[#111113] shadow-[0_12px_32px_rgba(0,0,0,0.06)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.6),inset_0_1px_0_0_rgba(255,255,255,0.06)] hover:border-zinc-300 dark:hover:border-zinc-700/90 transition-all duration-400 ease-in-out ${
+                compileStage === 'collapsing' ? 'rounded-[999px]' : 'rounded-xl'
+              }`}
+            >
               
               {/* CABECERA SAFARI / MAC (adaptable desde 320px hasta 4K) */}
               <div className="flex items-center justify-between gap-2 px-3 sm:px-4 py-2.5 sm:py-3 bg-zinc-100/90 dark:bg-[#161618] border-b border-zinc-200/90 dark:border-zinc-800/80 transition-colors duration-300">
@@ -274,15 +331,44 @@ export const AboutSection: React.FC = () => {
             </div>
           </div>
         ) : (
-          /* SOBRE MÍ REAL (Tarjeta de perfil estilo referencia con el mismo ancho max-w-4xl que Mis Proyectos) */
-          <div className="w-full max-w-4xl mx-auto pt-16 sm:pt-20 mt-2 transition-all duration-500 animate-fadeIn">
-            <div className="relative flex flex-col min-w-0 break-words bg-white dark:bg-[#111113] w-full shadow-[0_12px_32px_rgba(0,0,0,0.06)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.6),inset_0_1px_0_0_rgba(255,255,255,0.06)] rounded-xl border border-zinc-200/90 dark:border-zinc-800/90 px-4 sm:px-12 pb-8 sm:pb-12 pt-6">
-              
-              {/* Fila superior: Estadísticas (Izquierda) + Foto sobresaliendo (Centro) + Botón CONNECT a GitHub (Derecha) */}
+          /* SOBRE MÍ REAL (Despliegue cinematográfico desde el círculo con la foto de su cara) */
+          <div className="w-full max-w-4xl mx-auto pt-4 relative">
+            {/* AVATAR CIRCULAR: Centro exacto de la metamorfosis, se abre y emite brillo Ice */}
+            <div className="flex justify-center -mb-16 sm:-mb-20 relative z-30 pointer-events-auto">
+              <div
+                className={`relative w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-white dark:border-[#111113] bg-zinc-800 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] transform ${
+                  compileStage === 'circle'
+                    ? 'animate-circle-bloom ring-4 ring-sky-400'
+                    : 'scale-100 ring-2 ring-sky-500/30 dark:ring-sky-400/30 shadow-2xl'
+                }`}
+              >
+                <img
+                  src="https://media.licdn.com/dms/image/v2/D4D03AQER95VpQqGa6g/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1710956028738?e=1793232000&v=beta&t=r2znvX5bBHZIGz03ckGuWbA6Zp60uVlcOkOCAPnj90w"
+                  alt="Christian Moreno Díaz"
+                  className="w-full h-full object-cover select-none"
+                />
+              </div>
+            </div>
+
+            {/* CUERPO DE LA TARJETA: Se despliega desde el círculo */}
+            <div
+              className={`relative flex flex-col min-w-0 break-words bg-white dark:bg-[#111113] w-full rounded-xl border border-zinc-200/90 dark:border-zinc-800/90 px-4 sm:px-12 pb-8 sm:pb-12 pt-20 sm:pt-24 transition-all duration-700 ease-out origin-top ${
+                compileStage === 'circle'
+                  ? 'opacity-0 scale-y-0 pointer-events-none h-0 overflow-hidden'
+                  : compileStage === 'unfolding'
+                  ? 'animate-card-unfold shadow-[0_12px_32px_rgba(0,0,0,0.06)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.6),inset_0_1px_0_0_rgba(255,255,255,0.06)]'
+                  : 'opacity-100 scale-y-100 shadow-[0_12px_32px_rgba(0,0,0,0.06)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.6),inset_0_1px_0_0_rgba(255,255,255,0.06)]'
+              }`}
+            >
+              {/* Fila superior: Estadísticas (Izquierda) + Espaciador central + Botones (Derecha) */}
               <div className="flex flex-col md:flex-row items-center justify-between">
                 
-                {/* Estadísticas rápidas */}
-                <div className="w-full md:w-4/12 flex justify-center md:justify-start gap-6 sm:gap-8 order-2 md:order-1 mt-6 md:mt-0">
+                {/* Estadísticas rápidas: se despliegan desde el círculo hacia la izquierda */}
+                <div
+                  className={`w-full md:w-5/12 flex justify-center md:justify-start gap-6 sm:gap-8 order-2 md:order-1 mt-6 md:mt-0 transition-all duration-600 delay-150 transform ${
+                    compileStage === 'circle' ? '-translate-x-12 opacity-0' : 'translate-x-0 opacity-100'
+                  }`}
+                >
                   <div className="text-center">
                     <span className="text-xl font-bold block uppercase tracking-wide text-zinc-900 dark:text-zinc-100">
                       5+
@@ -303,24 +389,28 @@ export const AboutSection: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Foto circular sobresaliendo por arriba */}
-                <div className="w-full md:w-4/12 flex justify-center order-1 md:order-2">
-                  <div className="relative -mt-20 w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 rounded-full overflow-hidden shadow-2xl border-4 border-white dark:border-[#111113] bg-zinc-800">
-                    <img
-                      src="https://media.licdn.com/dms/image/v2/D4D03AQER95VpQqGa6g/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1710956028738?e=1793232000&v=beta&t=r2znvX5bBHZIGz03ckGuWbA6Zp60uVlcOkOCAPnj90w"
-                      alt="Christian Moreno Díaz"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                </div>
+                {/* Espaciador central para el avatar en desktop */}
+                <div className="hidden md:block w-2/12" />
 
-                {/* Botones CONNECT (LinkedIn) y PROJECTS (GitHub) */}
-                <div className="w-full md:w-4/12 flex flex-wrap items-center justify-center md:justify-end gap-3 order-3 mt-6 md:mt-0">
+                {/* Botones VER CV, CONNECT (LinkedIn) y PROJECTS (GitHub) */}
+                <div
+                  className={`w-full md:w-5/12 flex flex-wrap items-center justify-center md:justify-end gap-2.5 order-3 mt-6 md:mt-0 transition-all duration-600 delay-200 transform ${
+                    compileStage === 'circle' ? 'translate-x-12 opacity-0' : 'translate-x-0 opacity-100'
+                  }`}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setIsCvModalOpen(true)}
+                    className="inline-flex items-center gap-1.5 bg-zinc-900 dark:bg-zinc-100 hover:bg-zinc-800 dark:hover:bg-white active:scale-95 text-white dark:text-zinc-950 font-semibold uppercase text-xs px-4 py-2.5 rounded-lg shadow-sm transition-all tracking-wider cursor-pointer"
+                  >
+                    <FileText className="w-3.5 h-3.5 text-sky-400 dark:text-sky-600 shrink-0" />
+                    <span>Ver CV</span>
+                  </button>
                   <a
                     href="https://www.linkedin.com/in/christian-moreno-d%C3%ADaz-109024292/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-zinc-900 dark:bg-zinc-100 hover:bg-zinc-800 dark:hover:bg-white active:scale-95 text-white dark:text-zinc-950 font-semibold uppercase text-xs px-5 py-2.5 rounded-lg shadow-sm transition-all tracking-wider"
+                    className="bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200/80 dark:hover:bg-zinc-800 active:scale-95 text-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-800 font-semibold uppercase text-xs px-4 py-2.5 rounded-lg shadow-xs transition-all tracking-wider"
                   >
                     Connect
                   </a>
@@ -328,20 +418,24 @@ export const AboutSection: React.FC = () => {
                     href="https://github.com/Chriiis85"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200/80 dark:hover:bg-zinc-800 active:scale-95 text-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-800 font-semibold uppercase text-xs px-5 py-2.5 rounded-lg shadow-xs transition-all tracking-wider"
+                    className="bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200/80 dark:hover:bg-zinc-800 active:scale-95 text-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-800 font-semibold uppercase text-xs px-4 py-2.5 rounded-lg shadow-xs transition-all tracking-wider"
                   >
                     Projects
                   </a>
                 </div>
               </div>
 
-              {/* Información central de Christian */}
-              <div className="text-center mt-8">
+              {/* Información central de Christian: se desliza suavemente hacia abajo */}
+              <div
+                className={`text-center mt-8 transition-all duration-600 delay-250 transform ${
+                  compileStage === 'circle' ? 'translate-y-6 opacity-0' : 'translate-y-0 opacity-100'
+                }`}
+              >
                 <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight leading-normal text-zinc-900 dark:text-zinc-100 mb-2">
                   Christian Moreno Díaz
                 </h2>
 
-                <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-xs font-mono uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-6">
+                <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-6">
                   <a
                     href="mailto:christianmorenodiaz85@gmail.com"
                     className="inline-flex items-center gap-1.5 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors break-all"
@@ -370,8 +464,12 @@ export const AboutSection: React.FC = () => {
                 </div>
               </div>
 
-              {/* Línea divisoria + Texto completo Sobre Mí */}
-              <div className="mt-10 pt-10 border-t border-zinc-200/80 dark:border-zinc-800/80 text-center">
+              {/* Línea divisoria + Texto completo Sobre Mí: se despliega suavemente */}
+              <div
+                className={`mt-10 pt-10 border-t border-zinc-200/80 dark:border-zinc-800/80 text-center transition-all duration-600 delay-300 transform ${
+                  compileStage === 'circle' ? 'translate-y-8 opacity-0' : 'translate-y-0 opacity-100'
+                }`}
+              >
                 <div className="flex flex-wrap justify-center">
                   <div className="w-full lg:w-10/12 px-2 sm:px-4 space-y-5">
                     <p className="text-base md:text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed">
@@ -391,6 +489,7 @@ export const AboutSection: React.FC = () => {
           </div>
         )}
       </div>
+      <CvPreviewModal isOpen={isCvModalOpen} onClose={() => setIsCvModalOpen(false)} />
     </section>
   );
 };
