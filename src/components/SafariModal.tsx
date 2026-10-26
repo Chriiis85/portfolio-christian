@@ -1,83 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import {
-  FaAngular,
-  FaReact,
-  FaWordpress,
-  FaHtml5,
-  FaCss3Alt,
-  FaJs,
-  FaCode,
-  FaPhp,
-  FaJava,
-  FaDatabase,
-  FaBootstrap,
-  FaGitAlt,
-  FaGithub,
-  FaFigma,
-  FaDocker,
-  FaNodeJs,
-  FaServer,
-  FaLayerGroup,
-} from 'react-icons/fa';
-import {
-  SiTypescript,
-  SiTailwindcss,
-  SiMysql,
-  SiFirebase,
-  SiJquery,
-  SiNextdotjs,
-  SiExpress,
-} from 'react-icons/si';
-
-export interface SkillBadgeConfig {
-  icon: React.ReactNode;
-  color: string;
-  label?: string;
-}
-
-export const getSkillBadgeConfig = (tag: string, iconClass = 'w-4 h-4'): SkillBadgeConfig => {
-  const normalized = tag.trim();
-  const map: Record<string, SkillBadgeConfig> = {
-    'Angular': { icon: <FaAngular className={iconClass} />, color: '#DD0031' },
-    'React': { icon: <FaReact className={iconClass} />, color: '#0284C7' },
-    'Wordpress': { icon: <FaWordpress className={iconClass} />, color: '#21759B' },
-    'WordPress': { icon: <FaWordpress className={iconClass} />, color: '#21759B' },
-    'HTML': { icon: <FaHtml5 className={iconClass} />, color: '#E34F26' },
-    'CSS': { icon: <FaCss3Alt className={iconClass} />, color: '#1572B6' },
-    'JavaScript': { icon: <FaJs className={iconClass} />, color: '#CA9E00' },
-    'TypeScript': { icon: <SiTypescript className={iconClass} />, color: '#3178C6' },
-    'PHP': { icon: <FaPhp className={iconClass} />, color: '#777BB4' },
-    'Java': { icon: <FaJava className={iconClass} />, color: '#E76F00' },
-    'SQL/MYSQL': { icon: <SiMysql className={iconClass} />, color: '#4479A1' },
-    'MySQL': { icon: <SiMysql className={iconClass} />, color: '#4479A1', label: 'MySQL' },
-    'Firebase': { icon: <SiFirebase className={iconClass} />, color: '#F57C00' },
-    'Bootstrap': { icon: <FaBootstrap className={iconClass} />, color: '#7952B3' },
-    'Tailwind': { icon: <SiTailwindcss className={iconClass} />, color: '#06B6D4' },
-    'Tailwind CSS': { icon: <SiTailwindcss className={iconClass} />, color: '#06B6D4', label: 'Tailwind CSS' },
-    'jQuery': { icon: <SiJquery className={iconClass} />, color: '#0769AD' },
-    'Git': { icon: <FaGitAlt className={iconClass} />, color: '#F05032' },
-    'Github': { icon: <FaGithub className={iconClass} />, color: '#24292E' },
-    'GitHub': { icon: <FaGithub className={iconClass} />, color: '#24292E' },
-    'Figma': { icon: <FaFigma className={iconClass} />, color: '#F24E1E' },
-    'UI/UX': { icon: <FaFigma className={iconClass} />, color: '#F24E1E' },
-    'Docker': { icon: <FaDocker className={iconClass} />, color: '#2496ED' },
-    'Next.js': { icon: <SiNextdotjs className={iconClass} />, color: '#111111' },
-    'Node.js': { icon: <FaNodeJs className={iconClass} />, color: '#339933' },
-    'Express': { icon: <SiExpress className={iconClass} />, color: '#353B48' },
-    'API REST': { icon: <FaServer className={iconClass} />, color: '#0092CA' },
-    'Backend': { icon: <FaDatabase className={iconClass} />, color: '#475569' },
-    'Frontend': { icon: <FaCode className={iconClass} />, color: '#2563EB' },
-    'Full-Stack': { icon: <FaLayerGroup className={iconClass} />, color: '#6D28D9' },
-  };
-
-  return (
-    map[normalized] || {
-      icon: <FaCode className={iconClass} />,
-      color: '#0092CA',
-    }
-  );
-};
+import { StatusBadge, type ProjectStatus } from './ProjectCard';
+import { getSkillBadgeConfig } from '../utils/skillBadges';
 
 interface SafariModalProps {
   isOpen: boolean;
@@ -90,6 +14,7 @@ interface SafariModalProps {
   webUrl?: string;
   tags?: string[];
   images?: string[];
+  status?: ProjectStatus;
 }
 
 const DEFAULT_GALLERY_IMAGES = [
@@ -126,7 +51,7 @@ const getFileNameFromUrl = (url: string, fallbackIndex: number, projectTitle: st
   return `${fallbackIndex + 1}_${projectTitle.replace(/\s+/g, '')}.png`;
 };
 
-export const SafariModal = ({ isOpen, onClose, title, domain, description, aboutApp, githubUrl, webUrl, tags = [], images }: SafariModalProps) => {
+export const SafariModal = ({ isOpen, onClose, title, domain, description, aboutApp, githubUrl, webUrl, tags = [], images, status }: SafariModalProps) => {
   const [isRendered, setIsRendered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
@@ -159,25 +84,32 @@ export const SafariModal = ({ isOpen, onClose, title, domain, description, about
 
   // Efecto para manejar la animación de entrada/salida y barajar imágenes aleatoriamente al abrir
   useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>;
     if (isOpen) {
+      document.body.style.overflow = 'hidden';
       const baseImages = images && images.length > 0 ? images : DEFAULT_GALLERY_IMAGES;
-      setShuffledUrls(shuffleArray(baseImages));
-      setIsRendered(true);
-      requestAnimationFrame(() => {
+      timer = setTimeout(() => {
+        setShuffledUrls(shuffleArray(baseImages));
+        setIsRendered(true);
         requestAnimationFrame(() => {
           setIsVisible(true);
         });
-      });
-      document.body.style.overflow = 'hidden';
+      }, 0);
+      return () => clearTimeout(timer);
     } else {
-      setIsVisible(false);
-      setSelectedImageIndex(null);
-      setIsPreviewMaximized(false);
-      const timer = setTimeout(() => {
+      document.body.style.overflow = 'auto';
+      const animTimer = setTimeout(() => {
+        setIsVisible(false);
+        setSelectedImageIndex(null);
+        setIsPreviewMaximized(false);
+      }, 0);
+      timer = setTimeout(() => {
         setIsRendered(false);
       }, 300);
-      document.body.style.overflow = 'auto';
-      return () => clearTimeout(timer);
+      return () => {
+        clearTimeout(animTimer);
+        clearTimeout(timer);
+      };
     }
   }, [isOpen, images]);
 
@@ -408,10 +340,15 @@ export const SafariModal = ({ isOpen, onClose, title, domain, description, about
           
           {/* DESCRIPCIÓN PERSONAL DEL PROYECTO ENCIMA DEL STACK */}
           {(aboutApp || description) && (
-            <div className="w-full max-w-5xl mx-auto mb-8 sm:mb-12 mt-1 sm:mt-2">
-              <h3 className="text-lg sm:text-2xl font-extrabold text-zinc-900 dark:text-zinc-100 mb-3 sm:mb-4 text-center tracking-tight">
-                Sobre {title}
-              </h3>
+            <div className="w-full max-w-5xl mx-auto mb-8 sm:mb-12 mt-1 sm:mt-2 text-center">
+              <div className="flex items-center justify-center gap-2 mb-3 flex-wrap">
+                <h3 className="text-lg sm:text-2xl font-extrabold text-zinc-900 dark:text-zinc-100 tracking-tight">
+                  Sobre {title}
+                </h3>
+                {status && (
+                  <StatusBadge status={status} size="md" />
+                )}
+              </div>
               <div className="bg-white dark:bg-[#111113] border border-zinc-200/90 dark:border-zinc-800/90 rounded-xl p-4 sm:p-7 shadow-xs">
                 <p className="text-xs sm:text-base text-zinc-600 dark:text-zinc-300 leading-relaxed text-center max-w-4xl mx-auto">
                   {aboutApp || description}

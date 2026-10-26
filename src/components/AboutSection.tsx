@@ -145,7 +145,6 @@ export const AboutSection: React.FC = () => {
   // Si pasan 5 segundos tras terminar el tipeo sin pulsar Compilar, el botón empieza a botar
   useEffect(() => {
     if (!isTypingComplete || isCompiled || isCompiling) {
-      setShouldBounce(false);
       return;
     }
 
@@ -259,7 +258,7 @@ export const AboutSection: React.FC = () => {
   };
 
   return (
-    <section id="sobre-mi" className="w-full pt-0 pb-16 sm:pb-24 mt-12 sm:mt-20 px-4 flex flex-col items-center scroll-mt-24">
+    <section id="sobre-mi" className="w-full pt-0 pb-10 sm:pb-16 lg:pb-24 mt-6 sm:mt-12 lg:mt-20 px-4 flex flex-col items-center scroll-mt-24">
       
       {/* 1. SOBRE MÍ INTERACTIVO (Ventana macOS igual que Proyectos -> Compilar -> Sobre Mí Real) */}
       <div ref={aboutRef} className="w-full max-w-4xl mx-auto flex flex-col items-center scroll-mt-24">
@@ -473,13 +472,13 @@ export const AboutSection: React.FC = () => {
                 <div className="flex flex-wrap justify-center">
                   <div className="w-full lg:w-10/12 px-2 sm:px-4 space-y-5">
                     <p className="text-base md:text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                      Soy un <strong className="text-zinc-900 dark:text-zinc-100 font-semibold">Desarrollador Web Full Stack</strong> con visión global del producto. Me especializo en construir soluciones tecnológicas completas de principio a fin, cuidando al milímetro tanto el diseño como la arquitectura interna.
+                      Soy un <strong className="text-zinc-900 dark:text-zinc-100 font-semibold">Desarrollador Web Full Stack</strong> con visión global del ciclo de vida del software y doble titulación técnica superior en <strong className="text-zinc-900 dark:text-zinc-100 font-medium">DAW y DAM</strong>. Me especializo en construir soluciones tecnológicas completas de principio a fin, cuidando al milímetro tanto el diseño visual como la arquitectura interna.
                     </p>
                     <p className="text-base md:text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                      Domino todo el ciclo de vida del software. Aporto solidez técnica creando interfaces de usuario atractivas y accesibles (<strong className="text-zinc-900 dark:text-zinc-100 font-medium">Frontend</strong>), respaldadas por una lógica de servidor robusta y gestión eficiente de bases de datos (<strong className="text-zinc-900 dark:text-zinc-100 font-medium">Backend</strong>).
+                      Aporto solidez técnica tanto en el desarrollo de interfaces de usuario modernas, interactivas y accesibles (<strong className="text-zinc-900 dark:text-zinc-100 font-medium">React, Angular, Next.js, TypeScript, Tailwind, Bootstrap</strong>) como en la implementación de la lógica de servidor, APIs RESTful y gestión de bases de datos (<strong className="text-zinc-900 dark:text-zinc-100 font-medium">Node.js, Express, C# / .NET, PHP, Java, PostgreSQL, SQL Server, MySQL, Supabase</strong>).
                     </p>
                     <p className="text-base md:text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                      Mi filosofía es clara: código limpio, rendimiento optimizado y un compromiso absoluto con la experiencia del usuario. Soy un perfil orientado a resultados, resolutivo y listo para aportar valor a tu equipo desde el primer día.
+                      Mi filosofía es clara: código limpio, rendimiento optimizado y un compromiso constante con la calidad técnica y las necesidades del usuario final. Perfil resolutivo y orientado a resultados, listo para aportar valor a tu equipo desde el primer día.
                     </p>
                   </div>
                 </div>
@@ -519,47 +518,55 @@ export const ExperienceSection: React.FC = () => {
   const experiences = [
     {
       company: "ANALISIS SURVEY UNIT SL",
-      role: "Desarrollador",
+      role: "Desarrollador Web Full Stack",
       date: "Octubre 2024 — Actualidad",
       location: "Madrid",
       current: true,
       description: [
-        "Desarrollo y mantenimiento de encuestas web interactivas como plataformas dinámicas y accesibles.",
-        "Gestión y tratamiento eficiente de datos mediante sistemas de bases de datos.",
-        "Participación en todo el ciclo de desarrollo, desde el análisis y diseño hasta la optimización."
-      ]
+        "Desarrollo Full Stack en aplicaciones corporativas de gran escala para clientes multinacionales: implementación y mantenimiento de lógica de negocio, reglas de cálculo y motores de evaluación en C# y ASP.NET MVC.",
+        "Diseño e integración de APIs RESTful para la comunicación eficiente entre módulos, sincronización de datos y respuesta en tiempo real.",
+        "Desarrollo, optimización y mantenimiento de plataformas web dinámicas y encuestas interactivas de alto tráfico, garantizando un tratamiento fluido y seguro de datos masivos en bases de datos relacionales.",
+        "Modernización de herramientas internas y refactorización de código para mejorar el rendimiento y la mantenibilidad de los sistemas en producción."
+      ],
+      stack: "C#, ASP.NET MVC, ASP clásico, JavaScript, PHP, MySQL / SQL Server, REST APIs, Bootstrap, HTML5, CSS3"
     },
     {
       company: "IbernetCloud, Rentdays",
-      role: "Desarrollador Web (Prácticas)",
+      role: "Desarrollador Web Full Stack (Prácticas)",
       date: "Marzo 2024 — Junio 2024",
       location: "Madrid",
       current: false,
       description: [
-        "Diseño, maquetación y creación de un portal web inmobiliario (estilo Airbnb/Booking).",
-        "Gestión de reservas, control de usuarios y registro de inmuebles con diseño responsive.",
-      ]
+        "Desarrollo integral de plataforma web de reservas y gestión inmobiliaria (modelo marketplace turístico estilo Airbnb): arquitectura modular y maquetación responsive orientada a conversión.",
+        "Implementación del motor de reservas en tiempo real, control dinámico de disponibilidad por fechas, cálculo automatizado de tarifas y gestión del ciclo de vida del alquiler.",
+        "Desarrollo del panel de administración (Dashboard) y gestión de usuarios, permitiendo a propietarios dar de alta inmuebles, gestionar inventario y monitorear reservas entrantes.",
+        "Diseño de interfaces con enfoque mobile-first mediante Bootstrap y JavaScript modular, asegurando máxima accesibilidad, tiempos de carga rápidos y compatibilidad cross-browser."
+      ],
+      stack: "JavaScript (ES6+), PHP, MySQL, Bootstrap, HTML5, CSS3, REST APIs"
     },
     {
       company: "Teditel, Tecnoaccesos",
-      role: "Desarrollador Web (Prácticas)",
+      role: "Desarrollador Web / Software (Prácticas)",
       date: "Marzo 2023 — Junio 2023",
       location: "Vallecas, Madrid",
       current: false,
       description: [
-        "Desarrollo de sitio web responsive y accesible para generar visitas de empresas.",
-        "Creación de plataforma para gestión de visitas, registro de códigos QR y control de accesos."
-      ]
+        "Desarrollo y mantenimiento de software web para control de accesos y seguridad física en edificios corporativos y recintos empresariales.",
+        "Desarrollo con C# y .NET bajo arquitectura MVC, participando en la lógica de servidor para la gestión de credenciales y comunicación con terminales de acceso.",
+        "Implementación del sistema de registro de visitas en tiempo real, control de entradas/salidas y módulo de generación de códigos QR dinámicos para validación en lectores y tornos.",
+        "Creación de interfaces de usuario adaptadas a múltiples dispositivos y quioscos táctiles de recepción."
+      ],
+      stack: "C#, .NET (MVC), JavaScript, HTML5, CSS3, MySQL"
     },
     {
-      company: "Motiva Consulting, S.L.",
+      company: "Motiva Consulting",
       role: "Técnico Informático de Sistemas (Prácticas)",
       date: "Marzo 2021 — Junio 2021",
       location: "San Blas, Madrid",
       current: false,
       description: [
-        "Instalación, mantenimiento y reparación de equipos y sistemas operativos.",
-        "Soporte técnico a usuarios resolviendo incidencias."
+        "Instalación y configuración de sistemas operativos y software. Mantenimiento, montaje y reparación de equipos y sistemas informáticos, garantizando la verificación y comprobación de su correcto funcionamiento.",
+        "Soporte técnico a usuarios, solucionando incidencias y realizando mantenimiento preventivo para asegurar el óptimo rendimiento de los sistemas."
       ]
     }
   ];
@@ -568,7 +575,7 @@ export const ExperienceSection: React.FC = () => {
     <section
       ref={sectionRef}
       id="experiencia"
-      className="w-full pt-0 pb-16 sm:pb-24 mt-8 sm:mt-12 px-4 flex flex-col items-center scroll-mt-24 overflow-hidden"
+      className="w-full pt-0 pb-10 sm:pb-16 lg:pb-24 mt-4 sm:mt-8 lg:mt-12 px-4 flex flex-col items-center scroll-mt-24 overflow-hidden"
     >
       <div className="w-full max-w-4xl mx-auto">
         <div
@@ -641,6 +648,13 @@ export const ExperienceSection: React.FC = () => {
                     </li>
                   ))}
                 </ul>
+
+                {'stack' in exp && exp.stack && (
+                  <div className="mt-3.5 pt-3 border-t border-zinc-200/70 dark:border-zinc-800/70 flex flex-wrap items-baseline gap-1.5 text-xs sm:text-[13px] text-zinc-500 dark:text-zinc-400">
+                    <span className="font-semibold text-zinc-800 dark:text-zinc-200">Stack:</span>
+                    <span>{exp.stack}</span>
+                  </div>
+                )}
               </div>
             );
           })}

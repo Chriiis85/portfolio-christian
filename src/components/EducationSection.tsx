@@ -1,5 +1,14 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, type ReactNode } from 'react';
 import { GraduationCap, MapPin, CheckCircle2 } from 'lucide-react';
+
+interface StudyItem {
+  institution: string;
+  degree: string;
+  date: string;
+  location: string;
+  highlight?: boolean;
+  description: (string | ReactNode)[];
+}
 
 export const EducationSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -23,9 +32,9 @@ export const EducationSection = () => {
     return () => observer.disconnect();
   }, []);
 
-  const studies = [
+  const studies: StudyItem[] = [
     {
-      institution: "I.E.S Puig Adam",
+      institution: "I.E.S. Puig Adam",
       degree: "Grado Superior en Desarrollo de Aplicaciones Web (DAW)",
       date: "Septiembre 2023 — Junio 2024",
       location: "Getafe, Madrid",
@@ -47,7 +56,7 @@ export const EducationSection = () => {
       ]
     },
     {
-      institution: "I.E.S Laguna de Joatzel",
+      institution: "I.E.S. Laguna de Joatzel",
       degree: "Grado Medio en Sistemas Microinformáticos y Redes (SMR)",
       date: "Septiembre 2019 — Junio 2021",
       location: "Getafe, Madrid",
@@ -64,9 +73,30 @@ export const EducationSection = () => {
       location: "Madrid",
       highlight: false,
       description: [
+        <>
+          Certificaciones oficiales:{" "}
+          <a
+            href="https://www.udemy.com/certificate/UC-c2f88cef-7d7f-4a92-801c-b15869b064ec/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sky-600 dark:text-sky-400 hover:underline font-semibold"
+          >
+            Angular 18: De Cero a Experto
+          </a>{" "}
+          y{" "}
+          <a
+            href="https://www.udemy.com/certificate/UC-497035ed-855d-47fd-b05b-0bbcab3fa7cd/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sky-600 dark:text-sky-400 hover:underline font-semibold"
+          >
+            Git y GitHub
+          </a>{" "}
+          (Udemy).
+        </>,
         "Doble titulación oficial de Técnico Superior en Desarrollo de Software (Especialidades DAW + DAM).",
-        "Idiomas: Español (Nativo) e Inglés (Nivel Intermedio en lectura técnica y comunicación).",
-        "Permiso de conducir y vehículo propio con disponibilidad total en la Comunidad de Madrid."
+        "Idiomas: Español (Nativo) | Inglés (Nivel Alto).",
+        "Permiso de conducir (Carnet B) y vehículo propio con plena disponibilidad de movilidad en la Comunidad de Madrid."
       ]
     }
   ];
@@ -75,9 +105,9 @@ export const EducationSection = () => {
     <section
       ref={sectionRef}
       id="estudios"
-      className="w-full min-h-[calc(100vh-5rem)] lg:min-h-screen pt-4 pb-16 sm:pb-24 mt-8 sm:mt-12 px-4 scroll-mt-24 flex flex-col items-center justify-center overflow-hidden"
+      className="w-full lg:min-h-screen pt-2 sm:pt-4 pb-10 sm:pb-16 lg:pb-24 mt-4 sm:mt-8 lg:mt-12 px-4 scroll-mt-24 flex flex-col items-center justify-center overflow-hidden"
     >
-      <div className="w-full max-w-4xl mx-auto my-auto">
+      <div className="w-full max-w-4xl mx-auto lg:my-auto">
         <div
           className={`flex items-center justify-center sm:justify-start gap-3 sm:gap-3.5 mb-8 sm:mb-12 transition-all duration-700 ease-out transform ${
             isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'

@@ -10,7 +10,8 @@ import {
   FaGitAlt, 
   FaGithub, 
   FaServer, 
-  FaDatabase 
+  FaDatabase,
+  FaWindows 
 } from 'react-icons/fa';
 import { 
   SiTypescript, 
@@ -27,10 +28,10 @@ import {
   SiNodedotjs, 
   SiExpress, 
   SiSupabase, 
-  SiMongodb, 
-  SiDocker, 
   SiVite, 
-  SiNpm 
+  SiNpm,
+  SiPrisma,
+  SiVercel 
 } from 'react-icons/si';
 import { TbBrandCSharp, TbSql } from 'react-icons/tb';
 import { VscVscode, VscTerminal } from 'react-icons/vsc';
@@ -53,7 +54,12 @@ interface TechItem {
 export const TechStack = () => {
   const [activeTab, setActiveTab] = useState('Frontend');
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
-  const [isDark, setIsDark] = useState(true);
+  const [isDark, setIsDark] = useState(() => {
+    if (typeof document !== 'undefined') {
+      return document.documentElement.classList.contains('dark');
+    }
+    return true;
+  });
   const [isVisible, setIsVisible] = useState(false);
   const [isClear, setIsClear] = useState(false);
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -91,14 +97,12 @@ export const TechStack = () => {
   };
 
   useEffect(() => {
-    if (typeof document !== 'undefined') {
+    if (typeof document === 'undefined') return;
+    const observer = new MutationObserver(() => {
       setIsDark(document.documentElement.classList.contains('dark'));
-      const observer = new MutationObserver(() => {
-        setIsDark(document.documentElement.classList.contains('dark'));
-      });
-      observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-      return () => observer.disconnect();
-    }
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    return () => observer.disconnect();
   }, []);
 
   const iconClass = "w-6 h-6 transition-transform duration-300";
@@ -131,20 +135,19 @@ export const TechStack = () => {
       { name: "PostgreSQL", icon: <SiPostgresql className={iconClass} />, brandColor: "#4169E1" },
       { name: "MySQL", icon: <SiMysql className={iconClass} />, brandColor: "#4479A1" },
       { name: "Supabase", icon: <SiSupabase className={iconClass} />, brandColor: "#3ECF8E" },
+      { name: "Prisma ORM", icon: <SiPrisma className={iconClass} />, brandColor: "#2D3748", darkBrandColor: "#FFFFFF" },
       { name: "Firebase", icon: <SiFirebase className={iconClass} />, brandColor: "#FFCA28" },
-      { name: "MongoDB", icon: <SiMongodb className={iconClass} />, brandColor: "#47A248" },
-      { name: "Dapper ORM", icon: <FaDatabase className={iconClass} />, brandColor: "#E34F26" },
       { name: "JSON", icon: <SiJson className={iconClass} />, brandColor: "#0092CA" },
     ],
     'Herramientas': [
       { name: "Git", icon: <FaGitAlt className={iconClass} />, brandColor: "#F05032" },
       { name: "GitHub", icon: <FaGithub className={iconClass} />, brandColor: "#24292E", darkBrandColor: "#FFFFFF" },
-      { name: "Docker", icon: <SiDocker className={iconClass} />, brandColor: "#2496ED" },
+      { name: "Vercel", icon: <SiVercel className={iconClass} />, brandColor: "#000000", darkBrandColor: "#FFFFFF" },
       { name: "Postman", icon: <SiPostman className={iconClass} />, brandColor: "#FF6C37" },
       { name: "VS Code", icon: <VscVscode className={iconClass} />, brandColor: "#007ACC" },
-      { name: "Figma", icon: <FaFigma className={iconClass} />, brandColor: "#F24E1E" },
+      { name: "Windows Server", icon: <FaWindows className={iconClass} />, brandColor: "#0078D6" },
       { name: "npm", icon: <SiNpm className={iconClass} />, brandColor: "#CB3837" },
-      { name: "Terminal", icon: <VscTerminal className={iconClass} />, brandColor: "#4D5BCE" },
+      { name: "Terminal / Linux", icon: <VscTerminal className={iconClass} />, brandColor: "#4D5BCE" },
     ],
     'Diseño': [
       { name: "Figma", icon: <FaFigma className={iconClass} />, brandColor: "#F24E1E" },
@@ -160,9 +163,9 @@ export const TechStack = () => {
     <section 
       ref={sectionRef}
       id="stack" 
-      className="w-full min-h-[calc(100vh-5rem)] lg:min-h-screen pt-4 pb-16 sm:pb-20 mt-6 px-4 scroll-mt-24 flex flex-col items-center justify-center relative"
+      className="w-full lg:min-h-screen pt-2 sm:pt-4 pb-10 sm:pb-16 lg:pb-20 mt-4 sm:mt-6 px-4 scroll-mt-24 flex flex-col items-center justify-center relative"
     >
-      <div className="w-full max-w-4xl mx-auto flex flex-col items-center my-auto">
+      <div className="w-full max-w-4xl mx-auto flex flex-col items-center lg:my-auto">
         
         {/* Título de la sección */}
         <h2

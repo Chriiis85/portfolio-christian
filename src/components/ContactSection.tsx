@@ -87,7 +87,7 @@ export const ContactSection = () => {
     <section
       id="contacto"
       ref={sectionRef}
-      className="w-full pt-0 pb-16 sm:pb-24 mt-8 sm:mt-12 px-4 scroll-mt-24 flex flex-col items-center justify-center"
+      className="w-full pt-0 pb-12 sm:pb-16 lg:pb-24 mt-4 sm:mt-8 lg:mt-12 px-4 scroll-mt-24 flex flex-col items-center justify-center"
     >
       <div className="w-full max-w-4xl mx-auto">
         

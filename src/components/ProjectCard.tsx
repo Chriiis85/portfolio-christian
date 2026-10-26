@@ -1,5 +1,48 @@
 import { useState, useRef, useEffect } from 'react';
-import { SafariModal, getSkillBadgeConfig } from './SafariModal';
+import { SafariModal } from './SafariModal';
+import { getSkillBadgeConfig } from '../utils/skillBadges';
+
+export type ProjectStatus = 'beta' | 'inProgress' | 'notDeployed';
+
+const STATUS_CONFIG: Record<ProjectStatus, {
+  label: string;
+  badgeStyle: string;
+}> = {
+  beta: {
+    label: 'Beta',
+    badgeStyle: 'bg-sky-500/10 text-sky-700 dark:text-sky-300 border-sky-400/40 dark:border-sky-500/30',
+  },
+  inProgress: {
+    label: 'En desarrollo',
+    badgeStyle: 'bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-400/40 dark:border-amber-500/30',
+  },
+  notDeployed: {
+    label: 'Sin desplegar - Entorno Local',
+    badgeStyle: 'bg-zinc-500/10 text-zinc-700 dark:text-zinc-300 border-zinc-400/40 dark:border-zinc-600/30',
+  },
+};
+
+export const StatusBadge = ({
+  status,
+  size = 'md',
+}: {
+  status: ProjectStatus;
+  size?: 'sm' | 'md';
+}) => {
+  const config = STATUS_CONFIG[status];
+  const sizeClasses =
+    size === 'sm'
+      ? 'text-[10px] px-2 py-0.5'
+      : 'text-[11px] sm:text-xs px-2.5 py-0.5';
+
+  return (
+    <span
+      className={`inline-flex items-center font-sans font-medium tracking-tight rounded-md border select-none transition-colors duration-200 ${config.badgeStyle} ${sizeClasses}`}
+    >
+      {config.label}
+    </span>
+  );
+};
 
 interface ProjectCardProps {
   title: string;
@@ -11,12 +54,23 @@ interface ProjectCardProps {
   webUrl?: string;
   coverImage?: string;
   images?: string[];
-  inProgress?: boolean;
+  status?: ProjectStatus;
 }
 
 let activeOpenProjectTitle: string | null = null;
 
-export const ProjectCard = ({ title, domain, description, aboutApp, tags, githubUrl, webUrl, coverImage, images, inProgress }: ProjectCardProps) => {
+export const ProjectCard = ({
+  title,
+  domain,
+  description,
+  aboutApp,
+  tags,
+  githubUrl,
+  webUrl,
+  coverImage,
+  images,
+  status,
+}: ProjectCardProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [hasAppeared, setHasAppeared] = useState(false);
@@ -140,7 +194,7 @@ export const ProjectCard = ({ title, domain, description, aboutApp, tags, github
                   setIsModalOpen(true);
                 }
               }}
-              className="w-3 h-3 rounded-full bg-[#28c840] shadow-2xs hover:brightness-95 flex items-center justify-center group/btn transition-all"
+              className="w-3 h-3 rounded-full bg-[#28c840] shadow-2xs hover:brightness-95 flex items-center justify-center group/btn transition-all cursor-pointer"
               title={isOpen ? 'Ampliar vista completa' : 'Expandir proyecto'}
             >
               {isOpen && (
@@ -189,7 +243,12 @@ export const ProjectCard = ({ title, domain, description, aboutApp, tags, github
           <div className={`flex flex-col items-center justify-center text-center transition-all duration-500 overflow-hidden ${
             isOpen ? 'max-h-0 opacity-0' : 'max-h-[200px] opacity-100 my-2 sm:mt-6 sm:mb-2'
           }`}>
-            <h3 className="text-lg sm:text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 mb-1.5 sm:mb-2">{title}</h3>
+            <div className="flex items-center justify-center gap-2 mb-1.5 sm:mb-2 flex-wrap">
+              <h3 className="text-lg sm:text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">{title}</h3>
+              {status && (
+                <StatusBadge status={status} size="sm" />
+              )}
+            </div>
             <p className="text-zinc-500 dark:text-zinc-400 text-xs sm:text-sm">Toca para expandir y ver detalles</p>
           </div>
 
@@ -199,30 +258,20 @@ export const ProjectCard = ({ title, domain, description, aboutApp, tags, github
           }`}>
             <div className="flex flex-col md:flex-row gap-5 sm:gap-8">
               
-              {/* Contenedor de la Imagen - Marco con contraste y sombra profunda para resaltar capturas con fondo blanco */}
+              {/* Contenedor de la Imagen */}
               <div 
                 onClick={(e) => {
-                  e.stopPropagation(); // Evitamos que cierre la tarjeta
+                  e.stopPropagation();
                   setIsModalOpen(true);
                 }}
-                className="flex-1 self-stretch p-2 sm:p-3.5 bg-zinc-100 dark:bg-[#161618] border border-zinc-200/90 dark:border-zinc-800/90 rounded-xl min-h-[190px] sm:min-h-[300px] flex items-center justify-center shadow-inner hover:border-sky-500/40 dark:hover:border-sky-400/40 active:scale-[0.99] transition-all duration-300 relative group"
+                className="flex-1 self-stretch p-2 sm:p-3.5 bg-zinc-100 dark:bg-[#161618] border border-zinc-200/90 dark:border-zinc-800/90 rounded-xl min-h-[190px] sm:min-h-[300px] flex items-center justify-center shadow-inner transition-all duration-300 relative group hover:border-sky-500/40 dark:hover:border-sky-400/40 active:scale-[0.99] cursor-pointer"
                 title="Ampliar vista"
               >
                 <div className="relative w-full h-full aspect-[16/10] md:aspect-auto min-h-[175px] sm:min-h-[272px] rounded-lg overflow-hidden bg-white dark:bg-zinc-950 shadow-[0_12px_30px_-6px_rgba(0,0,0,0.18)] dark:shadow-[0_15px_35px_-6px_rgba(0,0,0,0.75)] ring-1 ring-zinc-900/10 dark:ring-white/10 flex items-center justify-center">
-                  {/* Indicador central "In Progress" estilo en construcción con tono amarillo */}
-                  {inProgress && (
-                    <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center transition-all duration-300 group-hover:opacity-0 group-hover:scale-95">
-                      <span className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold tracking-wide bg-amber-50/95 dark:bg-[#18181b]/95 text-amber-700 dark:text-amber-300 border border-amber-400/80 dark:border-amber-400/50 shadow-[0_10px_30px_rgba(245,158,11,0.25)] backdrop-blur-md select-none">
-                        <span className="relative flex h-2.5 w-2.5">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
-                          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-500 dark:bg-amber-400" />
-                        </span>
-                        {/* Icono sutil de en construcción / herramientas */}
-                        <svg className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z" />
-                        </svg>
-                        <span>In Progress</span>
-                      </span>
+                  {/* Badge en la esquina superior derecha */}
+                  {status && (
+                    <div className="absolute top-2.5 right-2.5 z-20 pointer-events-none">
+                      <StatusBadge status={status} size="sm" />
                     </div>
                   )}
 
@@ -242,15 +291,16 @@ export const ProjectCard = ({ title, domain, description, aboutApp, tags, github
                       Ampliar vista
                     </span>
                   </div>
+
                   {previewSrc ? (
                     <img
                       src={previewSrc}
                       alt={`Vista previa de ${title}`}
                       className="absolute inset-0 w-full h-full object-cover object-top"
                     />
-                  ) : !inProgress ? (
+                  ) : (
                     <span className="text-zinc-400 dark:text-zinc-500 font-medium z-0">No preview image</span>
-                  ) : null}
+                  )}
                   {/* Borde interior sutil para definir capturas 100% blancas */}
                   <div className="pointer-events-none absolute inset-0 rounded-lg ring-1 ring-inset ring-black/10 dark:ring-white/10 z-10" />
                 </div>
@@ -258,7 +308,14 @@ export const ProjectCard = ({ title, domain, description, aboutApp, tags, github
 
               {/* Detalles y Botones */}
               <div className="w-full md:w-1/3 flex flex-col gap-3.5 sm:gap-4">
-                <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">{title}</h3>
+                <div className="flex flex-col gap-1.5">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">{title}</h3>
+                    {status && (
+                      <StatusBadge status={status} size="md" />
+                    )}
+                  </div>
+                </div>
                 <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed text-xs sm:text-sm">
                   {description}
                 </p>
@@ -283,7 +340,7 @@ export const ProjectCard = ({ title, domain, description, aboutApp, tags, github
 
                 {/* Botones de Acción */}
                 <div className="flex gap-3 mt-auto pt-3 sm:pt-4" onClick={(e) => e.stopPropagation() /* Evita cerrar la card al clicar los botones */}>
-                  {webUrl && (
+                  {status !== 'inProgress' && status !== 'notDeployed' && webUrl && webUrl !== '#' && (
                     <a href={webUrl} target="_blank" rel="noreferrer" className="flex-1 py-2.5 px-4 text-center bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-950 font-semibold rounded-lg hover:bg-zinc-800 dark:hover:bg-white transition-colors text-sm">
                       Visitar Web
                     </a>
@@ -294,12 +351,13 @@ export const ProjectCard = ({ title, domain, description, aboutApp, tags, github
                       href={githubUrl} 
                       target="_blank" 
                       rel="noreferrer" 
-                      className="flex items-center justify-center px-4 py-2.5 bg-zinc-100 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 border border-zinc-200 dark:border-zinc-800 rounded-lg hover:bg-zinc-200/80 dark:hover:bg-zinc-800 transition-colors"
+                      className={`${status === 'inProgress' || status === 'notDeployed' || !webUrl || webUrl === '#' ? 'flex-1' : ''} inline-flex items-center justify-center gap-2 py-2.5 px-4 bg-zinc-100 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 border border-zinc-200 dark:border-zinc-800 rounded-lg hover:bg-zinc-200/80 dark:hover:bg-zinc-800 transition-colors text-sm font-semibold`}
                       title="Ver en GitHub"
                     >
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                       </svg>
+                      <span>Ver en GitHub</span>
                     </a>
                   )}
                 </div>
@@ -321,6 +379,7 @@ export const ProjectCard = ({ title, domain, description, aboutApp, tags, github
         webUrl={webUrl}
         tags={tags}
         images={images}
+        status={status}
       />
     </>
   );

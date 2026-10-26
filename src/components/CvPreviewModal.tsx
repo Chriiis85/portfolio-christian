@@ -20,22 +20,29 @@ export const CvPreviewModal = ({
   const [isMaximized, setIsMaximized] = useState(false);
 
   useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>;
     if (isOpen) {
-      setIsRendered(true);
-      requestAnimationFrame(() => {
+      document.body.style.overflow = 'hidden';
+      timer = setTimeout(() => {
+        setIsRendered(true);
         requestAnimationFrame(() => {
           setIsVisible(true);
         });
-      });
-      document.body.style.overflow = 'hidden';
+      }, 0);
+      return () => clearTimeout(timer);
     } else {
-      setIsVisible(false);
-      setIsMaximized(false);
-      const timer = setTimeout(() => {
+      document.body.style.overflow = 'auto';
+      const animTimer = setTimeout(() => {
+        setIsVisible(false);
+        setIsMaximized(false);
+      }, 0);
+      timer = setTimeout(() => {
         setIsRendered(false);
       }, 300);
-      document.body.style.overflow = 'auto';
-      return () => clearTimeout(timer);
+      return () => {
+        clearTimeout(animTimer);
+        clearTimeout(timer);
+      };
     }
   }, [isOpen]);
 
