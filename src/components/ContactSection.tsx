@@ -87,7 +87,7 @@ export const ContactSection = () => {
     <section
       id="contacto"
       ref={sectionRef}
-      className="w-full pt-0 pb-12 sm:pb-16 lg:pb-24 mt-4 sm:mt-8 lg:mt-12 px-4 scroll-mt-24 flex flex-col items-center justify-center"
+      className="w-full pt-0 pb-12 sm:pb-16 lg:pb-24 mt-4 sm:mt-8 lg:mt-12 px-4 scroll-mt-24 flex flex-col items-center justify-center overflow-x-hidden"
     >
       <div className="w-full max-w-4xl mx-auto">
         
@@ -175,7 +175,7 @@ export const ContactSection = () => {
               <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
                 <span
                   style={{ transitionDelay: '260ms' }}
-                  className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-zinc-100 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200 text-xs font-medium border border-zinc-200/90 dark:border-zinc-800 truncate transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
+                  className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-zinc-100 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200 text-xs font-medium border border-zinc-200/90 dark:border-zinc-800 max-w-full truncate transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
                     isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
                   }`}
                 >
@@ -231,7 +231,7 @@ export const ContactSection = () => {
                 onBlur={() => setActiveField(null)}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Tu nombre o empresa"
-                className="w-full bg-transparent font-sans text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:outline-none text-sm"
+                className="w-full min-w-0 flex-1 bg-transparent font-sans text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:outline-none text-base sm:text-sm"
               />
             </div>
 
@@ -262,7 +262,7 @@ export const ContactSection = () => {
                 onBlur={() => setActiveField(null)}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="tu@correo.com"
-                className="w-full bg-transparent font-sans text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:outline-none text-sm"
+                className="w-full min-w-0 flex-1 bg-transparent font-sans text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:outline-none text-base sm:text-sm"
               />
             </div>
 
@@ -293,7 +293,7 @@ export const ContactSection = () => {
                 onBlur={() => setActiveField(null)}
                 onChange={(e) => setSubject(e.target.value)}
                 placeholder="Motivo del mensaje"
-                className="w-full bg-transparent font-sans text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:outline-none text-sm"
+                className="w-full min-w-0 flex-1 bg-transparent font-sans text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:outline-none text-base sm:text-sm"
               />
             </div>
           </div>
@@ -314,7 +314,7 @@ export const ContactSection = () => {
               onBlur={() => setActiveField(null)}
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Escribe tu mensaje aquí..."
-              className="w-full bg-transparent font-sans text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:outline-none text-sm sm:text-base leading-relaxed resize-none"
+              className="w-full bg-transparent font-sans text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:outline-none text-base leading-relaxed resize-none"
             />
           </div>
 

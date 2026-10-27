@@ -163,7 +163,7 @@ export const TechStack = () => {
     <section 
       ref={sectionRef}
       id="stack" 
-      className="w-full lg:min-h-screen pt-2 sm:pt-4 pb-10 sm:pb-16 lg:pb-20 mt-4 sm:mt-6 px-4 scroll-mt-24 flex flex-col items-center justify-center relative"
+      className="w-full lg:min-h-screen pt-2 sm:pt-4 pb-10 sm:pb-16 lg:pb-20 mt-4 sm:mt-6 px-4 scroll-mt-24 flex flex-col items-center justify-center relative overflow-x-hidden"
     >
       <div className="w-full max-w-4xl mx-auto flex flex-col items-center lg:my-auto">
         

@@ -51,11 +51,11 @@ function App() {
   const isRoleTypingComplete = typedRoleChars >= HERO_ROLE_TOTAL_LENGTH
 
   return (
-    <div className="min-h-screen bg-[#fafafa] dark:bg-[#09090b] text-zinc-900 dark:text-zinc-100 transition-colors duration-300">
+    <div className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#fafafa] dark:bg-[#09090b] text-zinc-900 dark:text-zinc-100 transition-colors duration-300">
       {/* Nuestro nuevo componente de Navegación */}
       <Navbar />
 
-      <main>
+      <main className="w-full max-w-full overflow-x-hidden">
         {/* SECCIÓN: Inicio */}
         <section id="inicio" className="relative overflow-hidden min-h-screen flex items-center justify-center pt-16 px-4 bg-[#fafafa] dark:bg-[#09090b] transition-colors duration-300">
           <HeroBackground />
@@ -119,7 +119,7 @@ function App() {
         <AboutSection />
 
         {/* SECCIÓN: Mis Proyectos */}
-        <section id="proyectos" className="w-full pt-0 pb-10 sm:pb-16 lg:pb-24 mt-4 sm:mt-8 lg:mt-12 px-4 scroll-mt-24 flex flex-col items-center justify-center bg-[#fafafa] dark:bg-[#09090b] transition-colors duration-300">
+        <section id="proyectos" className="w-full pt-0 pb-10 sm:pb-16 lg:pb-24 mt-4 sm:mt-8 lg:mt-12 px-4 scroll-mt-24 flex flex-col items-center justify-center overflow-x-hidden bg-[#fafafa] dark:bg-[#09090b] transition-colors duration-300">
           <div className="w-full max-w-4xl mx-auto text-center mb-8 sm:mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 mb-3 sm:mb-4">Mis Proyectos</h2>
             <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">

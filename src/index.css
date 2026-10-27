@@ -14,7 +14,11 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  max-width: 100%;
   overflow-x: hidden;
+  overflow-x: clip;
+  overscroll-behavior-x: none;
+  -webkit-text-size-adjust: 100%;
 }
 
 /* Colores de fondo y tipografía Pure Zinc & Ice (Modo Claro) */
@@ -24,7 +28,19 @@ body {
   font-family: var(--font-sans);
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   letter-spacing: -0.015em;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
   overflow-x: hidden;
+  overflow-x: clip;
+  overscroll-behavior-x: none;
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 input, textarea, button, select {

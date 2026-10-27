@@ -258,7 +258,7 @@ export const AboutSection: React.FC = () => {
   };
 
   return (
-    <section id="sobre-mi" className="w-full pt-0 pb-10 sm:pb-16 lg:pb-24 mt-6 sm:mt-12 lg:mt-20 px-4 flex flex-col items-center scroll-mt-24">
+    <section id="sobre-mi" className="w-full pt-0 pb-10 sm:pb-16 lg:pb-24 mt-6 sm:mt-12 lg:mt-20 px-4 flex flex-col items-center scroll-mt-24 overflow-x-hidden">
       
       {/* 1. SOBRE MÍ INTERACTIVO (Ventana macOS igual que Proyectos -> Compilar -> Sobre Mí Real) */}
       <div ref={aboutRef} className="w-full max-w-4xl mx-auto flex flex-col items-center scroll-mt-24">
