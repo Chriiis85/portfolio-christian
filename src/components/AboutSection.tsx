@@ -110,6 +110,12 @@ export const AboutSection: React.FC = () => {
     };
   }, [hasStartedTyping, isCompiled]);
 
+  // Precargar la foto local para que al pulsar "Compilar" aparezca al instante sin parpadeos
+  useEffect(() => {
+    const preloadImg = new Image();
+    preloadImg.src = '/christian-photo.jpg';
+  }, []);
+
   // Detectar cuando el usuario hace scroll hasta la sección "Sobre mí"
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -342,7 +348,7 @@ export const AboutSection: React.FC = () => {
                 }`}
               >
                 <img
-                  src="https://media.licdn.com/dms/image/v2/D4D03AQER95VpQqGa6g/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1710956028738?e=1793232000&v=beta&t=r2znvX5bBHZIGz03ckGuWbA6Zp60uVlcOkOCAPnj90w"
+                  src="/christian-photo.jpg"
                   alt="Christian Moreno Díaz"
                   className="w-full h-full object-cover select-none"
                 />
